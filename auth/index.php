@@ -16,7 +16,7 @@
   <?php
   session_start();
   if(isset($_SESSION['id_pegawai'])){
-    header('location:../index.php');
+    header('location:../');
   }else{
     include 'connect.php';
     if(isset($_POST['submit'])){
@@ -40,7 +40,7 @@
             </script>
             ';
           }else{
-            header('location:../index.php');
+            header('location:../');
             $_SESSION['id_pegawai'] = $userid['id_pegawai'];
           }
         }

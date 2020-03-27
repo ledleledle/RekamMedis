@@ -11,7 +11,7 @@
   $jumlahpegawai = mysqli_num_rows($pegawai);
   $pasien = mysqli_query($conn, "SELECT * FROM pasien");
   $jumpasien = mysqli_num_rows($pasien);
-  $rawat_inap = mysqli_query($conn, "SELECT * FROM rawat_inap");
+  $rawat_inap = mysqli_query($conn, "SELECT * FROM rawat_inap WHERE id_pasien IS NOT NULL");
   $jumrawatinap = mysqli_num_rows($rawat_inap);
   $dokter = mysqli_query($conn, "SELECT * FROM pegawai WHERE pekerjaan='1'");
   $jumlahdokter = mysqli_num_rows($dokter);
@@ -72,7 +72,7 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Rawat Inap</h4>
+                    <h4>Pasien Rawat Inap</h4>
                   </div>
                   <div class="card-body">
                     <?php echo $jumrawatinap; ?>
@@ -100,51 +100,39 @@
             <div class="col-lg-8 col-md-12 col-12 col-sm-12">
               <div class="card">
                 <div class="card-header">
-                  <h4>Jadwal Pegawai</h4>
+                  <h4>Status Ruang Rawat Inap</h4>
                 </div>
                 <div class="card-body">
-                  <div class="table-responsive">
-                  <table class="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">Senin</th>
-                          <th scope="col">Selasa</th>
-                          <th scope="col">Rabu</th>
-                          <th scope="col">Kamis</th>
-                          <th scope="col">Jum'at</th>
-                          <th scope="col">Sabtu</th>
-                          <th scope="col">Minggu</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                        </tr>
-                        <tr>
-                          <th scope="row" class="bg-success text-white">2</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  <ul class="list-unstyled list-unstyled-border">
+                    <li class="media">
+                      <div class="media-body">
+                        <div class="badge badge-pill badge-danger mb-1 float-right"><i class="ion-close"></i> Dipakai</div>
+                        <h6 class="media-title"><a href="#">Ruang ABC</a></h6>
+                        <div class="text-small text-muted">Sdr. Anu <div class="bullet"></div> <span class="text-primary">16 Maret 2020</span></div>
+                      </div>
+                    </li>
+                    <li class="media">
+                      <div class="media-body">
+                        <div class="badge badge-pill badge-success mb-1 float-right"><i class="ion-checkmark-round"></i> Tersedia</div>
+                        <h6 class="media-title"><a href="#">Ruang AAA</a></h6>
+                        <div class="text-small text-muted">Tersedia</div>
+                      </div>
+                    </li>
+                    <li class="media">
+                      <div class="media-body">
+                        <div class="badge badge-pill badge-warning mb-1 float-right"><i class="ion-gear-b"></i>  Dalam Perbaikan</div>
+                        <h6 class="media-title"><a href="#">Ruang BBB</a></h6>
+                        <div class="text-small text-muted">Tidak Tersedia</div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
             <div class="col-lg-4 col-md-12 col-12 col-sm-12">
               <div class="card">
                 <div class="card-header">
-                  <h4>Recent Activities</h4>
+                  <h4>Aktifitas Terakhir</h4>
                 </div>
                 <div class="card-body">             
                   <ul class="list-unstyled list-unstyled-border">
@@ -183,7 +171,7 @@
                   </ul>
                   <div class="text-center pt-1 pb-1">
                     <a href="#" class="btn btn-primary btn-lg btn-round">
-                      View All
+                      Lihat Semua
                     </a>
                   </div>
                 </div>
@@ -617,14 +605,7 @@
       </div>
     </section>
   </div>
-  <footer class="main-footer">
-    <div class="footer-left">
-      Copyright &copy; 2018 <div class="bullet"></div> Design By <a href="https://nauval.in/">Muhamad Nauval Azhar</a>
-    </div>
-    <div class="footer-right">
-
-    </div>
-  </footer>
+  <?php include 'part/footer.php'; ?>
 </div>
 </div>
 
