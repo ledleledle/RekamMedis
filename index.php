@@ -6,12 +6,13 @@
   session_start();
   include 'auth/connect.php';
   include "part/head.php";
+  include 'part_func/tgl_ind.php';
   
   $pegawai = mysqli_query($conn, "SELECT * FROM pegawai WHERE pekerjaan='2'");
   $jumlahpegawai = mysqli_num_rows($pegawai);
   $pasien = mysqli_query($conn, "SELECT * FROM pasien");
   $jumpasien = mysqli_num_rows($pasien);
-  $rawat_inap = mysqli_query($conn, "SELECT * FROM rawat_inap WHERE id_pasien IS NOT NULL");
+  $rawat_inap = mysqli_query($conn, "SELECT * FROM riwayat_rawatinap WHERE id_pasien IS NOT NULL");
   $jumrawatinap = mysqli_num_rows($rawat_inap);
   $dokter = mysqli_query($conn, "SELECT * FROM pegawai WHERE pekerjaan='1'");
   $jumlahdokter = mysqli_num_rows($dokter);
@@ -57,7 +58,7 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Pasien</h4>
+                    <h4>Data Pasien</h4>
                   </div>
                   <div class="card-body">
                     <?php echo $jumpasien; ?>
@@ -101,31 +102,47 @@
               <div class="card">
                 <div class="card-header">
                   <h4>Status Ruang Rawat Inap</h4>
+                  <div class="card-header-action">
+                <a href="#">Detail</a>
+              </div>
                 </div>
                 <div class="card-body">
+                  <?php include 'part_func/ruangan.php';
+                  while($showruangan = mysqli_fetch_array($sqlruangan)){
+                  ?>
                   <ul class="list-unstyled list-unstyled-border">
                     <li class="media">
                       <div class="media-body">
-                        <div class="badge badge-pill badge-danger mb-1 float-right"><i class="ion-close"></i> Dipakai</div>
-                        <h6 class="media-title"><a href="#">Ruang ABC</a></h6>
-                        <div class="text-small text-muted">Sdr. Anu <div class="bullet"></div> <span class="text-primary">16 Maret 2020</span></div>
-                      </div>
-                    </li>
-                    <li class="media">
-                      <div class="media-body">
-                        <div class="badge badge-pill badge-success mb-1 float-right"><i class="ion-checkmark-round"></i> Tersedia</div>
-                        <h6 class="media-title"><a href="#">Ruang AAA</a></h6>
-                        <div class="text-small text-muted">Tersedia</div>
-                      </div>
-                    </li>
-                    <li class="media">
-                      <div class="media-body">
-                        <div class="badge badge-pill badge-warning mb-1 float-right"><i class="ion-gear-b"></i>  Dalam Perbaikan</div>
-                        <h6 class="media-title"><a href="#">Ruang BBB</a></h6>
-                        <div class="text-small text-muted">Tidak Tersedia</div>
+                        
+                          <?php
+                          if($showruangan["status"] == ""){
+                            echo '<div class="badge badge-pill badge-success mb-1 float-right">';
+                            echo '<i class="ion-checkmark-round"></i> Tersedia';
+                            
+                          } elseif ($showruangan["status"] == "1") {
+                            echo '<div class="badge badge-pill badge-danger mb-1 float-right">';
+                            echo '<i class="ion-close"></i> Dipakai';
+                          } else{
+                            echo '<div class="badge badge-pill badge-warning mb-1 float-right">';
+                            echo '<i class="ion-gear-b"></i>  Dalam Perbaikan';
+                          } ?>
+                          </div>
+                        <h6 class="media-title"><a href="#">Ruang <?php echo $showruangan["nama_ruang"]; ?></a></h6>
+                        <div class="text-small text-muted">
+                        <?php
+                          if($showruangan["status"] == ""){
+                            echo 'Tersedia';
+                            //echo '<div class="bullet"></div> <span class="text-primary">Harga per Hari : Rp. '.$showruangan["biaya"].'</span></div>';
+                          } elseif ($showruangan["status"] == "1") {
+                            echo 'Sdr. '.$showruangan["id_pasien"];
+                            echo '<div class="bullet"></div> <span class="text-primary">Sejak '.tgl_indo($showruangan["tgl_masuk"]).' | '.$showruangan["jam_masuk"].'</span></div>';
+                          } else{
+                            echo '<div class="text-small text-muted">Tidak Tersedia</div>';
+                          } ?>
                       </div>
                     </li>
                   </ul>
+                <?php } ?>
                 </div>
               </div>
             </div>
