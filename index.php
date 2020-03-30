@@ -109,11 +109,11 @@
                 <div class="card-body">
                   <?php include 'part_func/ruangan.php';
                   while($showruangan = mysqli_fetch_array($sqlruangan)){
+                    $defpasien = $showruangan['id_pasien'];
                   ?>
                   <ul class="list-unstyled list-unstyled-border">
                     <li class="media">
                       <div class="media-body">
-                        
                           <?php
                           if($showruangan["status"] == ""){
                             echo '<div class="badge badge-pill badge-success mb-1 float-right">';
@@ -132,9 +132,10 @@
                         <?php
                           if($showruangan["status"] == ""){
                             echo 'Tersedia';
-                            //echo '<div class="bullet"></div> <span class="text-primary">Harga per Hari : Rp. '.$showruangan["biaya"].'</span></div>';
                           } elseif ($showruangan["status"] == "1") {
-                            echo 'Sdr. '.$showruangan["id_pasien"];
+                            $sqlnama = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$defpasien'");
+                            $namapasien = mysqli_fetch_array($sqlnama);
+                            echo 'Sdr. '.ucwords($namapasien["nama_pasien"]);
                             echo '<div class="bullet"></div> <span class="text-primary">Sejak '.tgl_indo($showruangan["tgl_masuk"]).' | '.$showruangan["jam_masuk"].'</span></div>';
                           } else{
                             echo '<div class="text-small text-muted">Tidak Tersedia</div>';
