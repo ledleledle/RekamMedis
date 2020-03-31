@@ -28,7 +28,6 @@
 
 <!-- Sweet Alert -->
 <script src="assets/modules/sweetalert/sweetalert.min.js"></script>
-<script src="assets/js/page/modules-sweetalert.js"></script>
 
 <!-- Template JS File -->
 <script src="assets/js/scripts.js"></script>

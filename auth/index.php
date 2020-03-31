@@ -41,7 +41,7 @@
             ';
           }else{
             header('location:../');
-            $_SESSION['id_pegawai'] = $userid['id_pegawai'];
+            $_SESSION['id_pegawai'] = $userid['id'];
           }
         }
         ?>

@@ -3,10 +3,11 @@
 
 <head>
 	<?php
-	$page = "Data Pegawai";
+	$page = "Status Ruangan Rawat Inap";
 	session_start();
 	include 'auth/connect.php';
 	include "part/head.php";
+	include "part_func/tgl_ind.php";
 
 	if (isset($_POST['submit'])) {
 		$id = $_POST['iduser'];
@@ -17,7 +18,7 @@
 		$new_pass = $_POST['new_password'];
 
 		if ($old_pass == "" && $new_pass == "") {
-			$up1 = mysqli_query($conn, "UPDATE pegawai SET nama_pegawai='$nama', username='$user', alamat='$alam' WHERE id='$id'");
+			$up1 = mysqli_query($conn, "UPDATE pegawai SET nama_pegawai='$nama', username='$user', alamat='$alam' WHERE id_pegawai='$id'");
 			echo '<script>
 			setTimeout(function() {
 				swal({
@@ -28,7 +29,7 @@
 					}, 500);
 					</script>';
 		} elseif ($old_pass != "" && $new_pass != "") {
-			$cekpass = mysqli_query($conn, "SELECT * FROM pegawai WHERE id='$id' AND password='$old_pass'");
+			$cekpass = mysqli_query($conn, "SELECT * FROM pegawai WHERE id_pegawai='$id' AND password='$old_pass'");
 			$cekada = mysqli_num_rows($cekpass);
 			if ($cekada == 0) {
 				echo '<script>
@@ -41,7 +42,7 @@
 								}, 500);
 								</script>';
 			} else {
-				$up2 = mysqli_query($conn, "UPDATE pegawai SET nama_pegawai='$nama', username='$user', password='$new_pass', alamat='$alam' WHERE id='$id'");
+				$up2 = mysqli_query($conn, "UPDATE pegawai SET nama_pegawai='$nama', username='$user', password='$new_pass', alamat='$alam' WHERE id_pegawai='$id'");
 				echo '<script>
 				setTimeout(function() {
 					swal({
@@ -104,18 +105,16 @@
 			<div class="main-content">
 				<section class="section">
 					<div class="section-header">
-						<h1><?php echo $page; ?></h1>
+						<h1>Detail Ruangan Rawat Inap</h1>
 					</div>
-
 					<div class="section-body">
-
 						<div class="row">
 							<div class="col-12">
 								<div class="card">
 									<div class="card-header">
 										<h4><?php echo $page; ?></h4>
 										<div class="card-header-action">
-											<a href="#" class="btn btn-primary" data-target="#addUser" data-toggle="modal">Tambah Pegawai</a>
+											<a href="#" class="btn btn-primary" data-target="#addUser" data-toggle="modal">Tambah Ruangan</a>
 										</div>
 									</div>
 									<div class="card-body">
@@ -123,39 +122,58 @@
 											<table class="table table-striped" id="table-1">
 												<thead>
 													<tr>
-														<th class="text-center">
-															#
-														</th>
-														<th>Nama Pegawai</th>
-														<th>Alamat</th>
-														<th>Pekerjaan</th>
+														<th class="text-center">#</th>
+														<th>Nama Ruangan</th>
+														<th>Dipakai Sejak</th>
+														<th>Dipakai Oleh</th>
+														<th>Status</th>
+														<th>Harga per hari</th>
 														<th>Action</th>
 													</tr>
 												</thead>
 												<tbody>
 													<?php
-													$sql = mysqli_query($conn, "SELECT * FROM pegawai");
+													$sql = mysqli_query($conn, "SELECT * FROM ruang_inap");
 													$i = 0;
 													while ($row = mysqli_fetch_array($sql)) {
+														$defpasien = $row['id_pasien'];
 														$i++;
 													?>
 														<tr>
 															<td><?php echo $i; ?></td>
-															<td><?php echo ucwords($row['nama_pegawai']); ?></td>
-															<td><?php echo ucwords($row['alamat']); ?></td>
-															<td><?php
-																if ($row['pekerjaan'] == '1') {
-																	echo '<div class="badge badge-pill badge-primary mb-1">Dokter';
+															<th><?php echo ucwords($row['nama_ruang']); ?></th>
+															<td><?php if ($row['tgl_masuk'] == "") {
+																	echo 'Belum digunakan';
 																} else {
-																	echo '<div class="badge badge-pill badge-success mb-1">Apoteker';
+																	echo tgl_indo($row['tgl_masuk']);
+																} ?></td>
+															<td><?php
+																if ($defpasien == '') {
+																	echo 'Belum ada pasien';
+																} else {
+																	$sqlnama = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$defpasien'");
+																	$namapasien = mysqli_fetch_array($sqlnama);
+																	echo '<b>Sdr. ' . ucwords($namapasien["nama_pasien"]) . '</b>';
+																} ?></td>
+															<td><?php
+																if ($row["status"] == "") {
+																	echo '<div class="badge badge-pill badge-success mb-1">';
+																	echo '<i class="ion-checkmark-round"></i> Tersedia';
+																} elseif ($row["status"] == "1") {
+																	echo '<div class="badge badge-pill badge-danger mb-1">';
+																	echo '<i class="ion-close"></i> Dipakai';
+																} else {
+																	echo '<div class="badge badge-pill badge-warning mb-1">';
+																	echo '<i class="ion-gear-b"></i>  Dalam Perbaikan';
 																} ?>
 										</div>
 										</td>
+										<td>Rp. <?php number_format("872812617", 2); ?></td>
 										<td>
-											<span data-target="#editUser" data-toggle="modal" data-id="<?php echo $row['id']; ?>" data-nama="<?php echo $row['nama_pegawai']; ?>" data-user="<?php echo $row['username']; ?>" data-alam="<?php echo $row['alamat']; ?>">
+											<span data-target="#editUser" data-toggle="modal" data-id="<?php echo $row['id_pegawai']; ?>" data-nama="<?php echo $row['nama_pegawai']; ?>" data-user="<?php echo $row['username']; ?>" data-alam="<?php echo $row['alamat']; ?>">
 												<a class="btn btn-primary btn-action mr-1" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
 											</span>
-											<a class="btn btn-danger btn-action" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=pegawai&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
+											<a class="btn btn-danger btn-action" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/hapususer.php?id=<?php echo $row['id_pegawai']; ?>'" ;><i class="fas fa-trash"></i></a>
 										</td>
 										</tr>
 									<?php } ?>

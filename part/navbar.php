@@ -5,7 +5,7 @@ $sessionid = $_SESSION['id_pegawai'];
 if(!isset($sessionid)){
   header('location:auth');
 }
-$nama = mysqli_query($conn, "SELECT * FROM pegawai WHERE id_pegawai=$sessionid");
+$nama = mysqli_query($conn, "SELECT * FROM pegawai WHERE id=$sessionid");
 $output = mysqli_fetch_array($nama);
 ?>
 <nav class="navbar navbar-expand-lg main-navbar">
