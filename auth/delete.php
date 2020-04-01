@@ -1,5 +1,6 @@
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+  <script src="../assets/modules/sweetalert/sweet2.js"></script>
+  <link rel="stylesheet" href="../assets/modules/sweetalert/sweet2.css">
+
   <?php
     include 'connect.php';
 
