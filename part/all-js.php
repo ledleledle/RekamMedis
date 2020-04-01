@@ -8,10 +8,6 @@
 <script src="assets/js/stisla.js"></script>
 
 <!-- JS Libraies -->
-<script src="assets/modules/simple-weather/jquery.simpleWeather.min.js"></script>
-<script src="assets/modules/chart.min.js"></script>
-<script src="assets/modules/jqvmap/dist/jquery.vmap.min.js"></script>
-<script src="assets/modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
 <script src="assets/modules/summernote/summernote-bs4.js"></script>
 <script src="assets/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
 

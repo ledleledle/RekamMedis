@@ -10,78 +10,60 @@
 	include "part_func/tgl_ind.php";
 
 	if (isset($_POST['submit'])) {
-		$id = $_POST['iduser'];
+		$id = $_POST['id'];
 		$nama = $_POST['nama'];
-		$user = $_POST['username'];
-		$alam = $_POST['alamat'];
-		$old_pass = $_POST['old_password'];
-		$new_pass = $_POST['new_password'];
+		$harga = $_POST['harga'];
+		$stat = $_POST['status'];
 
-		if ($old_pass == "" && $new_pass == "") {
-			$up1 = mysqli_query($conn, "UPDATE pegawai SET nama_pegawai='$nama', username='$user', alamat='$alam' WHERE id_pegawai='$id'");
+		$cekruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE nama_ruang = '$nama'");
+		$cekada = mysqli_num_rows($cekruang);
+		if ($cekada >= 1) {
 			echo '<script>
-			setTimeout(function() {
-				swal({
-					title: "Data Diubah",
-					text: "Data berhasil diubah!",
-					icon: "success"
-					});
-					}, 500);
-					</script>';
-		} elseif ($old_pass != "" && $new_pass != "") {
-			$cekpass = mysqli_query($conn, "SELECT * FROM pegawai WHERE id_pegawai='$id' AND password='$old_pass'");
-			$cekada = mysqli_num_rows($cekpass);
-			if ($cekada == 0) {
-				echo '<script>
 						setTimeout(function() {
 							swal({
-								title: "Password salah",
-								text: "Password salah, cek kembali form password anda!",
+								title: "Gagal!",
+								text: "Nama ruangan ini telah digunakan, silahkan pilih nama yang lain!",
 								icon: "error"
 								});
 								}, 500);
 								</script>';
-			} else {
-				$up2 = mysqli_query($conn, "UPDATE pegawai SET nama_pegawai='$nama', username='$user', password='$new_pass', alamat='$alam' WHERE id_pegawai='$id'");
-				echo '<script>
+		} else {
+			$up2 = mysqli_query($conn, "UPDATE ruang_inap SET nama_ruang='$nama', status='$stat', biaya='$harga' WHERE id='$id'");
+			echo '<script>
 				setTimeout(function() {
 					swal({
 					title: "Data Diubah",
-					text: "Data atau Password berhasil diubah!",
+					text: "Data Ruangan berhasil diubah!",
 					icon: "success"
 					});
 					}, 500);
 				</script>';
-			}
 		}
 	}
 
 	if (isset($_POST['submit2'])) {
 		$nama = $_POST['nama'];
-		$user = $_POST['username'];
-		$alam = $_POST['alamat'];
-		$pass = $_POST['password'];
-		$job = $_POST['pekerjaan'];
+		$harga = $_POST['harga'];
 
-		$cekuser = mysqli_query($conn, "SELECT * FROM pegawai WHERE username='$user'");
+		$cekuser = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE nama_ruang='$nama'");
 		$baris = mysqli_num_rows($cekuser);
 		if ($baris >= 1) {
 			echo '<script>
 				setTimeout(function() {
 					swal({
-						title: "Username sudah digunakan",
-						text: "Username sudah digunakan, gunakan username lain!",
+						title: "Nama ruangan sudah digunakan",
+						text: "Nama ruangan sudah digunakan, gunakan nama lain!",
 						icon: "error"
 						});
 					}, 500);
 			</script>';
 		} else {
-			$add = mysqli_query($conn, "INSERT INTO pegawai (username, password, nama_pegawai, alamat, pekerjaan) VALUES ('$user', '$pass', '$nama', '$alam', '$job')");
+			$add = mysqli_query($conn, "INSERT INTO ruang_inap (nama_ruang, status, biaya) VALUES ('$nama', '0', '$harga')");
 			echo '<script>
 				setTimeout(function() {
 					swal({
 						title: "Berhasil!",
-						text: "Pegawai telah ditambahkan!",
+						text: "Ruangan baru telah ditambahkan!",
 						icon: "success"
 						});
 					}, 500);
@@ -143,37 +125,51 @@
 															<td><?php echo $i; ?></td>
 															<th><?php echo ucwords($row['nama_ruang']); ?></th>
 															<td><?php if ($row['tgl_masuk'] == "") {
-																	echo 'Belum digunakan';
-																} else {
-																	echo tgl_indo($row['tgl_masuk']);
-																} ?></td>
+																		echo 'Belum digunakan';
+																	} else {
+																		echo tgl_indo($row['tgl_masuk']);
+																		echo ' | ' . $row['jam_masuk'];
+																	} ?></td>
 															<td><?php
-																if ($defpasien == '') {
-																	echo 'Belum ada pasien';
-																} else {
-																	$sqlnama = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$defpasien'");
-																	$namapasien = mysqli_fetch_array($sqlnama);
-																	echo '<b>Sdr. ' . ucwords($namapasien["nama_pasien"]) . '</b>';
-																} ?></td>
+																	if ($defpasien == '') {
+																		echo 'Belum ada pasien';
+																	} else {
+																		$sqlnama = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$defpasien'");
+																		$namapasien = mysqli_fetch_array($sqlnama);
+																		echo '<b>Sdr. ' . ucwords($namapasien["nama_pasien"]) . '</b>';
+																	} ?></td>
 															<td><?php
-																if ($row["status"] == "") {
-																	echo '<div class="badge badge-pill badge-success mb-1">';
-																	echo '<i class="ion-checkmark-round"></i> Tersedia';
-																} elseif ($row["status"] == "1") {
-																	echo '<div class="badge badge-pill badge-danger mb-1">';
-																	echo '<i class="ion-close"></i> Dipakai';
-																} else {
-																	echo '<div class="badge badge-pill badge-warning mb-1">';
-																	echo '<i class="ion-gear-b"></i>  Dalam Perbaikan';
-																} ?>
+																	if ($row["status"] == "0") {
+																		echo '<div class="badge badge-pill badge-success mb-1">';
+																		echo '<i class="ion-checkmark-round"></i> Tersedia';
+																	} elseif ($row["status"] == "1") {
+																		echo '<div class="badge badge-pill badge-danger mb-1">';
+																		echo '<i class="ion-close"></i> Dipakai';
+																	} else {
+																		echo '<div class="badge badge-pill badge-warning mb-1">';
+																		echo '<i class="ion-gear-b"></i>  Dalam Perbaikan';
+																	} ?>
 										</div>
 										</td>
-										<td>Rp. <?php number_format("872812617", 2); ?></td>
+										<td>Rp. <?php echo number_format($row['biaya'], 0, ".", "."); ?></td>
 										<td>
-											<span data-target="#editUser" data-toggle="modal" data-id="<?php echo $row['id_pegawai']; ?>" data-nama="<?php echo $row['nama_pegawai']; ?>" data-user="<?php echo $row['username']; ?>" data-alam="<?php echo $row['alamat']; ?>">
-												<a class="btn btn-primary btn-action mr-1" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
-											</span>
-											<a class="btn btn-danger btn-action" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/hapususer.php?id=<?php echo $row['id_pegawai']; ?>'" ;><i class="fas fa-trash"></i></a>
+											<?php if ($row['status'] == '1') { ?>
+												<span data-toggle="tooltip" title="Status masih dipakai, Data tidak dapat diedit">
+													<a class="btn btn-primary disabled btn-action mr-1"><i class="fas fa-pencil-alt"></i></a>
+												</span>
+												<span data-toggle="tooltip" title="Status masih dipakai, Data tidak dapat dihapus">
+													<a class="btn btn-danger disabled btn-action mr-1"><i class="fas fa-trash"></i></a>
+												</span>
+												<a data-toggle="tooltip" title="Konfirmasi pasien keluar" class="btn btn-warning btn-action mr-1" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=ruang_inap&id=<?php echo $row['id']; ?>'";><i class="ion-log-out"></i></a>
+											<?php } else { ?>
+												<span data-target="#editRuang" data-toggle="modal" data-id="<?php echo $row['id']; ?>" data-nama="<?php echo $row['nama_ruang']; ?>" data-harga="<?php echo $row['biaya']; ?>">
+													<a class="btn btn-primary btn-action mr-1" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
+												</span>
+												<a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=ruang_inap&id=<?php echo $row['id']; ?>'";><i class="fas fa-trash"></i></a>
+												<span data-target="#editRuang" data-toggle="modal">
+												<a data-toggle="tooltip" title="Konfirmasi pasien masuk" class="btn btn-success btn-action"><i class="ion-log-in"></i></a>
+												</span>
+											<?php } ?>
 										</td>
 										</tr>
 									<?php } ?>
@@ -192,7 +188,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title">Tambah Pegawai</h5>
+						<h5 class="modal-title">Tambah Ruangan</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -200,7 +196,7 @@
 					<div class="modal-body">
 						<form action="" method="POST" class="needs-validation" novalidate="">
 							<div class="form-group row">
-								<label class="col-sm-3 col-form-label">Nama Lengkap</label>
+								<label class="col-sm-3 col-form-label">Nama Ruangan</label>
 								<div class="col-sm-9">
 									<input type="text" class="form-control" name="nama" required="">
 									<div class="invalid-feedback">
@@ -209,29 +205,17 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-3 col-form-label">Username</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" name="username" required="">
+								<label class="col-sm-3 col-form-label">Harga</label>
+								<div class="input-group col-sm-9">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											Rp
+										</div>
+									</div>
+									<input type="number" class="form-control currency" name="harga" required="">
 									<div class="invalid-feedback">
 										Mohon data diisi!
 									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label>Pekerjaan</label>
-								<select class="form-control selectric" name="pekerjaan">
-									<option value="1">Dokter</option>
-									<option value="2">Apoteker</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label>Alamat</label>
-								<textarea class="form-control" required="" name="alamat"></textarea>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-3 col-form-label">Password</label>
-								<div class="col-sm-9">
-									<input type="password" name="password" class="form-control">
 								</div>
 							</div>
 					</div>
@@ -244,7 +228,7 @@
 			</div>
 		</div>
 
-		<div class="modal fade" tabindex="-1" role="dialog" id="editUser">
+		<div class="modal fade" tabindex="-1" role="dialog" id="editRuang">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -256,9 +240,9 @@
 					<div class="modal-body">
 						<form action="" method="POST" class="needs-validation" novalidate="">
 							<div class="form-group row">
-								<label class="col-sm-3 col-form-label">Nama Lengkap</label>
+								<label class="col-sm-3 col-form-label">Nama Ruangan</label>
 								<div class="col-sm-9">
-									<input type="hidden" class="form-control" name="iduser" required="" id="getId">
+									<input type="hidden" class="form-control" name="id" required="" id="getId">
 									<input type="text" class="form-control" name="nama" required="" id="getNama">
 									<div class="invalid-feedback">
 										Mohon data diisi!
@@ -266,32 +250,22 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label class="col-sm-3 col-form-label">Username</label>
-								<div class="col-sm-9">
-									<input type="text" class="form-control" name="username" required="" id="getUser">
-									<div class="invalid-feedback">
-										Mohon data diisi!
+								<label class="col-sm-3 col-form-label">Harga</label>
+								<div class="input-group col-sm-9">
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											Rp
+										</div>
 									</div>
+									<input type="number" class="form-control currency" name="harga" id="getHarga" required="">
 								</div>
 							</div>
 							<div class="form-group">
-								<label>Alamat</label>
-								<textarea class="form-control" required="" name="alamat" id="getAddrs"></textarea>
-							</div>
-							<div class="alert alert-light text-center">
-								Jika password tidak diganti, form dibawah dikosongi saja.
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-3 col-form-label">Password Lama</label>
-								<div class="col-sm-9">
-									<input type="password" name="old_password" class="form-control">
-								</div>
-							</div>
-							<div class="form-group row">
-								<label class="col-sm-3 col-form-label">Password Baru</label>
-								<div class="col-sm-9">
-									<input type="password" name="new_password" class="form-control">
-								</div>
+								<label>Status Ruangan</label>
+								<select class="form-control selectric" name="status">
+									<option value="">Terserdia</option>
+									<option value="2">Dalam Perbaikan</option>
+								</select>
 							</div>
 					</div>
 					<div class="modal-footer bg-whitesmoke br">
@@ -308,17 +282,15 @@
 	<?php include "part/all-js.php"; ?>
 
 	<script>
-		$('#editUser').on('show.bs.modal', function(event) {
+		$('#editRuang').on('show.bs.modal', function(event) {
 			var button = $(event.relatedTarget)
 			var nama = button.data('nama')
-			var user = button.data('user')
-			var alam = button.data('alam')
 			var id = button.data('id')
+			var harga = button.data('harga')
 			var modal = $(this)
 			modal.find('#getId').val(id)
 			modal.find('#getNama').val(nama)
-			modal.find('#getUser').val(user)
-			modal.find('#getAddrs').val(alam)
+			modal.find('#getHarga').val(harga)
 		})
 	</script>
 </body>

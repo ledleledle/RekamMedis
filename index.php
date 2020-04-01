@@ -117,7 +117,7 @@
                       <li class="media">
                         <div class="media-body">
                           <?php
-                          if ($showruangan["status"] == "") {
+                          if ($showruangan["status"] == "0") {
                             echo '<div class="badge badge-pill badge-success mb-1 float-right">';
                             echo '<i class="ion-checkmark-round"></i> Tersedia';
                           } elseif ($showruangan["status"] == "1") {
@@ -131,7 +131,7 @@
                         <h6 class="media-title"><a href="#">Ruang <?php echo $showruangan["nama_ruang"]; ?></a></h6>
                         <div class="text-small text-muted">
                           <?php
-                          if ($showruangan["status"] == "") {
+                          if ($showruangan["status"] == "0") {
                             echo 'Tersedia';
                           } elseif ($showruangan["status"] == "1") {
                             $sqlnama = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$defpasien'");
