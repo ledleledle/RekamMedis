@@ -18,7 +18,7 @@ foreach ($pecahjudul as $w) {
     <ul class="sidebar-menu">
       <li <?php echo ($page == "Dashboard") ? "class=active" : ""; ?>><a class="nav-link" href="index.php"><i class="fas fa-fire"></i><span>Dashboard</span></a></li>
       <li class="menu-header">Menu</li>
-      <li><a class="nav-link" href="blank.html"><i class="fas fa-user-injured"></i> <span>Data Pasien</span></a></li>
+      <li><a class="nav-link" href="pasien.php"><i class="fas fa-user-injured"></i> <span>Data Pasien</span></a></li>
       <li><a class="nav-link" href="blank.html"><i class="fas fa-skull"></i> <span>Foto Rotgen Pasien</span></a></li>
       <li><a href="pegawai.php" class="nav-link"><i class="fas fa-users"></i> <span>Data Pegawai</span></a></li>
       <li class="dropdown">

@@ -13,6 +13,6 @@ $getdata = mysqli_num_rows($sql);
 $tglmasuk = $getdata['tgl_masuk'];
 $jammasuk = $getdata['jam_masuk'];
 
-$riwayat = mysqli_query($conn, "INSERT INTO riwayat_rawatinap");
+$riwayat = mysqli_query($conn, "INSERT INTO riwayat_rawatinap (id_pasien, ) VALUES ()");
 $ruangan = mysqli_query($conn, "");
 ?>

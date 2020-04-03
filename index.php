@@ -104,12 +104,12 @@
                 <div class="card-header">
                   <h4>Status Ruang Rawat Inap</h4>
                   <div class="card-header-action">
-                    <a href="#">Detail</a>
+                    <a href="ruangan.php">Detail</a>
                   </div>
                 </div>
                 <div class="card-body">
                   <?php 
-                  $sqlruangan = mysqli_query($conn, "SELECT * FROM ruang_inap");
+                  $sqlruangan = mysqli_query($conn, "SELECT * FROM ruang_inap ORDER BY nama_ruang ASC");
                   while ($showruangan = mysqli_fetch_array($sqlruangan)) {
                     $defpasien = $showruangan['id_pasien'];
                   ?>
