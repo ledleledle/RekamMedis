@@ -21,6 +21,8 @@
                     echo 'window.location.href="../pegawai.php";';
                 } elseif ($tipe == "ruang_inap") {
                     echo 'window.location.href="../ruangan.php";';
+                } elseif ($tipe == "pasien") {
+                    echo 'window.location.href="../pasien.php";';
                 }
                 ?>
           });
