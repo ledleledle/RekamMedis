@@ -13,63 +13,38 @@
   if (isset($_POST['submit'])) {
     $id = $_POST['id'];
     $nama = $_POST['nama'];
-    $harga = $_POST['harga'];
-    $stat = $_POST['status'];
+    $berat = $_POST['berat'];
+    $tinggi = $_POST['tinggi'];
+    $tgl = $_POST['tgl'];
 
-    $cekruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE nama_ruang = '$nama'");
-    $cekada = mysqli_num_rows($cekruang);
-    if ($cekada >= 1) {
-      echo '<script>
-						setTimeout(function() {
-							swal({
-								title: "Gagal!",
-								text: "Nama ruangan ini telah digunakan, silahkan pilih nama yang lain!",
-								icon: "error"
-								});
-								}, 500);
-								</script>';
-    } else {
-      $up2 = mysqli_query($conn, "UPDATE ruang_inap SET nama_ruang='$nama', status='$stat', biaya='$harga' WHERE id='$id'");
-      echo '<script>
+    $up2 = mysqli_query($conn, "UPDATE pasien SET nama_pasien='$nama', tgl_lahir='$tgl', berat_badan='$berat', tinggi_badan='$tinggi' WHERE id='$id'");
+    echo '<script>
 				setTimeout(function() {
 					swal({
 					title: "Data Diubah",
-					text: "Data Ruangan berhasil diubah!",
+					text: "Data Pasien berhasil diubah!",
 					icon: "success"
 					});
 					}, 500);
 				</script>';
-    }
   }
 
   if (isset($_POST['submit2'])) {
     $nama = $_POST['nama'];
-    $harga = $_POST['harga'];
+    $berat = $_POST['berat'];
+    $tinggi = $_POST['tinggi'];
+    $tgl = $_POST['tgl'];
 
-    $cekuser = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE nama_ruang='$nama'");
-    $baris = mysqli_num_rows($cekuser);
-    if ($baris >= 1) {
-      echo '<script>
-				setTimeout(function() {
-					swal({
-						title: "Nama ruangan sudah digunakan",
-						text: "Nama ruangan sudah digunakan, gunakan nama lain!",
-						icon: "error"
-						});
-					}, 500);
-			</script>';
-    } else {
-      $add = mysqli_query($conn, "INSERT INTO ruang_inap (nama_ruang, status, biaya) VALUES ('$nama', '0', '$harga')");
+      $add = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, tinggi_badan, berat_badan) VALUES ('$nama', '$tgl', '$tinggi', '$berat')");
       echo '<script>
 				setTimeout(function() {
 					swal({
 						title: "Berhasil!",
-						text: "Ruangan baru telah ditambahkan!",
+						text: "Pasien baru telah ditambahkan!",
 						icon: "success"
 						});
 					}, 500);
 			</script>';
-    }
   }
   ?>
 </head>
@@ -109,7 +84,7 @@
                             <th>Nama</th>
                             <th>Tanggal Lahir</th>
                             <th>Usia</th>
-                            <th>Action</th>
+                            <th class="text-center">Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -117,18 +92,28 @@
                           $sql = mysqli_query($conn, "SELECT * FROM pasien");
                           $i = 0;
                           while ($row = mysqli_fetch_array($sql)) {
+                            $idpasien = $row['id'];
                             $i++;
                           ?>
                             <tr>
                               <td><?php echo $i; ?></td>
-                              <th><?php echo ucwords($row['nama_pasien']); ?></th>
+                              <th><?php echo ucwords($row['nama_pasien']); ?>
+                                <div class="table-links">
+                                  <?php
+                                  $rekam = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idpasien'");
+                                  $cekrekam = mysqli_num_rows($rekam);
+                                  echo '<a>Pasien memiliki ' . $cekrekam . ' catatan</a>';
+                                  ?>
+                                </div>
+                              </th>
                               <td><?php echo tgl_indo($row['tgl_lahir']); ?></td>
                               <td><?php umur($row['tgl_lahir']); ?></td>
-                              <td>
-                                  <span data-target="#editRuang" data-toggle="modal" data-id="<?php echo $row['id']; ?>" data-nama="<?php echo $row['nama_ruang']; ?>" data-harga="<?php echo $row['biaya']; ?>">
-                                    <a class="btn btn-primary btn-action mr-1" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
-                                  </span>
-                                  <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=ruang_inap&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
+                              <td align="center">
+                                <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-nama="<?php echo $row['nama_pasien']; ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">
+                                  <a class="btn btn-primary btn-action mr-1" title="Edit Data Pasien" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
+                                </span>
+                                <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=pasien&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
+                                <a class="btn btn-info btn-action mr-1" title="Detail Pasien" data-toggle="tooltip"><i class="fas fa-info-circle"></i></a>
                               </td>
                             </tr>
                           <?php } ?>
@@ -147,33 +132,56 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Tambah Ruangan</h5>
+              <h5 class="modal-title">Tambah Pasien</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               <form action="" method="POST" class="needs-validation" novalidate="">
-                <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Nama Ruangan</label>
+              <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Nama Pasien</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="nama" required="">
+                    <input type="text" class="form-control" name="nama" required="" id="getNama">
                     <div class="invalid-feedback">
                       Mohon data diisi!
                     </div>
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Harga</label>
-                  <div class="input-group col-sm-9">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        Rp
-                      </div>
-                    </div>
-                    <input type="number" class="form-control currency" name="harga" required="">
+                  <label class="col-sm-3 col-form-label">Tanggal lahir</label>
+                  <div class="form-group col-sm-9">
+                    <input type="text" class="form-control datepicker" id="getTgl" name="tgl" required="">
                     <div class="invalid-feedback">
                       Mohon data diisi!
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Berat Badan</label>
+                  <div class="input-group col-sm-9">
+                    <input type="number" class="form-control" name="berat" required="" value="0">
+                    <div class="invalid-feedback">
+                      Mohon data diisi!
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        Kg
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Tinggi Badan</label>
+                  <div class="col-sm-9 input-group">
+                    <input type="number" class="form-control" name="tinggi" required="" value="0">
+                    <div class="invalid-feedback">
+                      Mohon data diisi!
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        cm
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -187,7 +195,7 @@
         </div>
       </div>
 
-      <div class="modal fade" tabindex="-1" role="dialog" id="editRuang">
+      <div class="modal fade" tabindex="-1" role="dialog" id="editPasien">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -199,7 +207,7 @@
             <div class="modal-body">
               <form action="" method="POST" class="needs-validation" novalidate="">
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Nama Ruangan</label>
+                  <label class="col-sm-3 col-form-label">Nama Pasien</label>
                   <div class="col-sm-9">
                     <input type="hidden" class="form-control" name="id" required="" id="getId">
                     <input type="text" class="form-control" name="nama" required="" id="getNama">
@@ -209,22 +217,38 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Harga</label>
-                  <div class="input-group col-sm-9">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        Rp
-                      </div>
-                    </div>
-                    <input type="number" class="form-control currency" name="harga" id="getHarga" required="">
+                  <label class="col-sm-3 col-form-label">Tanggal lahir</label>
+                  <div class="form-group col-sm-9">
+                    <input type="text" class="form-control datepicker" id="getTgl" name="tgl">
                   </div>
                 </div>
-                <div class="form-group">
-                  <label>Status Ruangan</label>
-                  <select class="form-control selectric" name="status">
-                    <option value="">Terserdia</option>
-                    <option value="2">Dalam Perbaikan</option>
-                  </select>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Berat Badan</label>
+                  <div class="input-group col-sm-9">
+                    <input type="number" class="form-control" name="berat" required="" id="getBerat">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        Kg
+                      </div>
+                    </div>
+                    <div class="invalid-feedback">
+                      Mohon data diisi!
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-3 col-form-label">Tinggi Badan</label>
+                  <div class="col-sm-9 input-group">
+                    <input type="number" class="form-control" name="tinggi" required="" id="getTinggi">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        cm
+                      </div>
+                    </div>
+                    <div class="invalid-feedback">
+                      Mohon data diisi!
+                    </div>
+                  </div>
                 </div>
             </div>
             <div class="modal-footer bg-whitesmoke br">
@@ -241,15 +265,19 @@
   <?php include "part/all-js.php"; ?>
 
   <script>
-    $('#editRuang').on('show.bs.modal', function(event) {
+    $('#editPasien').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget)
       var nama = button.data('nama')
       var id = button.data('id')
-      var harga = button.data('harga')
+      var tgl = button.data('lahir')
+      var berat = button.data('berat')
+      var tinggi = button.data('tinggi')
       var modal = $(this)
       modal.find('#getId').val(id)
       modal.find('#getNama').val(nama)
-      modal.find('#getHarga').val(harga)
+      modal.find('#getTgl').val(tgl)
+      modal.find('#getBerat').val(berat)
+      modal.find('#getTinggi').val(tinggi)
     })
   </script>
 </body>

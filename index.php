@@ -13,7 +13,7 @@
   $jumlahpegawai = mysqli_num_rows($pegawai);
   $pasien = mysqli_query($conn, "SELECT * FROM pasien");
   $jumpasien = mysqli_num_rows($pasien);
-  $rawat_inap = mysqli_query($conn, "SELECT * FROM riwayat_rawatinap WHERE id_pasien IS NOT NULL");
+  $rawat_inap = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id_pasien IS NOT NULL");
   $jumrawatinap = mysqli_num_rows($rawat_inap);
   $dokter = mysqli_query($conn, "SELECT * FROM pegawai WHERE pekerjaan='1'");
   $jumlahdokter = mysqli_num_rows($dokter);

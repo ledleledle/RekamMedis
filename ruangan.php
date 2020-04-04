@@ -3,6 +3,7 @@
 
 <head>
 	<?php
+	$page1 = "ruang";
 	$page = "Status Ruangan Rawat Inap";
 	session_start();
 	include 'auth/connect.php';

@@ -10,6 +10,7 @@
 <!-- JS Libraies -->
 <script src="assets/modules/summernote/summernote-bs4.js"></script>
 <script src="assets/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
+<script src="assets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 <!-- DataTable -->
 <script src="assets/modules/datatables/datatables.min.js"></script>

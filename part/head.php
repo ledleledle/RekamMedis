@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="assets/modules/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/modules/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="assets/modules/ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="assets/modules/bootstrap-daterangepicker/daterangepicker.css">
 
   <!-- CSS Libraries -->
   <link rel="stylesheet" href="assets/modules/jqvmap/dist/jqvmap.min.css">
