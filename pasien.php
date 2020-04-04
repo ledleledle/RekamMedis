@@ -35,8 +35,8 @@
     $tinggi = $_POST['tinggi'];
     $tgl = $_POST['tgl'];
 
-      $add = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, tinggi_badan, berat_badan) VALUES ('$nama', '$tgl', '$tinggi', '$berat')");
-      echo '<script>
+    $add = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, tinggi_badan, berat_badan) VALUES ('$nama', '$tgl', '$tinggi', '$berat')");
+    echo '<script>
 				setTimeout(function() {
 					swal({
 						title: "Berhasil!",
@@ -113,7 +113,10 @@
                                   <a class="btn btn-primary btn-action mr-1" title="Edit Data Pasien" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
                                 </span>
                                 <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=pasien&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
-                                <a class="btn btn-info btn-action mr-1" title="Detail Pasien" data-toggle="tooltip"><i class="fas fa-info-circle"></i></a>
+                                <form method="POST" action="detail_pasien.php">
+                                  <input type="hidden" name="id" value="<?php echo $row['nama_pasien']; ?>">
+                                  <button type="submit" class="btn btn-info btn-action mr-1" title="Detail Pasien" data-toggle="tooltip" name="submit"><i class="fas fa-info-circle"></i></button>
+                                </form>
                               </td>
                             </tr>
                           <?php } ?>
@@ -139,7 +142,7 @@
             </div>
             <div class="modal-body">
               <form action="" method="POST" class="needs-validation" novalidate="">
-              <div class="form-group row">
+                <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Nama Pasien</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" name="nama" required="" id="getNama">
