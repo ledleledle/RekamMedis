@@ -102,18 +102,22 @@
                                   <?php
                                   $rekam = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idpasien'");
                                   $cekrekam = mysqli_num_rows($rekam);
-                                  echo '<a>Pasien memiliki ' . $cekrekam . ' catatan</a>';
+                                  if ($cekrekam == 0) {
+                                    echo '<a>Pasien belum memiliki catatan medis</a>';
+                                  } else {
+                                    echo '<a>Pasien memiliki ' . $cekrekam . ' catatan medis</a>';
+                                  }
                                   ?>
                                 </div>
                               </th>
                               <td><?php echo tgl_indo($row['tgl_lahir']); ?></td>
                               <td><?php umur($row['tgl_lahir']); ?></td>
                               <td align="center">
-                                <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-nama="<?php echo $row['nama_pasien']; ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">
-                                  <a class="btn btn-primary btn-action mr-1" title="Edit Data Pasien" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
-                                </span>
-                                <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=pasien&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
                                 <form method="POST" action="detail_pasien.php">
+                                  <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-nama="<?php echo $row['nama_pasien']; ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">
+                                    <a class="btn btn-primary btn-action mr-1" title="Edit Data Pasien" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
+                                  </span>
+                                  <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=pasien&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
                                   <input type="hidden" name="id" value="<?php echo $row['nama_pasien']; ?>">
                                   <button type="submit" class="btn btn-info btn-action mr-1" title="Detail Pasien" data-toggle="tooltip" name="submit"><i class="fas fa-info-circle"></i></button>
                                 </form>
