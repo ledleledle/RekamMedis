@@ -35,7 +35,7 @@
 
           <div class="section-body">
             <h2 class="section-title"><?php echo ucwords($idnama); ?></h2>
-            <p class="section-lead">Grouping multiple images on one component.</p>
+            <p class="section-lead">Durung mari nggarape. Monggo dikoreksi dulu</p>
 
             <div class="row">
               <div class="col-12 col-sm-12 col-lg-4">
