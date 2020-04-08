@@ -72,7 +72,8 @@
                   <div class="card-header">
                     <h4>Pasien yang telah terdaftar</h4>
                     <div class="card-header-action">
-                      <a href="#" class="btn btn-primary" data-target="#addUser" data-toggle="modal">Daftar pasien baru</a>
+                      <!-- <a href="#" class="btn btn-primary" data-target="#addUser" data-toggle="modal">Daftar pasien baru</a> -->
+                      <a href="rawat_jalan.php" class="btn btn-primary">Daftar pasien baru</a>
                     </div>
                   </div>
                   <div class="card-body">

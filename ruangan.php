@@ -168,7 +168,7 @@
 												</span>
 												<a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=ruang_inap&id=<?php echo $row['id']; ?>'";><i class="fas fa-trash"></i></a>
 												<span data-target="#editRuang" data-toggle="modal">
-												<a data-toggle="tooltip" title="Konfirmasi pasien masuk" class="btn btn-success btn-action"><i class="ion-log-in"></i></a>
+												<a data-toggle="tooltip" title="Pasien masuk" class="btn btn-success btn-action" href="rawat_jalan.php"><i class="ion-log-in"></i></a>
 												</span>
 											<?php } ?>
 										</td>

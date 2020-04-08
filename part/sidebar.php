@@ -22,7 +22,7 @@ foreach ($pecahjudul as $w) {
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-stethoscope"></i> <span>Pasien</span></a>
         <ul class="dropdown-menu">
           <li><a class="nav-link" href="404.php">Rawat Jalan</a></li>
-          <li <?php echo ($page == "Data Pasien") ? "class=active" : ""; ?>><a class="nav-link" href="pasien.php">Riwayat Pasien</a></li>
+          <li <?php echo ($page == "Data Pasien" || @$page1 == "det") ? "class=active" : ""; ?>><a class="nav-link" href="pasien.php">Riwayat Pasien</a></li>
         </ul>
       </li>
       <li <?php echo ($page == "Data Pegawai") ? "class=active" : ""; ?>><a href="pegawai.php" class="nav-link"><i class="fas fa-users"></i> <span>Data Pegawai</span></a></li>
@@ -33,6 +33,6 @@ foreach ($pecahjudul as $w) {
           <li><a class="nav-link" href="404.php">Riwayat Rawat Inap</a></li>
         </ul>
       </li>
-      <li><a class="nav-link" href="404.php"><i class="fas fa-briefcase-medical"></i> <span>Obat</span></a></li>
+      <li <?php echo ($page == "Data Obat") ? "class=active" : ""; ?>><a class="nav-link" href="obat.php"><i class="fas fa-briefcase-medical"></i> <span>Obat</span></a></li>
   </aside>
 </div>

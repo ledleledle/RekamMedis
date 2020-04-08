@@ -1,5 +1,5 @@
 <?php
 	#urutane "localhost", "username mu", "password mu", "jeneng db mu"
 	
-	$conn = mysqli_connect("localhost", "mental", "", "rekam_medis");
+	$conn = mysqli_connect("localhost", "root", "", "rekam_medis");
 ?>

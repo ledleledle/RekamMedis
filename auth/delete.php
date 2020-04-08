@@ -17,14 +17,12 @@
               type: "success"
           }, function() {
               <?php
-                if ($tipe == "pegawai") {
-                    echo 'window.location.href="../pegawai.php";';
-                } elseif ($tipe == "ruang_inap") {
+                if ($tipe == "ruang_inap") {
                     echo 'window.location.href="../ruangan.php";';
-                } elseif ($tipe == "pasien") {
-                    echo 'window.location.href="../pasien.php";';
+                } else {
+                    echo 'window.location.href="../'.$tipe.'.php";';
                 }
                 ?>
           });
-      }, 1000);
+      }, 500);
   </script>
