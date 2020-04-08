@@ -18,10 +18,10 @@ foreach ($pecahjudul as $w) {
     <ul class="sidebar-menu">
       <li <?php echo ($page == "Dashboard") ? "class=active" : ""; ?>><a class="nav-link" href="index.php"><i class="fas fa-fire"></i><span>Dashboard</span></a></li>
       <li class="menu-header">Menu</li>
-      <li class="dropdown <?php echo ($page == "Data Pasien" || @$page1 == "det") ? "active" : ""; ?>">
-        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-stethoscope"></i> <span>Pasien</span></a>
+      <li class="dropdown <?php echo ($page == "Data Pasien" || $page == "Rawat Jalan" || @$page1 == "det") ? "active" : ""; ?>">
+        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-user-injured"></i> <span>Pasien</span></a>
         <ul class="dropdown-menu">
-          <li><a class="nav-link" href="404.php">Rawat Jalan</a></li>
+          <li <?php echo ($page == "Rawat Jalan") ? "class=active" : ""; ?>><a class="nav-link" href="rawat_jalan.php">Rawat Jalan</a></li>
           <li <?php echo ($page == "Data Pasien" || @$page1 == "det") ? "class=active" : ""; ?>><a class="nav-link" href="pasien.php">Riwayat Pasien</a></li>
         </ul>
       </li>
@@ -30,9 +30,10 @@ foreach ($pecahjudul as $w) {
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bed"></i> <span>Rawat Inap</span></a>
         <ul class="dropdown-menu">
           <li <?php echo (@$page1 == "ruang") ? "class=active" : ""; ?>><a class="nav-link" href="ruangan.php">Detail Ruangan</a></li>
-          <li><a class="nav-link" href="404.php">Riwayat Rawat Inap</a></li>
+          <li><a class="nav-link" href="riwayat_inap.php">Riwayat Rawat Inap</a></li>
         </ul>
       </li>
+      <li <?php echo ($page == "Foto Rotgen") ? "class=active" : ""; ?>><a class="nav-link" href="rotgen.php"><i class="fas fa-skull"></i> <span>Foto Rotgen</span></a></li>
       <li <?php echo ($page == "Data Obat") ? "class=active" : ""; ?>><a class="nav-link" href="obat.php"><i class="fas fa-briefcase-medical"></i> <span>Obat</span></a></li>
   </aside>
 </div>

@@ -5,10 +5,12 @@
   <?php
   $idnama = $_POST['id'];
   $page1 = "det";
-  $page = "Detail Pasien : ".$idnama;
+  $page = "Detail Pasien : " . $idnama;
   session_start();
   include 'auth/connect.php';
   include "part/head.php";
+  $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$idnama'");
+  $pasien = mysqli_fetch_array($cek);
   ?>
 </head>
 
@@ -20,22 +22,26 @@
       <?php
       include 'part/navbar.php';
       include 'part/sidebar.php';
+      include 'part_func/umur.php';
+      include 'part_func/tgl_ind.php';
       ?>
 
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
-        <div class="section-header">
+          <div class="section-header">
             <h1>Detail Pasien</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="#">Data Pasien</a></div>
-              <div class="breadcrumb-item">Detail Pasien</div>
+              <div class="breadcrumb-item">Detail Pasien : <?php echo $idnama; ?></div>
             </div>
           </div>
 
           <div class="section-body">
             <h2 class="section-title"><?php echo ucwords($idnama); ?></h2>
-            <p class="section-lead">Durung mari nggarape. Monggo dikoreksi dulu</p>
+            <p class="section-lead"><?php echo tgl_indo($pasien['tgl_lahir']); ?> (<?php echo umur($pasien['tgl_lahir']); ?>)
+              <br><?php echo $pasien['tinggi_badan']." cm";
+                  echo "<br>" . $pasien['berat_badan']." kg"; ?></p>
 
             <div class="row">
               <div class="col-12 col-sm-12 col-lg-4">
@@ -129,10 +135,10 @@
           </div>
         </section>
 
-      <?php include 'part/footer.php'; ?>
+        <?php include 'part/footer.php'; ?>
+      </div>
     </div>
-  </div>
-  <?php include "part/all-js.php"; ?>
+    <?php include "part/all-js.php"; ?>
 </body>
 
 </html>

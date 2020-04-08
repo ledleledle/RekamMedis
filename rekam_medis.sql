@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6deb5
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: 05 Apr 2020 pada 19.07
--- Versi Server: 10.1.44-MariaDB-0ubuntu0.18.04.1
--- PHP Version: 7.2.24-0ubuntu0.18.04.3
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 08 Apr 2020 pada 16.52
+-- Versi server: 10.4.11-MariaDB
+-- Versi PHP: 7.4.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -46,6 +47,14 @@ CREATE TABLE `obat` (
   `stok` int(11) NOT NULL,
   `harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `obat`
+--
+
+INSERT INTO `obat` (`id`, `nama_obat`, `stok`, `harga`) VALUES
+(1, 'parashitamol', 1000, 500),
+(2, 'antibilotil', 10, 5000);
 
 -- --------------------------------------------------------
 
@@ -91,8 +100,21 @@ CREATE TABLE `pegawai` (
 
 INSERT INTO `pegawai` (`id`, `username`, `password`, `nama_pegawai`, `alamat`, `pekerjaan`) VALUES
 (1, 'leon', 'admin', 'leon prasetya mulya', 'No.19 sumbergedong, trenggalek', 2),
-(2, 'ledle', 'admin', 'patrick star', 'dibawah batu no.3. bikini bottom', 1),
-(3, 'ananan', 'anjing', 'tolol', 'lo semua ngentod', 1);
+(2, 'ledle', 'admin', 'patrick star', 'dibawah batu no.3. bikini bottom', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `riwayat_obat`
+--
+
+CREATE TABLE `riwayat_obat` (
+  `id` int(11) NOT NULL,
+  `id_penyakit` int(11) NOT NULL,
+  `id_pasien` int(11) NOT NULL,
+  `id_obat` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -106,6 +128,7 @@ CREATE TABLE `riwayat_penyakit` (
   `penyakit` varchar(300) NOT NULL,
   `tgl` varchar(200) NOT NULL,
   `id_rawatinap` int(11) NOT NULL,
+  `id_obat` int(11) NOT NULL,
   `biaya_pengobatan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -113,8 +136,8 @@ CREATE TABLE `riwayat_penyakit` (
 -- Dumping data untuk tabel `riwayat_penyakit`
 --
 
-INSERT INTO `riwayat_penyakit` (`id`, `id_pasien`, `penyakit`, `tgl`, `id_rawatinap`, `biaya_pengobatan`) VALUES
-(1, 1, 'Skizofrenia', '2020-03-01', 0, 15000);
+INSERT INTO `riwayat_penyakit` (`id`, `id_pasien`, `penyakit`, `tgl`, `id_rawatinap`, `id_obat`, `biaya_pengobatan`) VALUES
+(1, 1, 'Skizofrenia', '2020-03-01', 0, 0, 15000);
 
 -- --------------------------------------------------------
 
@@ -154,39 +177,44 @@ INSERT INTO `ruang_inap` (`id`, `nama_ruang`, `id_pasien`, `tgl_masuk`, `jam_mas
 (1, 'Melati', NULL, NULL, '', 0, 900000),
 (2, 'Mawar', 1, '2020-03-20', '03:21:00', 1, 600000),
 (3, 'Coper', NULL, NULL, '', 2, 400000),
-(4, 'Copere', NULL, NULL, '', 0, 666),
-(5, 'aiiih', NULL, NULL, '', 0, 40000);
+(4, 'Copere', NULL, NULL, '', 0, 666);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `foto_rotgen`
+-- Indeks untuk tabel `foto_rotgen`
 --
 ALTER TABLE `foto_rotgen`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `obat`
+-- Indeks untuk tabel `obat`
 --
 ALTER TABLE `obat`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pasien`
+-- Indeks untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pegawai`
+-- Indeks untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `riwayat_penyakit`
+-- Indeks untuk tabel `riwayat_obat`
+--
+ALTER TABLE `riwayat_obat`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `riwayat_penyakit`
 --
 ALTER TABLE `riwayat_penyakit`
   ADD PRIMARY KEY (`id`),
@@ -194,57 +222,71 @@ ALTER TABLE `riwayat_penyakit`
   ADD KEY `id_pasien_2` (`id_pasien`);
 
 --
--- Indexes for table `riwayat_rawatinap`
+-- Indeks untuk tabel `riwayat_rawatinap`
 --
 ALTER TABLE `riwayat_rawatinap`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `ruang_inap`
+-- Indeks untuk tabel `ruang_inap`
 --
 ALTER TABLE `ruang_inap`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_pasien` (`id_pasien`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `foto_rotgen`
+-- AUTO_INCREMENT untuk tabel `foto_rotgen`
 --
 ALTER TABLE `foto_rotgen`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT for table `obat`
+-- AUTO_INCREMENT untuk tabel `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `pasien`
+-- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
--- AUTO_INCREMENT for table `pegawai`
+-- AUTO_INCREMENT untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
--- AUTO_INCREMENT for table `riwayat_penyakit`
+-- AUTO_INCREMENT untuk tabel `riwayat_obat`
+--
+ALTER TABLE `riwayat_obat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `riwayat_penyakit`
 --
 ALTER TABLE `riwayat_penyakit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
--- AUTO_INCREMENT for table `riwayat_rawatinap`
+-- AUTO_INCREMENT untuk tabel `riwayat_rawatinap`
 --
 ALTER TABLE `riwayat_rawatinap`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
--- AUTO_INCREMENT for table `ruang_inap`
+-- AUTO_INCREMENT untuk tabel `ruang_inap`
 --
 ALTER TABLE `ruang_inap`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
