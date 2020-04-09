@@ -4,7 +4,7 @@ include "auth/connect.php";
 if (isset($_POST['submit'])) {
   $pasien = "1";
   $penyakit = "1";
-  $biaya = "200000";
+  $biaya = "20000";
 
   if (count($_FILES['upload']['name']) > 0) {
     //Loop through each file
@@ -15,16 +15,13 @@ if (isset($_POST['submit'])) {
       //Make sure we have a filepath
       if ($tmpFilePath != "") {
 
-        //save the filename
-        $shortname = $_FILES['upload']['name'][$i];
-
         //save the url and the file
         $filePath = "assets/img/uploads/" . date('d-m-Y-H-i-s') . '-' . $_FILES['upload']['name'][$i];
 
         //Upload the file into the temp dir
         if (move_uploaded_file($tmpFilePath, $filePath)) {
 
-          $files[] = $shortname;
+          $split = count($_FILES['upload']['tmp_name']);
           $sql = mysqli_query($conn, "INSERT INTO foto_rotgen (id_pasien, id_penyakit, biaya, directory) VALUES ('$pasien', '$penyakit','$biaya', '$filePath')");
           //insert into db 
           //use $shortname for the filename
@@ -35,15 +32,7 @@ if (isset($_POST['submit'])) {
     }
   }
 
-  //show success message
-  echo "<h1>Uploaded:</h1>";
-  if (is_array($files)) {
-    echo "<ul>";
-    foreach ($files as $file) {
-      echo "<li>$file</li>";
-    }
-    echo "</ul>";
-  }
+  echo $split." Gambar";
 }
 ?>
 
