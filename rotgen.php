@@ -59,7 +59,7 @@
                             $sqlpenyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idpasien'");
                             $penyakit = mysqli_fetch_array($sqlpenyakit);
                             $i++;
-                          ?>
+                          ?> 
                             <tr>
                               <td><?php echo $i; ?></td>
                               <td><?php echo ucwords($pasien['nama_pasien']); ?></td>
