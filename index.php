@@ -18,6 +18,11 @@
   $dokter = mysqli_query($conn, "SELECT * FROM pegawai WHERE pekerjaan='1'");
   $jumlahdokter = mysqli_num_rows($dokter);
   ?>
+  <style>
+    #link-no{
+      text-decoration: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -108,7 +113,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <?php 
+                  <?php
                   $sqlruangan = mysqli_query($conn, "SELECT * FROM ruang_inap ORDER BY nama_ruang ASC");
                   while ($showruangan = mysqli_fetch_array($sqlruangan)) {
                     $defpasien = $showruangan['id_pasien'];
@@ -151,48 +156,33 @@
             <div class="col-lg-4 col-md-12 col-12 col-sm-12">
               <div class="card">
                 <div class="card-header">
-                  <h4>Aktifitas Terakhir</h4>
+                  <h4>Menu Utama</h4>
                 </div>
                 <div class="card-body">
-                  <ul class="list-unstyled list-unstyled-border">
-                    <li class="media">
-                      <img class="mr-3 rounded-circle" width="50" src="assets/img/avatar/avatar-1.png" alt="avatar">
-                      <div class="media-body">
-                        <div class="float-right text-primary">Now</div>
-                        <div class="media-title">Farhan A Mujib</div>
-                        <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</span>
+                  <a href="ruangan.php" id="link-no">
+                    <div class="alert alert-primary alert-has-icon">
+                      <div class="alert-icon"><i class="fas fa-bed"></i> </div>
+                      <div class="alert-body">
+                        <div class="alert-title"> Rawat Inap</div>
                       </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded-circle" width="50" src="assets/img/avatar/avatar-2.png" alt="avatar">
-                      <div class="media-body">
-                        <div class="float-right">12m</div>
-                        <div class="media-title">Ujang Maman</div>
-                        <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</span>
+                    </div>
+                  </a>
+                  <a href="rotgen.php" id="link-no">
+                    <div class="alert alert-danger alert-has-icon">
+                      <div class="alert-icon"><i class="fas fa-skull"></i></div>
+                      <div class="alert-body">
+                        <div class="alert-title">Foto Rotgen</div>
                       </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded-circle" width="50" src="assets/img/avatar/avatar-3.png" alt="avatar">
-                      <div class="media-body">
-                        <div class="float-right">17m</div>
-                        <div class="media-title">Rizal Fakhri</div>
-                        <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</span>
+                    </div>
+                  </a>
+                  <a href="obat.php" id="link-no">
+                    <div class="alert alert-warning alert-has-icon">
+                      <div class="alert-icon"><i class="fas fa-briefcase-medical"></i></div>
+                      <div class="alert-body">
+                        <div class="alert-title">Data Obat</div>
                       </div>
-                    </li>
-                    <li class="media">
-                      <img class="mr-3 rounded-circle" width="50" src="assets/img/avatar/avatar-4.png" alt="avatar">
-                      <div class="media-body">
-                        <div class="float-right">21m</div>
-                        <div class="media-title">Alfa Zulkarnain</div>
-                        <span class="text-small text-muted">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</span>
-                      </div>
-                    </li>
-                  </ul>
-                  <div class="text-center pt-1 pb-1">
-                    <a href="#" class="btn btn-primary btn-lg btn-round">
-                      Lihat Semua
-                    </a>
-                  </div>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>

@@ -33,7 +33,7 @@ foreach ($pecahjudul as $w) {
           <li><a class="nav-link" href="riwayat_inap.php">Riwayat Rawat Inap</a></li>
         </ul>
       </li>
-      <li <?php echo ($page == "Foto Rotgen") ? "class=active" : ""; ?>><a class="nav-link" href="rotgen.php"><i class="fas fa-skull"></i> <span>Foto Rotgen</span></a></li>
+      <li <?php echo ($page == "Data Foto Rotgen") ? "class=active" : ""; ?>><a class="nav-link" href="rotgen.php"><i class="fas fa-skull"></i> <span>Foto Rotgen</span></a></li>
       <li <?php echo ($page == "Data Obat") ? "class=active" : ""; ?>><a class="nav-link" href="obat.php"><i class="fas fa-briefcase-medical"></i> <span>Obat</span></a></li>
   </aside>
 </div>
