@@ -11,6 +11,7 @@
   include "part/head.php";
   $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$idnama'");
   $pasien = mysqli_fetch_array($cek);
+  $idid = $pasien['id'];
   ?>
 </head>
 
@@ -32,16 +33,24 @@
           <div class="section-header">
             <h1>Detail Pasien</h1>
             <div class="section-header-breadcrumb">
-              <div class="breadcrumb-item active"><a href="#">Data Pasien</a></div>
-              <div class="breadcrumb-item">Detail Pasien : <?php echo $idnama; ?></div>
+              <div class="breadcrumb-item active"><a href="pasien.php">Data Pasien</a></div>
+              <div class="breadcrumb-item">Detail Pasien : <?php echo ucwords($idnama); ?></div>
             </div>
           </div>
 
           <div class="section-body">
-            <h2 class="section-title"><?php echo ucwords($idnama); ?></h2>
-            <p class="section-lead"><?php echo tgl_indo($pasien['tgl_lahir']); ?> (<?php echo umur($pasien['tgl_lahir']); ?>)
-              <br><?php echo $pasien['tinggi_badan']." cm";
-                  echo "<br>" . $pasien['berat_badan']." kg"; ?></p>
+            <h2 class="section-title"><?php echo ucwords($idnama); ?> (<?php echo umur($pasien['tgl_lahir']); ?>) </h2>
+            <p class="section-lead">
+              <?php
+              $rekam = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id='$idid'");
+              $cekrekam = mysqli_num_rows($rekam);
+              if ($cekrekam == 0) {
+                echo 'Pasien belum memiliki catatan medis';
+              } else {
+                echo 'Pasien memiliki ' . $cekrekam . ' catatan medis';
+              }
+              ?>
+            </p>
 
             <div class="row">
               <div class="col-12 col-sm-12 col-lg-4">
@@ -49,18 +58,30 @@
                   <div class="col-12 col-sm-6 col-lg-12">
                     <div class="card">
                       <div class="card-header">
-                        <h4>Gallery</h4>
+                        <h4>Info Pasien</h4>
                       </div>
                       <div class="card-body">
                         <div class="gallery">
-                          <div class="gallery-item" data-image="assets/img/news/img01.jpg" data-title="Image 1"></div>
-                          <div class="gallery-item" data-image="assets/img/news/img02.jpg" data-title="Image 2"></div>
-                          <div class="gallery-item" data-image="assets/img/news/img03.jpg" data-title="Image 3"></div>
-                          <div class="gallery-item" data-image="assets/img/news/img04.jpg" data-title="Image 4"></div>
-                          <div class="gallery-item" data-image="assets/img/news/img05.jpg" data-title="Image 5"></div>
-                          <div class="gallery-item" data-image="assets/img/news/img06.jpg" data-title="Image 6"></div>
-                          <div class="gallery-item" data-image="assets/img/news/img07.jpg" data-title="Image 7"></div>
-                          <div class="gallery-item" data-image="assets/img/news/img08.jpg" data-title="Image 8"></div>
+                          <table class="table table-striped">
+                            <tbody>
+                              <tr>
+                                <th scope="row">Nama Lengkap</th>
+                                <td> : <?php echo ucwords($idnama); ?></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Tanggal Lahir</th>
+                                <td> : <?php echo tgl_indo($pasien['tgl_lahir']); ?></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Tinggi Bandan</th>
+                                <td> : <?php echo $pasien['tinggi_badan'] . " cm"; ?></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Berat Badan</th>
+                                <td> : <?php echo $pasien['berat_badan'] . " kg"; ?></td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>

@@ -161,9 +161,9 @@
                 <div class="card-body">
                   <a href="ruangan.php" id="link-no">
                     <div class="alert alert-primary alert-has-icon">
-                      <div class="alert-icon"><i class="fas fa-bed"></i> </div>
+                      <div class="alert-icon"><i class="fas fa-bed"></i></div>
                       <div class="alert-body">
-                        <div class="alert-title"> Rawat Inap</div>
+                        <div class="alert-title">Rawat Inap</div>
                       </div>
                     </div>
                   </a>

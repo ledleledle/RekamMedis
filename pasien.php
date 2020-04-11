@@ -47,6 +47,17 @@
 			</script>';
   }
   ?>
+  <style>
+    #btn-link {
+      border: none;
+      outline: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+      font-family: inherit;
+      font-size: inherit;
+    }
+  </style>
 </head>
 
 <body>
@@ -72,7 +83,6 @@
                   <div class="card-header">
                     <h4>Pasien yang telah terdaftar</h4>
                     <div class="card-header-action">
-                      <!-- <a href="#" class="btn btn-primary" data-target="#addUser" data-toggle="modal">Daftar pasien baru</a> -->
                       <a href="rawat_jalan.php" class="btn btn-primary">Daftar pasien baru</a>
                     </div>
                   </div>
@@ -105,9 +115,12 @@
                                   $cekrekam = mysqli_num_rows($rekam);
                                   if ($cekrekam == 0) {
                                     echo '<a>Pasien belum memiliki catatan medis</a>';
-                                  } else {
-                                    echo '<a>Pasien memiliki ' . $cekrekam . ' catatan medis</a>';
-                                  }
+                                  } else { ?>
+                                    <form method="POST" action="detail_pasien.php">
+                                      <input type="hidden" name="id" value="<?php echo $row['nama_pasien']; ?>">
+                                      <button type="submit" id="btn-link">Pasien memiliki <?php echo $cekrekam; ?> catatan medis</button>
+                                    </form>
+                                  <?php }
                                   ?>
                                 </div>
                               </th>

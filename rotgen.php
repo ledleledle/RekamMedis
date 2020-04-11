@@ -43,7 +43,7 @@
                           <tr>
                             <th class="text-center">#</th>
                             <th>Nama Pasien</th>
-                            <th>Penyakit</th>
+                            <th>Jumlah Foto Rotgen</th>
                             <th>Biaya</th>
                             <th class="text-center">Action</th>
                           </tr>
@@ -63,7 +63,7 @@
                             <tr>
                               <td><?php echo $i; ?></td>
                               <td><?php echo ucwords($pasien['nama_pasien']); ?></td>
-                              <td><?php echo ucwords($penyakit['penyakit']); ?></td>
+                              <td>* <?php echo ucwords($penyakit['penyakit']); ?></td>
                               <td>Rp. <?php echo number_format($row['biaya'], 0, ".", "."); ?></td>
                               <td align="center">
                                 <span data-target="#editObat" data-toggle="modal" data-id="<?php echo $row['id']; ?>" data-nama="<?php echo $row['nama_obat']; ?>" data-harga="<?php echo $row['harga']; ?>" data-stok="<?php echo $row['stok']; ?>">
