@@ -130,11 +130,11 @@
                                       if ($status == "tmp") {
                                         $ruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id='$idrawatinap'");
                                         $showruang = mysqli_fetch_array($ruang);
-                                        echo "Pasien masih dirawat di ruang " . $showruang['nama_ruang'] . " sejak tgl " . tgl_indo($showruang['tgl_masuk']);
+                                        echo "<a href='ruangan.php' title='Detail Ruang Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien masih dirawat di ruang " . $showruang['nama_ruang'] . " sejak tgl " . tgl_indo($showruang['tgl_masuk']) . "</a>";
                                       } else {
                                         $riw1 = mysqli_query($conn, "SELECT * FROM riwayat_rawatinap WHERE id='$idrawatinap'");
                                         $riwayatinap = mysqli_fetch_array($riw1);
-                                        echo 'Pasien pernah dirawat pada tgl ' . tgl_indo($riwayatinap['2']) . ' - ' . tgl_indo($riwayatinap['3']);
+                                        echo "<a href='riwayat_inap.php' title='Riwayat Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien pernah dirawat pada tgl " . tgl_indo($riwayatinap['2']) . ' - ' . tgl_indo($riwayatinap['3']) . "</a>";
                                       }
                                     } ?>
                                 </td>
@@ -168,7 +168,7 @@
                                     } else { ?>
                                     <form action="detail_rotgen.php" method="POST">
                                       <input type="hidden" name="id" value="<?php $idid; ?>">
-                                      <button type="submit" title="Detail" data-toggle="tooltip" id="btn-link"><i class="fas fa-info-circle text-info"></i> <?php echo $jumrotgen; ?> Foto</button>
+                                      <button type="submit" title="Detail Foto Rotgen Pasien" data-toggle="tooltip" id="btn-link"><i class="fas fa-info-circle text-info"></i> <?php echo $jumrotgen; ?> Foto</button>
                                     </form>
                                   <?php } ?>
                                 </td>
@@ -176,7 +176,10 @@
                                   <form method="POST" action="print.php" target="_blank">
                                     <input type="hidden" name="id" value="<?php echo $idnama; ?>">
                                     <input type="hidden" name="idriwayat" value="<?php echo $idpenyakit ?>">
-                                    <button type="submit" class="btn btn-primary" name="printone">Print</button>
+                                    <div class="btn-group">
+                                      <button type="submit" class="btn btn-info" name="detail" title="Detail" data-toggle="tooltip"><i class="fas fa-info"></i></button>
+                                      <button type="submit" class="btn btn-primary" name="printone" title="Print" data-toggle="tooltip"><i class="fas fa-print"></i></button>
+                                    </div>
                                   </form>
                                 </td>
                               </tr>

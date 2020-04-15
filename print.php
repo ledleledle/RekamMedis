@@ -15,7 +15,7 @@ $idid = $pasien['id'];
 
 if (isset($_POST['printall'])) {
   $riwayatpenyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY tgl ASC");
-} elseif (isset($_POST['printone'])) {
+} elseif (isset($_POST['printone']) || isset($_POST['detail'])) {
   $idriwayat = $_POST['idriwayat'];
   $riwayatpenyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' AND id='$idriwayat'");
 }
@@ -76,7 +76,7 @@ if (isset($_POST['printall'])) {
                   <th>Penyakit</th>
                   <th>Rawat Inap</th>
                   <th>Obat</th>
-                  <th>Biaya</th>
+                  <th>Total Biaya</th>
                 </tr>
               </thead>
               <tbody>
@@ -164,6 +164,12 @@ if (isset($_POST['printall'])) {
       </div>
     </div>
   </div>
-  <script>
-    window.print();
-  </script>
+
+  <?php if (!isset($_POST['detail'])) {
+    echo '<footer class="main-footer">
+    <div class="footer-left">
+      Struk ini dicetak pada tanggal ' . tgl_indo(date('Y-m-d')) . '
+    </div>
+  </footer>';
+    echo '<script> window.print(); </script>';
+  } ?>
