@@ -12,7 +12,13 @@ include 'part_func/tgl_ind.php';
 $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$idnama'");
 $pasien = mysqli_fetch_array($cek);
 $idid = $pasien['id'];
-$riwayatpenyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY tgl ASC");
+
+if (isset($_POST['printall'])) {
+  $riwayatpenyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY tgl ASC");
+} elseif (isset($_POST['printone'])) {
+  $idriwayat = $_POST['idriwayat'];
+  $riwayatpenyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' AND id='$idriwayat'");
+}
 ?>
 
 <div class="section-body">

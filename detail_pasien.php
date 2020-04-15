@@ -55,7 +55,7 @@
                           if ($cekrekam == 0) {
                             echo '';
                           } else {
-                            echo '<button type="submit" class="btn btn-primary">Print Semua</button> &emsp;';
+                            echo '<button type="submit" class="btn btn-primary" name="printall">Print Semua</button> &emsp;';
                           } ?>
                           <a href="rawat_jalan.php" class="btn btn-primary">Rawat Jalan</a>
                         </form>
@@ -175,7 +175,8 @@
                                 <td>
                                   <form method="POST" action="print.php" target="_blank">
                                     <input type="hidden" name="id" value="<?php echo $idnama; ?>">
-                                    <button type="submit" class="btn btn-primary">Print</button>
+                                    <input type="hidden" name="idriwayat" value="<?php echo $idpenyakit ?>">
+                                    <button type="submit" class="btn btn-primary" name="printone">Print</button>
                                   </form>
                                 </td>
                               </tr>
