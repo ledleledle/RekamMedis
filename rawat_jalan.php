@@ -43,7 +43,7 @@
                               <i class="far fa-user"></i>
                             </div>
                             <div class="wizard-step-label">
-                              User Account
+                              Identitas Pasien
                             </div>
                           </div>
                           <div class="wizard-step">
@@ -69,21 +69,15 @@
                     <form class="wizard-content mt-2">
                       <div class="wizard-pane">
                         <div class="form-group row align-items-center">
-                          <label class="col-md-4 text-md-right text-left">Name</label>
+                          <label class="col-md-4 text-md-right text-left">Nama</label>
                           <div class="col-lg-4 col-md-6">
                             <input type="text" name="name" class="form-control">
                           </div>
                         </div>
-                        <div class="form-group row align-items-center">
-                          <label class="col-md-4 text-md-right text-left">Email</label>
-                          <div class="col-lg-4 col-md-6">
-                            <input type="email" name="email" class="form-control">
-                          </div>
-                        </div>
                         <div class="form-group row">
-                          <label class="col-md-4 text-md-right text-left mt-2">Address</label>
+                          <label class="col-md-4 text-md-right text-left mt-2">Alamat</label>
                           <div class="col-lg-4 col-md-6">
-                            <textarea class="form-control" name="address"></textarea>
+                            <textarea class="form-control" name="alamat"></textarea>
                           </div>
                         </div>
                         <div class="form-group row">
@@ -103,17 +97,8 @@
                         </div>
                         <div class="form-group row">
                           <div class="col-md-4"></div>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="custom-control custom-checkbox">
-                              <input type="checkbox" name="agree" class="custom-control-input" id="agree">
-                              <label class="custom-control-label" for="agree">I agree with the terms and conditions</label>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <div class="col-md-4"></div>
                           <div class="col-lg-4 col-md-6 text-right">
-                            <a href="#" class="btn btn-icon icon-right btn-primary">Next <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="btn btn-icon icon-right btn-primary">Selanjutnya <i class="fas fa-arrow-right"></i></a>
                           </div>
                         </div>
                       </div>

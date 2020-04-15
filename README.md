@@ -1,6 +1,7 @@
 # RekamMedis
 
 Native Website with PHP, JS, Bootstrap....
+Sistem rekam medis untuk rumah sakit dsb.
 
 Tutorial pake
 -
@@ -17,7 +18,7 @@ About 90% :")
 Daripada download berulang - ulang
 -
 
-Ya sorry, update kecil-kecilan doang... Biar enak pake <a href="https://github.com/git-for-windows/git/releases/download/v2.26.1.windows.1/Git-2.26.1-64-bit.exe">GitBash For Windows</a> atau kalau di Linux ya langsung aja pake <code>git</code>.
+Ya sorry, bisanya update kecil-kecilan doang... Biar enak pake <a href="https://github.com/git-for-windows/git/releases/download/v2.26.1.windows.1/Git-2.26.1-64-bit.exe">GitBash For Windows</a> atau kalau di Linux ya langsung aja pake <code>git</code> aja.
 
 
 Tata cara pake Git

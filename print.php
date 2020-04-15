@@ -74,7 +74,7 @@ if (isset($_POST['printall'])) {
                 <tr>
                   <th>Tanggal Berobat</th>
                   <th>Penyakit</th>
-                  <th>Rawat Inap</th>
+                  <th>Diagnosa</th>
                   <th>Obat</th>
                   <th>Total Biaya</th>
                 </tr>
@@ -89,6 +89,7 @@ if (isset($_POST['printall'])) {
                     <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
                     <td><?php echo ucwords($row['penyakit']); ?></td>
                     <td><?php
+                        echo $row['diagnosa'];
                         $status = substr($row['id_rawatinap'], 0, 3);
                         $idrawatinap = substr($row['id_rawatinap'], 3);
                         if ($row['id_rawatinap'] == '0') {
