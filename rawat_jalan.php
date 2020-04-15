@@ -36,7 +36,7 @@
                   </div>
                   <div class="card-body">
                     <div class="row mt-4">
-                      <div class="col-12 col-lg-8 offset-lg-2">
+                      <div class="col-12 col-lg-8 offset-lg-1">
                         <div class="wizard-steps">
                           <div class="wizard-step wizard-step-active">
                             <div class="wizard-step-icon">
@@ -48,18 +48,34 @@
                           </div>
                           <div class="wizard-step">
                             <div class="wizard-step-icon">
-                              <i class="fas fa-box-open"></i>
+                              <i class="fas fa-server"></i>
                             </div>
                             <div class="wizard-step-label">
-                              Create an App
+                              Informasi Umum
                             </div>
                           </div>
                           <div class="wizard-step">
                             <div class="wizard-step-icon">
-                              <i class="fas fa-server"></i>
+                              <i class="fas fa-cogs"></i>
                             </div>
                             <div class="wizard-step-label">
-                              Server Information
+                              Keperluan
+                            </div>
+                          </div>
+                          <div class="wizard-step">
+                            <div class="wizard-step-icon">
+                              <i class="fas fa-stethoscope"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                              Pemeriksaan
+                            </div>
+                          </div>
+                          <div class="wizard-step">
+                            <div class="wizard-step-icon">
+                              <i class="fas fa-briefcase-medical"></i>
+                            </div>
+                            <div class="wizard-step-label">
+                              Tindakan yang dilakukan
                             </div>
                           </div>
                         </div>
@@ -69,30 +85,9 @@
                     <form class="wizard-content mt-2">
                       <div class="wizard-pane">
                         <div class="form-group row align-items-center">
-                          <label class="col-md-4 text-md-right text-left">Nama</label>
+                          <label class="col-md-4 text-md-right text-left">Nama Lengkap</label>
                           <div class="col-lg-4 col-md-6">
                             <input type="text" name="name" class="form-control">
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label class="col-md-4 text-md-right text-left mt-2">Alamat</label>
-                          <div class="col-lg-4 col-md-6">
-                            <textarea class="form-control" name="alamat"></textarea>
-                          </div>
-                        </div>
-                        <div class="form-group row">
-                          <label class="col-md-4 text-md-right text-left mt-2">Role</label>
-                          <div class="col-lg-4 col-md-6">
-                            <div class="selectgroup w-100">
-                              <label class="selectgroup-item">
-                                <input type="radio" name="value" value="developer" class="selectgroup-input">
-                                <span class="selectgroup-button">Developer</span>
-                              </label>
-                              <label class="selectgroup-item">
-                                <input type="radio" name="value" value="ceo" class="selectgroup-input">
-                                <span class="selectgroup-button">CEO</span>
-                              </label>
-                            </div>
                           </div>
                         </div>
                         <div class="form-group row">
