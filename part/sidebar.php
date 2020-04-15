@@ -26,11 +26,11 @@ foreach ($pecahjudul as $w) {
         </ul>
       </li>
       <li <?php echo ($page == "Data Pegawai") ? "class=active" : ""; ?>><a href="pegawai.php" class="nav-link"><i class="fas fa-users"></i> <span>Data Pegawai</span></a></li>
-      <li class="dropdown <?php echo ($page1 == "ruang") ? "active" : ""; ?>">
+      <li class="dropdown <?php echo ($page1 == "ruang" || $page1=="riwayatinap") ? "active" : ""; ?>">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bed"></i> <span>Rawat Inap</span></a>
         <ul class="dropdown-menu">
           <li <?php echo (@$page1 == "ruang") ? "class=active" : ""; ?>><a class="nav-link" href="ruangan.php">Detail Ruangan</a></li>
-          <li><a class="nav-link" href="riwayat_inap.php">Riwayat Rawat Inap</a></li>
+          <li <?php echo (@$page1 == "riwayatinap") ? "class=active" : ""; ?>><a class="nav-link" href="riwayat_inap.php">Riwayat Rawat Inap</a></li>
         </ul>
       </li>
       <li <?php echo ($page == "Data Foto Rotgen") ? "class=active" : ""; ?>><a class="nav-link" href="rotgen.php"><i class="fas fa-skull"></i> <span>Foto Rotgen</span></a></li>

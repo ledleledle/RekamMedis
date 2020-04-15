@@ -25,3 +25,15 @@
    <!-- Template CSS -->
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/components.css">
+
+   <style>
+      #btn-link {
+         border: none;
+         outline: none;
+         background: none;
+         cursor: pointer;
+         padding: 0;
+         font-family: inherit;
+         font-size: inherit;
+      }
+   </style>

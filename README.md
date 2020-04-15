@@ -12,4 +12,4 @@ Tutorial pake
 
 Still on proggress :(
 -
-About 80% :"((
+About 80% :")

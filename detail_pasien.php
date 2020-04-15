@@ -100,29 +100,25 @@
                     </div>
                     <div class="card-body">
                       <div class="table-responsive">
-                        <table class="table table-striped" id="table-1">
+                        <table class="table table-striped table-bordered" id="table-1">
                           <thead>
                             <tr>
-                              <th class="text-center">
-                                #
-                              </th>
                               <th>Tanggal Berobat</th>
                               <th>Penyakit</th>
                               <th>Rawat Inap</th>
                               <th>Obat</th>
                               <th>Foto Rotgen</th>
+                              <th>Aksi</th>
                             </tr>
                           </thead>
                           <tbody>
                             <?php
-                            $sql = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY tgl ASC");
+                            $sql = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid'");
                             $i = 0;
                             while ($row = mysqli_fetch_array($sql)) {
                               $idpenyakit = $row['id'];
-                              $i++;
                             ?>
                               <tr>
-                                <td><?php echo $i; ?></td>
                                 <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
                                 <td><?php echo ucwords($row['penyakit']); ?></td>
                                 <td><?php
@@ -149,7 +145,18 @@
                                   if ($jumobat == 0) {
                                     echo "Tidak ada obat yang diberikan";
                                   } else {
-                                    echo $jumobat . ' jenis obat telah diberikan';
+                                    $count = 0;
+                                    while ($showobat = mysqli_fetch_array($obat2an)) {
+                                      $idobat = $showobat['id_obat'];
+                                      $obatlagi = mysqli_query($conn, "SELECT * FROM obat WHERE id='$idobat'");
+                                      $namaobat = mysqli_fetch_array($obatlagi);
+                                      echo $str = ucwords($namaobat['nama_obat']);
+                                      $count = $count + 1;
+
+                                      if ($count < $jumobat) {
+                                        echo ", ";
+                                      }
+                                    }
                                   }
                                   ?>
                                 </td>
@@ -158,16 +165,19 @@
                                     $jumrotgen = mysqli_num_rows($rotgensql);
                                     if ($jumrotgen == 0) {
                                       echo 'Tidak ada foto';
-                                    } else {
-                                      echo $jumrotgen . " Foto";
-                                    }
-                                    ?></td>
-                                <!--<td>
-                        <span data-target="#editUser" data-toggle="modal" data-id="<?php echo $row['id']; ?>" data-nama="<?php echo $row['nama_pegawai']; ?>" data-user="<?php echo $row['username']; ?>" data-alam="<?php echo $row['alamat']; ?>">
-                          <a class="btn btn-primary btn-action mr-1" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
-                        </span>
-                        <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=pegawai&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
-                      </td> -->
+                                    } else { ?>
+                                    <form action="detail_rotgen.php" method="POST">
+                                      <input type="hidden" name="id" value="<?php $idid; ?>">
+                                      <button type="submit" title="Detail" data-toggle="tooltip" id="btn-link"><i class="fas fa-info-circle text-info"></i> <?php echo $jumrotgen; ?> Foto</button>
+                                    </form>
+                                  <?php } ?>
+                                </td>
+                                <td>
+                                  <form method="POST" action="print.php" target="_blank">
+                                    <input type="hidden" name="id" value="<?php echo $idnama; ?>">
+                                    <button type="submit" class="btn btn-primary">Print</button>
+                                  </form>
+                                </td>
                               </tr>
                             <?php } ?>
                           </tbody>

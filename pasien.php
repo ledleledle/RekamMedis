@@ -47,17 +47,6 @@
 			</script>';
   }
   ?>
-  <style>
-    #btn-link {
-      border: none;
-      outline: none;
-      background: none;
-      cursor: pointer;
-      padding: 0;
-      font-family: inherit;
-      font-size: inherit;
-    }
-  </style>
 </head>
 
 <body>
