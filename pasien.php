@@ -28,24 +28,6 @@
 					}, 500);
 				</script>';
   }
-
-  if (isset($_POST['submit2'])) {
-    $nama = $_POST['nama'];
-    $berat = $_POST['berat'];
-    $tinggi = $_POST['tinggi'];
-    $tgl = $_POST['tgl'];
-
-    $add = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, tinggi_badan, berat_badan) VALUES ('$nama', '$tgl', '$tinggi', '$berat')");
-    echo '<script>
-				setTimeout(function() {
-					swal({
-						title: "Berhasil!",
-						text: "Pasien baru telah ditambahkan!",
-						icon: "success"
-						});
-					}, 500);
-			</script>';
-  }
   ?>
 </head>
 
@@ -113,8 +95,16 @@
                                   ?>
                                 </div>
                               </th>
-                              <td><?php echo tgl_indo($row['tgl_lahir']); ?></td>
-                              <td><?php umur($row['tgl_lahir']); ?></td>
+                              <td><?php if ($row['tgl_lahir'] == "") {
+                                    echo "-";
+                                  } else {
+                                    echo tgl_indo($row['tgl_lahir']);
+                                  } ?></td>
+                              <td><?php if ($row['tgl_lahir'] == "") {
+                                    echo "-";
+                                  } else {
+                                    umur($row['tgl_lahir']);
+                                  } ?></td>
                               <td align="center">
                                 <form method="POST" action="detail_pasien.php">
                                   <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-nama="<?php echo $row['nama_pasien']; ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">
@@ -136,73 +126,6 @@
             </div>
           </div>
         </section>
-      </div>
-
-      <div class="modal fade" tabindex="-1" role="dialog" id="addUser">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Tambah Pasien</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="" method="POST" class="needs-validation" novalidate="">
-                <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Nama Pasien</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="nama" required="" id="getNama">
-                    <div class="invalid-feedback">
-                      Mohon data diisi!
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Tanggal lahir</label>
-                  <div class="form-group col-sm-9">
-                    <input type="text" class="form-control datepicker" id="getTgl" name="tgl" required="">
-                    <div class="invalid-feedback">
-                      Mohon data diisi!
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Berat Badan</label>
-                  <div class="input-group col-sm-9">
-                    <input type="number" class="form-control" name="berat" required="" value="0">
-                    <div class="invalid-feedback">
-                      Mohon data diisi!
-                    </div>
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        Kg
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-3 col-form-label">Tinggi Badan</label>
-                  <div class="col-sm-9 input-group">
-                    <input type="number" class="form-control" name="tinggi" required="" value="0">
-                    <div class="invalid-feedback">
-                      Mohon data diisi!
-                    </div>
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        cm
-                      </div>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer bg-whitesmoke br">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" name="submit2">Tambah</button>
-              </form>
-            </div>
-          </div>
-        </div>
       </div>
 
       <div class="modal fade" tabindex="-1" role="dialog" id="editPasien">

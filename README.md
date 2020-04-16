@@ -13,7 +13,7 @@ Tutorial pake
 
 Still on proggress :(
 -
-About 90% :")
+About 95% :) its about to end
 
 Daripada download berulang - ulang
 -

@@ -27,6 +27,7 @@
    <link rel="stylesheet" href="assets/css/components.css">
 
    <style>
+      /* btn yang mirip link */
       #btn-link {
          border: none;
          outline: none;
@@ -35,5 +36,23 @@
          padding: 0;
          font-family: inherit;
          font-size: inherit;
+      }
+
+      /*auto completenya dirawat jalan */
+      .autocomplete {
+         position: relative;
+         display: inline-block;
+      }
+      .autocomplete-items {
+         position: absolute;
+         border: 1px solid;
+         border-bottom: none;
+         border-top: none;
+         z-index: 99;
+      }
+      .autocomplete-items div {
+         padding: 10px;
+         cursor: pointer;
+         border-bottom: 1px solid;
       }
    </style>
