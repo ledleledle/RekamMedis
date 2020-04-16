@@ -55,12 +55,13 @@
                       <div class="card-header-action">
                         <form method="POST" action="print.php" target="_blank">
                           <input type="hidden" name="id" value="<?php echo $idnama; ?>">
+                          <input type="hidden" name="idfoto" value="<?php echo $idpenyakit; ?>">
                           <?php
                           $cekrekam = mysqli_num_rows($rekam);
                           if ($cekrekam == 0) {
                             echo '';
                           } else {
-                            echo '<button type="submit" class="btn btn-primary" name="printall">Print Semua</button> &emsp;';
+                            echo '<button type="submit" class="btn btn-primary" name="print_foto">Print Foto</button> &emsp;';
                           } ?>
                           <a href="rawat_jalan.php" class="btn btn-primary">Rawat Jalan</a>
                         </form>

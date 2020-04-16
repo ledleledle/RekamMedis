@@ -1,0 +1,4 @@
+<?php
+$idfoto = $_POST[''];
+
+?>

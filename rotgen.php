@@ -79,8 +79,8 @@
                                   &emsp;
                                   <form method="POST" action="print.php" target="_blank">
                                     <input type="hidden" name="id" value="<?php echo $pasien['nama_pasien']; ?>">
-                                    <input type="hidden" name="idriwayat" value="<?php echo $idpenyakit ?>">
-                                    <button type="submit" class="btn btn-primary" name="printone" title="Print" data-toggle="tooltip">Print</button>
+                                    <input type="hidden" name="idfoto" value="<?php echo $idpenyakit ?>">
+                                    <button type="submit" class="btn btn-primary" name="print_foto" title="Print" data-toggle="tooltip">Print</button>
                                   </form>
                                 </div>
                               </td>
