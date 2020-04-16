@@ -116,7 +116,6 @@
 																		echo 'Belum digunakan';
 																	} else {
 																		echo tgl_indo($row['tgl_masuk']);
-																		echo ' | ' . $row['jam_masuk'];
 																	} ?></td>
 															<td><?php
 																	if ($defpasien == '') {

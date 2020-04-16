@@ -12,6 +12,7 @@
   $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$nama' OR id='$nama'");
   $cekrow = mysqli_num_rows($cek);
   $tokne = mysqli_fetch_array($cek);
+  $tglnow = date('Y-m-d');
 
   if (isset($_POST['jalan1'])) {
     if ($cekrow == 0) {
@@ -45,7 +46,6 @@
     $penyakit = $_POST['penyakit'];
     $diagnosa = $_POST['diagnosa'];
     $biaya = $_POST['biaya'];
-    $tglnow = date('Y-m-d');
 
     mysqli_query($conn, "INSERT INTO riwayat_penyakit (id_pasien, penyakit, diagnosa, tgl, id_rawatinap, biaya_pengobatan) VALUES ('$idpasien', '$penyakit', '$diagnosa', '$tglnow', '0', '$biaya')");
   }
@@ -76,6 +76,26 @@
 					swal({
 						title: "Foto terupload!",
 						text: "' . $split . ' Foto Telah Berhasil Diupload",
+						icon: "success"
+						});
+					}, 500);
+			</script>';
+  }
+
+  if (isset($_POST['rawatinap'])) {
+    $pasien = $_POST['id'];
+    $penyakit = $_POST['penyakit'];
+    $idruang = $_POST['ruang'];
+    $kodestatus = "yes" . $idruang;
+    $nama = $_POST['namaruang'];
+
+    mysqli_query($conn, "UPDATE ruang_inap SET id_pasien='$pasien', tgl_masuk='$tglnow', status='1' WHERE id='$idruang'");
+    mysqli_query($conn, "UPDATE riwayat_penyakit SET id_rawatinap='$kodestatus' WHERE id_pasien='$pasien'");
+    echo '<script>
+				setTimeout(function() {
+					swal({
+						title: "Kamar dipesan!",
+						text: "Kamar ' . $nama . ' Berhasil Dipesan",
 						icon: "success"
 						});
 					}, 500);
@@ -112,7 +132,7 @@
                     <div class="row mt-4">
                       <div class="col-12 col-lg-8 offset-lg-1">
                         <div class="wizard-steps">
-                          <div class="wizard-step wizard-step-active">
+                          <div class="wizard-step <?php echo (isset($_POST['jalan1']) || isset($_POST['jalan2']) || isset($_POST['jalan3']) || isset($_POST['submitfoto']) || isset($_POST['rawatinap']) || isset($_POST['pesanobat'])) ? "wizard-step-active" : ""; ?>">
                             <div class="wizard-step-icon">
                               <i class="far fa-user"></i>
                             </div>
@@ -120,7 +140,7 @@
                               Identitas Pasien
                             </div>
                           </div>
-                          <div class="wizard-step wizard-step-active">
+                          <div class="wizard-step <?php echo (isset($_POST['jalan2']) || isset($_POST['jalan3']) || isset($_POST['submitfoto']) || isset($_POST['rawatinap']) || isset($_POST['pesanobat'])) ? "wizard-step-active" : ""; ?>">
                             <div class="wizard-step-icon">
                               <i class="fas fa-server"></i>
                             </div>
@@ -128,7 +148,7 @@
                               Informasi Umum
                             </div>
                           </div>
-                          <div class="wizard-step">
+                          <div class="wizard-step <?php echo (isset($_POST['jalan3']) || isset($_POST['submitfoto']) || isset($_POST['rawatinap']) || isset($_POST['pesanobat'])) ? "wizard-step-active" : ""; ?>">
                             <div class="wizard-step-icon">
                               <i class="fas fa-stethoscope"></i>
                             </div>
@@ -136,7 +156,7 @@
                               Pemeriksaan
                             </div>
                           </div>
-                          <div class="wizard-step">
+                          <div class="wizard-step <?php echo (isset($_POST['submitfoto'])) ? "wizard-step-active" : ""; ?>">
                             <div class="wizard-step-icon">
                               <i class="fas fa-briefcase-medical"></i>
                             </div>
@@ -273,7 +293,7 @@
                               </div>
                             </div>
                           <?php }
-                        if (isset($_POST['jalan3']) || isset($_POST['submitfoto'])) { ?>
+                        if (isset($_POST['jalan3']) || isset($_POST['submitfoto']) || isset($_POST['rawatinap']) || isset($_POST['pesanobat'])) { ?>
 
                             <!-- PART 4 -->
 
@@ -333,31 +353,41 @@
                                   </div>
                                   <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4">
                                     <div class="table-responsive">
-                                      <table class="table table-striped" id="table-1">
-                                        <thead>
-                                          <tr>
-                                            <th>Nama Ruangan</th>
-                                            <th>Harga per hari</th>
-                                            <th>Action</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <?php
-                                          $sql = mysqli_query($conn, "SELECT * FROM ruang_inap");
-                                          while ($row = mysqli_fetch_array($sql)) {
-                                            $defpasien = $row['id_pasien'];
-                                          ?>
+                                      <?php
+                                      $kepake = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id_pasien='$pasien'");
+                                      $kapakegak = mysqli_num_rows($kepake);
+                                      if ($kapakegak == 0) {
+                                      ?>
+                                        <table class="table table-striped" id="table-1">
+                                          <thead>
                                             <tr>
-                                              <th><?php echo ucwords($row['nama_ruang']); ?></th>
-                                              <td>Rp. <?php echo number_format($row['biaya'], 0, ".", "."); ?></td>
-                                              <td>
-                                                still
-                                                <!-- <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Pesan" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=ruang_inap&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a> -->
-                                              <?php } ?>
-                                              </td>
+                                              <th>Nama Ruangan</th>
+                                              <th>Harga per hari</th>
+                                              <th>Action</th>
                                             </tr>
-                                        </tbody>
-                                      </table>
+                                          </thead>
+                                          <tbody>
+                                            <?php
+                                            $sql = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE status='0'");
+                                            while ($row = mysqli_fetch_array($sql)) {
+                                              $defpasien = $row['id_pasien'];
+                                            ?>
+                                              <tr>
+                                                <th><?php echo ucwords($row['nama_ruang']); ?></th>
+                                                <td>Rp. <?php echo number_format($row['biaya'], 0, ".", "."); ?></td>
+                                                <td>
+                                                  <input type="text" name="id" required="" value="<?php echo $pasien; ?>">
+                                                  <input type="hidden" name="namaruang" required="" value="<?php echo $row['nama_ruang']; ?>">
+                                                  <input type="text" name="ruang" value="<?php echo $row['id'] ?>" required="">
+                                                  <button class="btn btn-primary btn-action mr-1" name="rawatinap"><i class="fas fa-arrow-right"></i></button>
+                                                <?php } ?>
+                                                </td>
+                                              </tr>
+                                          </tbody>
+                                        </table>
+                                      <?php } else {
+                                        echo 'Pasien sudah memesan kamar';
+                                      } ?>
                                     </div>
                                   </div>
                                 </div>

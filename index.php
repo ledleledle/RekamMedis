@@ -19,7 +19,7 @@
   $jumlahdokter = mysqli_num_rows($dokter);
   ?>
   <style>
-    #link-no{
+    #link-no {
       text-decoration: none;
     }
   </style>
@@ -104,7 +104,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-8 col-md-12 col-12 col-sm-12">
+            <div class="col-lg-6 col-md-12 col-12 col-sm-12">
               <div class="card">
                 <div class="card-header">
                   <h4>Status Ruang Rawat Inap</h4>
@@ -142,7 +142,7 @@
                             $sqlnama = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$defpasien'");
                             $namapasien = mysqli_fetch_array($sqlnama);
                             echo 'Sdr. ' . ucwords($namapasien["nama_pasien"]);
-                            echo '<div class="bullet"></div> <span class="text-primary">Sejak ' . tgl_indo($showruangan["tgl_masuk"]) . ' | ' . $showruangan["jam_masuk"] . '</span></div>';
+                            echo '<div class="bullet"></div> <span class="text-primary">Sejak ' . tgl_indo($showruangan["tgl_masuk"]) . '</span></div>';
                           } else {
                             echo '<div class="text-small text-muted">Tidak Tersedia</div>';
                           } ?>
@@ -153,36 +153,46 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-md-12 col-12 col-sm-12">
+            <div class="col-lg-6 col-md-12 col-12 col-sm-12">
               <div class="card">
                 <div class="card-header">
                   <h4>Menu Utama</h4>
                 </div>
                 <div class="card-body">
-                  <a href="ruangan.php" id="link-no">
-                    <div class="alert alert-primary alert-has-icon">
-                      <div class="alert-icon"><i class="fas fa-bed"></i></div>
-                      <div class="alert-body">
-                        <div class="alert-title">Rawat Inap</div>
+                  <div class="col-lg-12">
+                    <div class="card card-large-icons">
+                      <div class="card-icon bg-primary text-white">
+                        <i class="fas fa-bed"></i>
+                      </div>
+                      <div class="card-body">
+                        <h4>Rawat Inap</h4>
+                        <a href="ruangan.php" class="card-cta">Detail <i class="fas fa-chevron-right"></i></a>
                       </div>
                     </div>
-                  </a>
-                  <a href="rotgen.php" id="link-no">
-                    <div class="alert alert-danger alert-has-icon">
-                      <div class="alert-icon"><i class="fas fa-skull"></i></div>
-                      <div class="alert-body">
-                        <div class="alert-title">Foto Rotgen</div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="card card-large-icons">
+                      <div class="card-icon bg-danger text-white">
+                        <i class="fas fa-skull"></i>
+                      </div>
+                      <div class="card-body">
+                        <h4>Foto Rotgen</h4>
+                        <a href="rotgen.php" class="card-cta">Detail <i class="fas fa-chevron-right"></i></a>
                       </div>
                     </div>
-                  </a>
-                  <a href="obat.php" id="link-no">
-                    <div class="alert alert-warning alert-has-icon">
-                      <div class="alert-icon"><i class="fas fa-briefcase-medical"></i></div>
-                      <div class="alert-body">
-                        <div class="alert-title">Data Obat</div>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="card card-large-icons">
+                      <div class="card-icon bg-warning text-white">
+                        <i class="fas fa-briefcase-medical"></i>
+                      </div>
+                      <div class="card-body">
+                        <h4>Data Obat</h4>
+                        <a href="obat.php" class="card-cta">Detail <i class="fas fa-chevron-right"></i></a>
                       </div>
                     </div>
-                  </a>
+                  </div>
+                  
                 </div>
               </div>
             </div>
