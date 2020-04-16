@@ -9,30 +9,20 @@
   include "part/head.php";
 
   @$nama = $_POST['nama'];
-  @$tgl = $_POST['tgl'];
-  $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$nama' AND tgl_lahir='$tgl'");
+  $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$nama' OR id='$nama'");
   $cekrow = mysqli_num_rows($cek);
   $tokne = mysqli_fetch_array($cek);
 
   if (isset($_POST['jalan1'])) {
     if ($cekrow == 0) {
-      mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tinggi_badan, berat_badan, tgl_lahir) VALUES ('$nama', '0', '0', '$tgl')");
-      echo '<script>
-				setTimeout(function() {
-					swal({
-						title: "Pasien Telah Didaftarkan!",
-						text: "Pasien baru telah ditambahkan!",
-						icon: "success"
-						});
-          }, 500);
-          location.reload();
-			</script>';
+      mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tinggi_badan, berat_badan) VALUES ('$nama', '0', '0')");
+      echo '<script> location.reload(); </script>';
     } else {
       echo '<script>
 				setTimeout(function() {
 					swal({
-						title: "Sebelumnya Pasien Telah Terdaftar!",
-						text: "Pasien yang bernama ' . ucwords($nama) . ' sudah terdaftar sebelumnya, silahkan lanjutkan ke menu selanjutnya",
+						title: "Pasien Telah Terdaftar!",
+						text: "Pasien yang bernama ' . ucwords($tokne['nama_pasien']) . ' sudah terdaftar, silahkan lanjutkan ke menu selanjutnya",
 						icon: "success"
 						});
 					}, 500);
@@ -42,11 +32,12 @@
 
   if (isset($_POST['jalan2'])) {
     $namamu = $_POST['nama'];
+    @$tgl = $_POST['tgl'];
     $berat = $_POST['berat'];
     $tinggi = $_POST['tinggi'];
     $alam = $_POST['alamat'];
 
-    mysqli_query($conn, "UPDATE pasien SET alamat='$alam', berat_badan='$berat', tinggi_badan='$tinggi' WHERE nama_pasien='$namamu'");
+    mysqli_query($conn, "UPDATE pasien SET alamat='$alam', tgl_lahir='$tgl', berat_badan='$berat', tinggi_badan='$tinggi' WHERE nama_pasien='$namamu'");
   }
   ?>
 </head>
@@ -122,9 +113,9 @@
                           <!-- PART 1 -->
 
                           <div class="form-group row align-items-center">
-                            <label class="col-md-4 text-md-right text-left">Nama Lengkap</label>
+                            <label class="col-md-4 text-md-right text-left">Nama Lengkap / ID</label>
                             <div class="col-lg-4 col-md-6">
-                              <input id="myInput" type="text" class="form-control" name="myCountry" placeholder="Nama Calon Pasien">
+                              <input id="myInput" type="text" class="form-control" name="nama" placeholder="Nama / ID Calon Pasien">
                               <div class="invalid-feedback">
                                 Mohon data diisi!
                               </div>
@@ -151,7 +142,7 @@
                           <div class="form-group row">
                             <label class="col-md-4 text-md-right text-left">Tanggal lahir</label>
                             <div class="col-lg-4 col-md-6">
-                              <input type="text" class="form-control" required="" value="<?php echo $tokne['tgl_lahir']; ?>" disabled>
+                              <input type="text" class="form-control datepicker" name="tgl" required="" value="<?php echo $tokne['tgl_lahir']; ?>">
                             </div>
                           </div>
                           <div class="form-group row">
@@ -199,7 +190,7 @@
                           </div>
                         <?php }
                         if (isset($_POST['jalan2'])) { ?>
-
+                        aahhww
                         <?php } ?>
                       </div>
                     </form>
