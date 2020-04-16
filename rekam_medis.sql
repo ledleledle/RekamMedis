@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 15 Apr 2020 pada 16.32
+-- Waktu pembuatan: 16 Apr 2020 pada 18.17
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.4
 
@@ -34,19 +34,6 @@ CREATE TABLE `foto_rotgen` (
   `biaya` int(11) NOT NULL,
   `directory` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `foto_rotgen`
---
-
-INSERT INTO `foto_rotgen` (`id`, `id_pasien`, `id_penyakit`, `biaya`, `directory`) VALUES
-(38, 1, 2, 20000, 'assets/img/uploads/13-04-2020-13-52-17-7957.png'),
-(39, 1, 2, 20000, 'assets/img/uploads/13-04-2020-14-04-48-ds3.jpg'),
-(40, 1, 2, 20000, 'assets/img/uploads/13-04-2020-14-04-48-ds32.jpg'),
-(41, 1, 2, 20000, 'assets/img/uploads/13-04-2020-14-04-48-ds32-blur.jpg'),
-(42, 1, 2, 20000, 'assets/img/uploads/13-04-2020-14-04-48-kimi.jpg'),
-(43, 1, 2, 20000, 'assets/img/uploads/13-04-2020-14-04-48-punish.jpg'),
-(44, 1, 1, 20000, 'assets/img/uploads/13-04-2020-14-04-48-wp2691708-chinatown-wallpapers.jpg');
 
 -- --------------------------------------------------------
 
@@ -84,15 +71,6 @@ CREATE TABLE `pasien` (
   `alamat` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `pasien`
---
-
-INSERT INTO `pasien` (`id`, `nama_pasien`, `tgl_lahir`, `tinggi_badan`, `berat_badan`, `alamat`) VALUES
-(1, 'Joker India', '1998-03-04', 120, 30, 'Jl. Laylaylaylay India Brooo No.69, RT06/RW09, India 61726'),
-(3, 'leon prasetya mulya', '1998-08-04', 168, 46, 'Jl. Dr. Wahidin SH No.19 Sumbergedong, Trenggalek'),
-(4, 'Selly Shelly', '2019-11-26', 190, 50, 'Plesotan dijalanan (Homeless)');
-
 -- --------------------------------------------------------
 
 --
@@ -113,8 +91,7 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id`, `username`, `password`, `nama_pegawai`, `alamat`, `pekerjaan`) VALUES
-(1, 'leon', 'admin', 'leon prasetya mulya', 'No.19 sumbergedong, trenggalek', 2),
-(2, 'ledle', 'admin', 'patrick star', 'dibawah batu no.3. bikini bottom', 1);
+(1, 'leon', 'admin', 'leon prasetya', 'tidak tau', 1);
 
 -- --------------------------------------------------------
 
@@ -129,15 +106,6 @@ CREATE TABLE `riwayat_obat` (
   `id_obat` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `riwayat_obat`
---
-
-INSERT INTO `riwayat_obat` (`id`, `id_penyakit`, `id_pasien`, `id_obat`, `jumlah`) VALUES
-(1, 1, 1, 2, 5),
-(2, 1, 1, 1, 2),
-(3, 3, 1, 2, 3);
 
 -- --------------------------------------------------------
 
@@ -155,15 +123,6 @@ CREATE TABLE `riwayat_penyakit` (
   `biaya_pengobatan` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `riwayat_penyakit`
---
-
-INSERT INTO `riwayat_penyakit` (`id`, `id_pasien`, `penyakit`, `diagnosa`, `tgl`, `id_rawatinap`, `biaya_pengobatan`) VALUES
-(1, 1, 'Skizofrenia', '<ul><li>Delusional</li><li>Mendengar suara-suara aneh</li><li>Tidak mau makan</li></ul>', '2020-03-01', 'tmp2', 15000),
-(2, 1, 'Kanker Otak', '<ul><li>Delusional</li><li>Benjolan di kepala</li></ul>', '2019-12-30', 'yes1', 20000),
-(3, 1, 'Batuk Berdarah', '<ul><li>Badan Panas</li><li>Muntah Darah</li><li>Wajah Pucat</li></ul>', '2018-01-12', '0', 20000);
-
 -- --------------------------------------------------------
 
 --
@@ -178,13 +137,6 @@ CREATE TABLE `riwayat_rawatinap` (
   `biaya` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `riwayat_rawatinap`
---
-
-INSERT INTO `riwayat_rawatinap` (`id`, `id_pasien`, `tgl_masuk`, `tgl_keluar`, `biaya`) VALUES
-(1, 1, '2019-01-02', '2019-03-04', 8000000);
-
 -- --------------------------------------------------------
 
 --
@@ -194,7 +146,7 @@ INSERT INTO `riwayat_rawatinap` (`id`, `id_pasien`, `tgl_masuk`, `tgl_keluar`, `
 CREATE TABLE `ruang_inap` (
   `id` int(11) NOT NULL,
   `nama_ruang` varchar(200) NOT NULL,
-  `id_pasien` int(11) DEFAULT NULL,
+  `id_pasien` varchar(11) DEFAULT NULL,
   `tgl_masuk` varchar(200) DEFAULT NULL,
   `jam_masuk` varchar(100) NOT NULL,
   `status` int(11) DEFAULT NULL,
@@ -206,8 +158,8 @@ CREATE TABLE `ruang_inap` (
 --
 
 INSERT INTO `ruang_inap` (`id`, `nama_ruang`, `id_pasien`, `tgl_masuk`, `jam_masuk`, `status`, `biaya`) VALUES
-(1, 'Melati', NULL, NULL, '', 0, 900000),
-(2, 'Mawar', 1, '2020-03-20', '03:21:00', 1, 600000),
+(1, 'Melati', NULL, NULL, '', 2, 900000),
+(2, 'Mawar', '', '', '', 0, 600000),
 (3, 'Coper', NULL, NULL, '', 2, 400000),
 (4, 'Copere', NULL, NULL, '', 0, 666);
 
@@ -274,7 +226,7 @@ ALTER TABLE `ruang_inap`
 -- AUTO_INCREMENT untuk tabel `foto_rotgen`
 --
 ALTER TABLE `foto_rotgen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `obat`
@@ -286,31 +238,31 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `riwayat_obat`
 --
 ALTER TABLE `riwayat_obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `riwayat_penyakit`
 --
 ALTER TABLE `riwayat_penyakit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `riwayat_rawatinap`
 --
 ALTER TABLE `riwayat_rawatinap`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `ruang_inap`
