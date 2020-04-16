@@ -51,10 +51,10 @@
   }
 
   if (isset($_POST['submitfoto'])) {
-    $pasien = $_POST['id'];
+    $idpasien = $_POST['id'];
     $penyakit = $_POST['penyakit'];
     $biaya = $_POST['biaya'];
-    $cekriwayat = mysqli_query($conn, "SELECT * FROM `riwayat_penyakit` WHERE penyakit='$penyakit' AND id_pasien='$pasien' ORDER BY id DESC LIMIT 1");
+    $cekriwayat = mysqli_query($conn, "SELECT * FROM `riwayat_penyakit` WHERE penyakit='$penyakit' AND id_pasien='$idpasien' ORDER BY id DESC LIMIT 1");
     $datapasien = mysqli_fetch_array($cekriwayat);
     $idpas = $datapasien['id_pasien'];
     $idpeny = $datapasien['id'];
@@ -83,14 +83,14 @@
   }
 
   if (isset($_POST['rawatinap'])) {
-    $pasien = $_POST['id'];
+    $idpasien = $_POST['id'];
     $penyakit = $_POST['penyakit'];
     $idruang = $_POST['ruang'];
-    $kodestatus = "yes" . $idruang;
+    $kodestatus = "tmp" . $idruang;
     $nama = $_POST['namaruang'];
 
-    mysqli_query($conn, "UPDATE ruang_inap SET id_pasien='$pasien', tgl_masuk='$tglnow', status='1' WHERE id='$idruang'");
-    mysqli_query($conn, "UPDATE riwayat_penyakit SET id_rawatinap='$kodestatus' WHERE id_pasien='$pasien'");
+    mysqli_query($conn, "UPDATE ruang_inap SET id_pasien='$idpasien', tgl_masuk='$tglnow', status='1' WHERE id='$idruang'");
+    mysqli_query($conn, "UPDATE riwayat_penyakit SET id_rawatinap='$kodestatus' WHERE id_pasien='$idpasien'");
     echo '<script>
 				setTimeout(function() {
 					swal({
@@ -314,7 +314,17 @@
                               <div class="col-12 col-sm-12 col-md-8">
                                 <div class="tab-content no-padding" id="myTab2Content">
                                   <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4">
-                                    obat
+                                    <div class="form-group">
+                                      <label>Select2 Multiple</label>
+                                      <select class="form-control select2" name="obat[]" multiple="">
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
+                                        <option>Option 3</option>
+                                        <option>Option 4</option>
+                                        <option>Option 5</option>
+                                        <option>Option 6</option>
+                                      </select>
+                                    </div>
                                   </div>
                                   <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4">
                                     <div class="card-body">
@@ -354,7 +364,7 @@
                                   <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4">
                                     <div class="table-responsive">
                                       <?php
-                                      $kepake = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id_pasien='$pasien'");
+                                      $kepake = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id_pasien='$idpasien'");
                                       $kapakegak = mysqli_num_rows($kepake);
                                       if ($kapakegak == 0) {
                                       ?>
@@ -370,15 +380,14 @@
                                             <?php
                                             $sql = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE status='0'");
                                             while ($row = mysqli_fetch_array($sql)) {
-                                              $defpasien = $row['id_pasien'];
                                             ?>
                                               <tr>
                                                 <th><?php echo ucwords($row['nama_ruang']); ?></th>
                                                 <td>Rp. <?php echo number_format($row['biaya'], 0, ".", "."); ?></td>
                                                 <td>
-                                                  <input type="text" name="id" required="" value="<?php echo $pasien; ?>">
+                                                  <input type="hidden" name="id" required="" value="<?php echo $idpasien; ?>">
                                                   <input type="hidden" name="namaruang" required="" value="<?php echo $row['nama_ruang']; ?>">
-                                                  <input type="text" name="ruang" value="<?php echo $row['id'] ?>" required="">
+                                                  <input type="hidden" name="ruang" value="<?php echo $row['id'] ?>" required="">
                                                   <button class="btn btn-primary btn-action mr-1" name="rawatinap"><i class="fas fa-arrow-right"></i></button>
                                                 <?php } ?>
                                                 </td>
