@@ -71,6 +71,15 @@
         }
       }
     }
+    echo '<script>
+				setTimeout(function() {
+					swal({
+						title: "Foto terupload!",
+						text: "' . $split . ' Foto Telah Berhasil Diupload",
+						icon: "success"
+						});
+					}, 500);
+			</script>';
   }
   ?>
 </head>
@@ -285,7 +294,7 @@
                               <div class="col-12 col-sm-12 col-md-8">
                                 <div class="tab-content no-padding" id="myTab2Content">
                                   <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4">
-                                    Untuk obat
+                                    obat
                                   </div>
                                   <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4">
                                     <div class="card-body">
@@ -323,7 +332,33 @@
                                     </div>
                                   </div>
                                   <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4">
-                                    untuk rawat inap
+                                    <div class="table-responsive">
+                                      <table class="table table-striped" id="table-1">
+                                        <thead>
+                                          <tr>
+                                            <th>Nama Ruangan</th>
+                                            <th>Harga per hari</th>
+                                            <th>Action</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <?php
+                                          $sql = mysqli_query($conn, "SELECT * FROM ruang_inap");
+                                          while ($row = mysqli_fetch_array($sql)) {
+                                            $defpasien = $row['id_pasien'];
+                                          ?>
+                                            <tr>
+                                              <th><?php echo ucwords($row['nama_ruang']); ?></th>
+                                              <td>Rp. <?php echo number_format($row['biaya'], 0, ".", "."); ?></td>
+                                              <td>
+                                                still
+                                                <!-- <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Pesan" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=ruang_inap&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a> -->
+                                              <?php } ?>
+                                              </td>
+                                            </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
                                   </div>
                                 </div>
                               </div>

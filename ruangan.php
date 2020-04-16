@@ -16,21 +16,9 @@
 		$harga = $_POST['harga'];
 		$stat = $_POST['status'];
 
-		$cekruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE nama_ruang = '$nama'");
-		$cekada = mysqli_num_rows($cekruang);
-		if ($cekada >= 1) {
-			echo '<script>
-						setTimeout(function() {
-							swal({
-								title: "Gagal!",
-								text: "Nama ruangan ini telah digunakan, silahkan pilih nama yang lain!",
-								icon: "error"
-								});
-								}, 500);
-								</script>';
-		} else {
-			$up2 = mysqli_query($conn, "UPDATE ruang_inap SET nama_ruang='$nama', status='$stat', biaya='$harga' WHERE id='$id'");
-			echo '<script>
+
+		$up2 = mysqli_query($conn, "UPDATE ruang_inap SET nama_ruang='$nama', status='$stat', biaya='$harga' WHERE id='$id'");
+		echo '<script>
 				setTimeout(function() {
 					swal({
 					title: "Data Diubah",
@@ -39,7 +27,6 @@
 					});
 					}, 500);
 				</script>';
-		}
 	}
 
 	if (isset($_POST['submit2'])) {
@@ -161,14 +148,14 @@
 												<span data-toggle="tooltip" title="Status masih dipakai, Data tidak dapat dihapus">
 													<a class="btn btn-danger disabled btn-action mr-1"><i class="fas fa-trash"></i></a>
 												</span>
-												<a data-toggle="tooltip" title="Konfirmasi pasien keluar" class="btn btn-warning btn-action mr-1" data-confirm="Pasien Keluar|Apakah benar pasien yang bernama <b><?php echo ucwords($namapasien["nama_pasien"]) ?></b> akan keluar?" data-confirm-yes="window.location.href = 'auth/updateriwayat.php?type=inap&id=<?php echo $defpasien; ?>'";><i class="ion-log-out"></i></a>
+												<a data-toggle="tooltip" title="Konfirmasi pasien keluar" class="btn btn-warning btn-action mr-1" data-confirm="Pasien Keluar|Apakah benar pasien yang bernama <b><?php echo ucwords($namapasien["nama_pasien"]) ?></b> akan keluar?" data-confirm-yes="window.location.href = 'auth/updateriwayat.php?type=inap&id=<?php echo $defpasien; ?>'" ;><i class="ion-log-out"></i></a>
 											<?php } else { ?>
 												<span data-target="#editRuang" data-toggle="modal" data-id="<?php echo $row['id']; ?>" data-nama="<?php echo $row['nama_ruang']; ?>" data-harga="<?php echo $row['biaya']; ?>">
 													<a class="btn btn-primary btn-action mr-1" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
 												</span>
-												<a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=ruang_inap&id=<?php echo $row['id']; ?>'";><i class="fas fa-trash"></i></a>
+												<a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=ruang_inap&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
 												<span data-target="#editRuang" data-toggle="modal">
-												<a data-toggle="tooltip" title="Pasien masuk" class="btn btn-success btn-action" href="rawat_jalan.php"><i class="ion-log-in"></i></a>
+													<a data-toggle="tooltip" title="Pasien masuk" class="btn btn-success btn-action" href="rawat_jalan.php"><i class="ion-log-in"></i></a>
 												</span>
 											<?php } ?>
 										</td>
