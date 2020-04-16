@@ -39,6 +39,39 @@
 
     mysqli_query($conn, "UPDATE pasien SET alamat='$alam', tgl_lahir='$tgl', berat_badan='$berat', tinggi_badan='$tinggi' WHERE nama_pasien='$namamu'");
   }
+
+  if (isset($_POST['jalan3'])) {
+    $idpasien = $_POST['id'];
+    $penyakit = $_POST['penyakit'];
+    $diagnosa = $_POST['diagnosa'];
+    $biaya = $_POST['biaya'];
+    $tglnow = date('Y-m-d');
+
+    mysqli_query($conn, "INSERT INTO riwayat_penyakit (id_pasien, penyakit, diagnosa, tgl, id_rawatinap, biaya_pengobatan) VALUES ('$idpasien', '$penyakit', '$diagnosa', '$tglnow', '0', '$biaya')");
+  }
+
+  if (isset($_POST['submitfoto'])) {
+    $pasien = $_POST['id'];
+    $penyakit = $_POST['penyakit'];
+    $biaya = $_POST['biaya'];
+    $cekriwayat = mysqli_query($conn, "SELECT * FROM `riwayat_penyakit` WHERE penyakit='$penyakit' AND id_pasien='$pasien' ORDER BY id DESC LIMIT 1");
+    $datapasien = mysqli_fetch_array($cekriwayat);
+    $idpas = $datapasien['id_pasien'];
+    $idpeny = $datapasien['id'];
+
+    if (count($_FILES['upload']['name']) > 0) {
+      for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
+        $tmpFilePath = $_FILES['upload']['tmp_name'][$i];
+        if ($tmpFilePath != "") {
+          $filePath = "assets/img/uploads/" . date('d-m-Y-H-i-s') . '-' . $_FILES['upload']['name'][$i];
+          if (move_uploaded_file($tmpFilePath, $filePath)) {
+            $split = count($_FILES['upload']['tmp_name']);
+            $sql = mysqli_query($conn, "INSERT INTO foto_rotgen (id_pasien, id_penyakit, biaya, directory) VALUES ('$idpas', '$idpeny','$biaya', '$filePath')");
+          }
+        }
+      }
+    }
+  }
   ?>
 </head>
 
@@ -106,7 +139,7 @@
                       </div>
                     </div>
 
-                    <form class="wizard-content mt-2 needs-validation" novalidate="" method="POST" autocomplete="off">
+                    <form class="wizard-content mt-2 needs-validation" novalidate="" method="POST" autocomplete="off" enctype="multipart/form-data">
                       <div class="wizard-pane">
                         <?php if (empty($_POST)) { ?>
 
@@ -190,9 +223,113 @@
                           </div>
                         <?php }
                         if (isset($_POST['jalan2'])) { ?>
-                        aahhww
-                        <?php } ?>
-                      </div>
+
+                          <!-- PART 3 -->
+
+                          <div class="card-body">
+                            <div class="form-group row mb-4">
+                              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Nama Penyakit</label>
+                              <div class="col-sm-12 col-md-7">
+                                <input type="hidden" class="form-control" name="id" required="" value="<?php echo $tokne['id']; ?>">
+                                <input type="text" class="form-control" name="penyakit" required="">
+                                <div class="invalid-feedback">
+                                  Mohon data diisi!
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group row mb-4">
+                              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Diagnosa</label>
+                              <div class="col-sm-12 col-md-7">
+                                <textarea placeholder="Wajib" class="summernote" name="diagnosa">Wajib Diisi</textarea>
+                              </div>
+                            </div>
+                            <div class="form-group row mb-4">
+                              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Biaya Pemeriksaan</label>
+                              <div class="input-group col-sm-12 col-md-7">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">
+                                    Rp
+                                  </div>
+                                </div>
+                                <input type="number" class="form-control" name="biaya" required="" value="0">
+                                <div class="invalid-feedback">
+                                  Mohon data diisi!
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-md-6"></div>
+                              <div class="col-lg-4 col-md-6 text-right">
+                                <button class="btn btn-icon icon-right btn-primary" name="jalan3">Selanjutnya <i class="fas fa-arrow-right"></i></button>
+                              </div>
+                            </div>
+                          <?php }
+                        if (isset($_POST['jalan3']) || isset($_POST['submitfoto'])) { ?>
+
+                            <!-- PART 4 -->
+
+                            <div class="row">
+                              <div class="col-12 col-sm-12 col-md-4">
+                                <ul class="nav nav-pills flex-column" id="myTab4" role="tablist">
+                                  <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#home4" role="tab" aria-controls="home" aria-selected="true">Pemberian Obat</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">Foto Rotgen</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact4" role="tab" aria-controls="contact" aria-selected="false">Membutuhkan Rawat Inap</a>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="col-12 col-sm-12 col-md-8">
+                                <div class="tab-content no-padding" id="myTab2Content">
+                                  <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4">
+                                    Untuk obat
+                                  </div>
+                                  <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4">
+                                    <div class="card-body">
+                                      <div class="form-group row mb-4">
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Pilih Foto</label>
+                                        <div class="col-sm-12 col-md-7">
+                                          <input type="hidden" class="form-control" name="id" required="" value="<?php echo $idpasien; ?>">
+                                          <input type="hidden" class="form-control" name="penyakit" required="" value="<?php echo $penyakit; ?>">
+                                          <input id='upload' class="form-control" name="upload[]" type="file" multiple="multiple" />
+                                          <div class="invalid-feedback">
+                                            Mohon data diisi!
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="form-group row mb-4">
+                                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Total Biaya</label>
+                                        <div class="input-group col-sm-12 col-md-7">
+                                          <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                              Rp
+                                            </div>
+                                          </div>
+                                          <input type="number" class="form-control" name="biaya" required="" value="0">
+                                          <div class="invalid-feedback">
+                                            Mohon data diisi!
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="form-group row">
+                                        <div class="col-md-6"></div>
+                                        <div class="col-lg-4 col-md-6 text-right">
+                                          <input type="submit" class="btn btn-icon icon-right btn-primary" name="submitfoto" value="Upload Foto">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4">
+                                    untuk rawat inap
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <?php } ?>
+                          </div>
                     </form>
                   </div>
                 </div>
@@ -201,7 +338,6 @@
           </div>
         </section>
       </div>
-
       <?php include 'part/footer.php'; ?>
     </div>
   </div>
