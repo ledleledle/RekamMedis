@@ -147,7 +147,7 @@
 												<span data-toggle="tooltip" title="Status masih dipakai, Data tidak dapat dihapus">
 													<a class="btn btn-danger disabled btn-action mr-1"><i class="fas fa-trash"></i></a>
 												</span>
-												<a data-toggle="tooltip" title="Konfirmasi pasien keluar" class="btn btn-warning btn-action mr-1" data-confirm="Pasien Keluar|Apakah benar pasien yang bernama <b><?php echo ucwords($namapasien["nama_pasien"]) ?></b> akan keluar?" data-confirm-yes="window.location.href = 'auth/updateriwayat.php?type=inap&id=<?php echo $defpasien; ?>'" ;><i class="ion-log-out"></i></a>
+												<a data-toggle="tooltip" title="Konfirmasi pasien keluar" class="btn btn-warning btn-action mr-1" data-confirm="Pasien Keluar|Apakah benar pasien yang bernama <b><?php echo ucwords($namapasien["nama_pasien"]) ?></b> akan keluar?" data-confirm-yes="location.reload(); window.open('updateriwayat.php?id=<?php echo $defpasien; ?>', '_blank');"><i class="ion-log-out"></i></a>
 											<?php } else { ?>
 												<span data-target="#editRuang" data-toggle="modal" data-id="<?php echo $row['id']; ?>" data-nama="<?php echo $row['nama_ruang']; ?>" data-harga="<?php echo $row['biaya']; ?>">
 													<a class="btn btn-primary btn-action mr-1" title="Edit" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
