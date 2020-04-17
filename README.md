@@ -27,3 +27,8 @@ Tata cara pake Git
 - Clone repo <code>git clone https://github.com/ledleledle/RekamMedis.git</code>
 - Pantau update dengan <code>git fetch</code>
 - Dan dapatkan update dengan <code>git merge</code>
+
+Rancangan Sistem
+-
+
+![rancangansistem](https://raw.githubusercontent.com/ledleledle/RekamMedis/master/blueprint/rancangan.png)
