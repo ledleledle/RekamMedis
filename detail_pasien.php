@@ -122,7 +122,7 @@
                                 <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
                                 <td><?php echo ucwords($row['penyakit']); ?></td>
                                 <td><?php
-                                    echo $row['diagnosa'];
+                                    echo $row['diagnosa']." - ";
                                     $status = substr($row['id_rawatinap'], 0, 3);
                                     $idrawatinap = substr($row['id_rawatinap'], 3);
                                     if ($row['id_rawatinap'] == '0') {
