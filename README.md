@@ -11,10 +11,6 @@ Tutorial pake
 - Edit file <code>auth/connect.php</code> sesuaikan username dan password dengan servermu
 - Enjoy
 
-Still on proggress :(
--
-About 95% :) its about to end
-
 Daripada download berulang - ulang
 -
 
@@ -32,3 +28,5 @@ Rancangan Sistem
 -
 
 ![rancangansistem](https://raw.githubusercontent.com/ledleledle/RekamMedis/master/blueprint/rancangan.png)
+
+For now its done :)
