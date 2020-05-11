@@ -14,7 +14,7 @@ Tutorial pake
 Daripada download berulang - ulang
 -
 
-Ya sorry, bisanya update kecil-kecilan doang... Biar enak pake <a href="https://github.com/git-for-windows/git/releases/download/v2.26.1.windows.1/Git-2.26.1-64-bit.exe">GitBash For Windows</a> atau kalau di Linux ya langsung aja pake <code>git</code> aja.
+Ya sorry, bisanya update kecil-kecilan doang... Biar enak pake <a href="https://github.com/git-for-windows/git/releases/download/v2.26.1.windows.1/Git-2.26.1-64-bit.exe">GitBash For Windows</a> atau kalau di Linux ya langsung aja pake <code>git</code>.
 
 
 Tata cara pake Git
@@ -30,3 +30,4 @@ Rancangan Sistem
 ![rancangansistem](https://raw.githubusercontent.com/ledleledle/RekamMedis/master/blueprint/rancangan.png)
 
 For now its done :)
+## Update : Not Done yet, still doin a maintance. Backward till 70%

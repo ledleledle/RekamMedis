@@ -168,7 +168,8 @@
                                       echo 'Tidak ada foto';
                                     } else { ?>
                                     <form action="detail_rotgen.php" method="POST">
-                                      <input type="hidden" name="id" value="<?php $idid; ?>">
+                                      <input type="hidden" name="id" value="<?php echo $idnama; ?>">
+                                      <input type="hidden" name="idriwayat" value="<?php echo $idpenyakit ?>">
                                       <button type="submit" title="Detail Foto Rotgen Pasien" data-toggle="tooltip" id="btn-link"><i class="fas fa-info-circle text-info"></i> <?php echo $jumrotgen; ?> Foto</button>
                                     </form>
                                   <?php } ?>
