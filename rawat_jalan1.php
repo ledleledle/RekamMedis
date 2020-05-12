@@ -3,8 +3,8 @@
 
 <head>
   <?php
-  $page = "Pendaftaran Pasien";
-  $page1 = "raw0";
+  $page = "Pemeriksaan Pasien";
+  $page1 = "raw1";
   session_start();
   include 'auth/connect.php';
   include "part/head.php";
