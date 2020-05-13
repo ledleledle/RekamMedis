@@ -35,7 +35,20 @@ $("#table-1").dataTable({
 });
 $("#table-2").dataTable({
   dom: 'Bfrtip',
-  buttons: ['excel'],
+  buttons: [
+    {
+      extend: 'excel', className: 'btn-primary',
+      exportOptions: {
+        columns: ':not(:last-child)',
+      }
+    },
+    {
+      extend: 'pdf', className: 'btn-primary',
+      exportOptions: {
+        columns: ':not(:last-child)',
+      }
+    },
+  ],
   "columnDefs": [
     { "sortable": false, "targets": [2, 3] }
   ]

@@ -50,10 +50,14 @@
                       <div class="col-12 col-sm-12 col-md-8">
                         <div class="tab-content no-padding" id="myTab2Content">
                           <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4">
-                            Harap isi data dengan benar dan lengkap.
+                            <div class="card-header">
+                              <h4>Daftar Pasien Baru</h4>
+                            </div>
                           </div>
                           <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4">
-                            Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui. Aliquam convallis neque eget tellus efficitur, eget maximus massa imperdiet. Morbi a mattis velit. Donec hendrerit venenatis justo, eget scelerisque tellus pharetra a.
+                            <div class="card-header">
+                              <h4>Pasien Yang Sudah Pernah Berobat</h4>
+                            </div>
                           </div>
                         </div>
                       </div>

@@ -4,6 +4,7 @@
 <head>
   <?php
   $page = "Data Pasien";
+  $page1 = "det1";
   session_start();
   include 'auth/connect.php';
   include "part/head.php";

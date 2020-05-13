@@ -30,8 +30,13 @@ $mbuh = "Rawat Jalan";
           <li <?php echo (@$page1 == "raw3") ? "class=active" : ""; ?>><a class="nav-link" href="rawat_jalan3.php"><span>Pemberian Obat Pasien</span></a></li>
         </ul>
       </li>
-      <li <?php echo ($page == "Data Pasien" || @$page1 == "det") ? "class=active" : ""; ?>><a class="nav-link" href="pasien.php"><i class="fas fa-user-injured"></i> <span>Data Pasien</span></a></li>
-
+      <li class="dropdown <?php echo ($page1 == "det" || $page1 == "det1" || $page1 == "det2") ? "active" : ""; ?>">
+        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-user-injured"></i> <span>Data Pasien</span></a>
+        <ul class="dropdown-menu">
+          <li <?php echo (@$page1 == "det" || @$page1 == "det1") ? "class=active" : ""; ?>><a class="nav-link" href="pasien.php"><span>Detail Pasien</span></a></li>
+          <li <?php echo (@$page1 == "det2") ? "class=active" : ""; ?>><a class="nav-link" href="riwayat_pemeriksaan.php"><span>Riwayat Pemeriksaan</span></a></li>
+        </ul>
+      </li>
       <li <?php echo ($page == "Data Pegawai") ? "class=active" : ""; ?>><a href="pegawai.php" class="nav-link"><i class="fas fa-users"></i> <span>Data Pegawai</span></a></li>
       <li class="dropdown <?php echo ($page1 == "ruang" || $page1 == "riwayatinap") ? "active" : ""; ?>">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-bed"></i> <span>Rawat Inap</span></a>
