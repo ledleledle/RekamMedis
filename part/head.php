@@ -21,6 +21,7 @@
 
    <link rel="stylesheet" href="assets/modules/datatables/datatables.min.css">
    <link rel="stylesheet" href="assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+   <link rel="stylesheet" href="assets/modules/datatables/buttons.dataTables.min.css">
    <link rel="stylesheet" href="assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
 
    <!-- Template CSS -->
