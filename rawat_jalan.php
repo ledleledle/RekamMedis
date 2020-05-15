@@ -40,10 +40,10 @@
                       <div class="col-12 col-sm-12 col-md-4">
                         <ul class="nav nav-pills flex-column" id="myTab4" role="tablist">
                           <li class="nav-item">
-                            <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#home4" role="tab" aria-controls="home" aria-selected="true">Belum Pernah Berobat</a>
+                            <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#home4" role="tab" aria-controls="home" aria-selected="true">Belum Memiliki Kartu Berobat</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">Sudah Pernah Berobat</a>
+                            <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">Memiliki Kartu Berobat</a>
                           </li>
                         </ul>
                       </div>
@@ -53,10 +53,64 @@
                             <div class="card-header">
                               <h4>Daftar Pasien Baru</h4>
                             </div>
+                            <div class="card-body">
+                              <div class="form-group row align-items-center">
+                                <label class="col-md-4 text-md-right text-left">Nama Lengkap</label>
+                                <div class="col-lg-6 col-md-6">
+                                  <input type="text" class="form-control" required="" placeholder="Nama Lengkap Pasien">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-4 text-md-right text-left">Tanggal lahir</label>
+                                <div class="col-lg-6 col-md-6">
+                                  <input type="text" class="form-control datepicker" name="tgl" required="" value="<?php echo date('Y-m-d'); ?>">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-4 text-md-right text-left">Alamat</label>
+                                <div class="col-lg-6 col-md-6">
+                                  <textarea type="number" class="form-control" name="alamat" required="" placeholder="Alamat Pasien"></textarea>
+                                  <div class="invalid-feedback">
+                                    Mohon data diisi!
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-md-4"></div>
+                                <div class="col-lg-6 col-md-6 text-right">
+                                  <button class="btn btn-icon icon-right btn-primary" name="daftar1">Daftar</button>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4">
                             <div class="card-header">
-                              <h4>Pasien Yang Sudah Pernah Berobat</h4>
+                              <h4>Pasien Yang Memiliki Kartu Berobat</h4>
+                            </div>
+                            <div class="card-body">
+                              <div class="form-group row align-items-center">
+                                <label class="col-md-4 text-md-right text-left">Nama Lengkap / ID Pasien</label>
+                                <div class="col-lg-6 col-md-6">
+                                  <select class="form-control select2" name="pasien" id="myselect">
+                                    <option value=""></option>
+                                    <?php
+                                    $pas = mysqli_query($conn, "SELECT * FROM pasien");
+                                    while ($pasien = mysqli_fetch_array($pas)) {
+                                      echo "<option value='" . $pasien['id'] . "'>" . $pasien['kode_pasien'] . " - " . $pasien['nama_pasien'] . "</option>";
+                                    }
+                                    ?>
+                                  </select>
+                                  <div class="invalid-feedback">
+                                    Mohon data diisi!
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <div class="col-md-4"></div>
+                                <div class="col-lg-6 col-md-6 text-right">
+                                  <button class="btn btn-icon icon-right btn-primary" name="daftar1">Daftar</button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -73,6 +127,13 @@
   </div>
   <?php include "part/all-js.php";
   include "part/autocomplete.php"; ?>
+  <script>
+    $(document).ready(function() {
+      $("#myselect").select2({
+        width: '285px'
+      });
+    });
+  </script>
 </body>
 
 </html>

@@ -39,13 +39,13 @@ $("#table-2").dataTable({
     {
       extend: 'excel', className: 'btn-primary',
       exportOptions: {
-        columns: ':not(:last-child)',
+        columns: [0, 1, 2, 3],
       }
     },
     {
       extend: 'pdf', className: 'btn-primary',
       exportOptions: {
-        columns: ':not(:last-child)',
+        columns: [0, 1, 2, 3],
       }
     },
   ],

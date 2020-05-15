@@ -63,7 +63,7 @@
                       <table class="table table-striped" id="table-2">
                         <thead>
                           <tr>
-                            <th class="text-center">#</th>
+                            <th class="text-center">ID Pasien</th>
                             <th>Nama</th>
                             <th>Tanggal Lahir</th>
                             <th>Usia</th>

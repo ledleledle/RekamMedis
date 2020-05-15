@@ -67,9 +67,11 @@
                 <div class="card">
                   <div class="card-header">
                     <h4><?php echo $page; ?></h4>
-                    <div class="card-header-action">
-                      <a href="#" class="btn btn-primary" data-target="#addObat" data-toggle="modal">Tambahkan Obat Baru</a>
-                    </div>
+                    <?php if ($job != '1') { ?>
+                      <div class="card-header-action">
+                        <a href="#" class="btn btn-primary" data-target="#addObat" data-toggle="modal">Tambahkan Obat Baru</a>
+                      </div>
+                    <?php } ?>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -80,7 +82,9 @@
                             <th>Nama</th>
                             <th>Stok</th>
                             <th>Harga per unit</th>
-                            <th class="text-center">Action</th>
+                            <?php if ($job != '1') { ?>
+                              <th class="text-center">Action</th>
+                            <?php } ?>
                           </tr>
                         </thead>
                         <tbody>
@@ -95,12 +99,14 @@
                               <td><?php echo ucwords($row['nama_obat']) ?></td>
                               <td><?php echo $row['stok'] . " Unit"; ?></td>
                               <td>Rp. <?php echo number_format($row['harga'], 0, ".", "."); ?></td>
-                              <td align="center">
-                                <span data-target="#editObat" data-toggle="modal" data-id="<?php echo $row['id']; ?>" data-nama="<?php echo $row['nama_obat']; ?>" data-harga="<?php echo $row['harga']; ?>" data-stok="<?php echo $row['stok']; ?>">
-                                  <a class="btn btn-primary btn-action mr-1" title="Edit Data Obat" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
-                                </span>
-                                <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=obat&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
-                              </td>
+                              <?php if ($job != '1') { ?>
+                                <td align="center">
+                                  <span data-target="#editObat" data-toggle="modal" data-id="<?php echo $row['id']; ?>" data-nama="<?php echo $row['nama_obat']; ?>" data-harga="<?php echo $row['harga']; ?>" data-stok="<?php echo $row['stok']; ?>">
+                                    <a class="btn btn-primary btn-action mr-1" title="Edit Data Obat" data-toggle="tooltip"><i class="fas fa-pencil-alt"></i></a>
+                                  </span>
+                                  <a class="btn btn-danger btn-action mr-1" data-toggle="tooltip" title="Hapus" data-confirm="Hapus Data|Apakah anda ingin menghapus data ini?" data-confirm-yes="window.location.href = 'auth/delete.php?type=obat&id=<?php echo $row['id']; ?>'" ;><i class="fas fa-trash"></i></a>
+                                </td>
+                              <?php } ?>
                             </tr>
                           <?php } ?>
                         </tbody>

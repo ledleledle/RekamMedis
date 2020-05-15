@@ -7,6 +7,7 @@ if(!isset($sessionid)){
 }
 $nama = mysqli_query($conn, "SELECT * FROM pegawai WHERE id=$sessionid");
 $output = mysqli_fetch_array($nama);
+$job = $output['pekerjaan'];
 ?>
 <nav class="navbar navbar-expand-lg main-navbar">
   <form class="form-inline mr-auto">
@@ -22,7 +23,7 @@ $output = mysqli_fetch_array($nama);
       <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-title"><i class="fas fa-circle text-success"></i>
           <?php
-          if($output["pekerjaan"] == "1"){
+          if($job == "1"){
             echo "Dokter";
           }else{
             echo "Apoteker";
