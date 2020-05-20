@@ -80,6 +80,8 @@ $lay = $hitunghari * $biaya;
 </script>
 
 <?php
+#$status = 'yes'.$idruang;
 $riwayat = mysqli_query($conn, "INSERT INTO riwayat_rawatinap (id_pasien, tgl_masuk, tgl_keluar, biaya) VALUES ('$id', '$tglmasuk', '$datenow', '$biaya')");
+#$stat_pasien = mysqli_query($conn, "UPDATE riwayat_penyakit SET id_rawatinap='$status' WHERE id='$id'");
 $ruangan = mysqli_query($conn, "UPDATE ruang_inap SET id_pasien = NULL, tgl_masuk = NULL, status='0' WHERE id='$idruang'");
 ?>

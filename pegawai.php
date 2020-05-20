@@ -140,14 +140,16 @@
 													?>
 														<tr>
 															<td><?php echo $i; ?></td>
-															<td><?php echo ucwords($row['nama_pegawai']); ?></td>
+															<td>
+																<a href="#" class="font-weight-600"><img src="<?php echo $row['foto']; ?>" alt="avatar" width="30" class="rounded-circle mr-1"> <?php echo ucwords($row['nama_pegawai']); ?></a>
+															</td>
 															<td><?php echo ucwords($row['alamat']); ?></td>
 															<td><?php
-																if ($row['pekerjaan'] == '1') {
-																	echo '<div class="badge badge-pill badge-primary mb-1">Dokter';
-																} else {
-																	echo '<div class="badge badge-pill badge-success mb-1">Apoteker';
-																} ?>
+																	if ($row['pekerjaan'] == '1') {
+																		echo '<div class="badge badge-pill badge-primary mb-1">Dokter';
+																	} else {
+																		echo '<div class="badge badge-pill badge-success mb-1">Apoteker';
+																	} ?>
 										</div>
 										</td>
 										<td>

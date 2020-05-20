@@ -18,7 +18,7 @@ $job = $output['pekerjaan'];
   </form>
   <ul class="navbar-nav navbar-right">
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-      <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+      <img alt="image" src="<?php echo $output['foto']; ?>" class="rounded-circle mr-1">
       <div class="d-sm-none d-lg-inline-block">Hi, <?php echo ucwords($output['nama_pegawai']); ?></div></a>
       <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-title"><i class="fas fa-circle text-success"></i>
