@@ -2,7 +2,7 @@
 
 $sessionid = $_SESSION['id_pegawai'];
 
-if(!isset($sessionid)){
+if (!isset($sessionid)) {
   header('location:auth');
 }
 $nama = mysqli_query($conn, "SELECT * FROM pegawai WHERE id=$sessionid");
@@ -18,18 +18,22 @@ $job = $output['pekerjaan'];
   </form>
   <ul class="navbar-nav navbar-right">
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-      <img alt="image" src="<?php echo $output['foto']; ?>" class="rounded-circle mr-1">
-      <div class="d-sm-none d-lg-inline-block">Hi, <?php echo ucwords($output['nama_pegawai']); ?></div></a>
+        <img alt="image" src="<?php echo $output['foto']; ?>" class="rounded-circle mr-1">
+        <div class="d-sm-none d-lg-inline-block">Hi, <?php echo ucwords($output['nama_pegawai']); ?></div>
+      </a>
       <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-title"><i class="fas fa-circle text-success"></i>
           <?php
-          if($job == "1"){
+          if ($job == "1") {
             echo "Dokter";
-          }else{
+          } else {
             echo "Apoteker";
           }
           ?>
         </div>
+        <a href="profile.php" class="dropdown-item has-icon">
+          <i class="fas fa-user"></i> Profile
+        </a>
         <div class="dropdown-divider"></div>
         <a href="#" data-target="#ModalLogout" data-toggle="modal" class="dropdown-item has-icon text-danger">
           <i class="fas fa-sign-out-alt"></i> Logout

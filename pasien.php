@@ -76,10 +76,9 @@
                           $i = 0;
                           while ($row = mysqli_fetch_array($sql)) {
                             $idpasien = $row['id'];
-                            $i++;
                           ?>
                             <tr>
-                              <td><?php echo $i; ?></td>
+                              <td><?php echo $row['kode_pasien']; ?></td>
                               <th><?php echo ucwords($row['nama_pasien']); ?>
                                 <div class="table-links">
                                   <?php

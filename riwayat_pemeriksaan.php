@@ -51,15 +51,17 @@
                           <?php
                           $rekam = mysqli_query($conn, "SELECT * FROM riwayat_penyakit");
                           while ($row = mysqli_fetch_array($rekam)) {
-                            $id = $row['id_pasien']
+                            $id = $row['id_pasien'];
                           ?>
                             <tr>
                               <th><?php echo tgl_indo($row['tgl']); ?></th>
-                              <td><?php echo $id; ?></td>
                               <?php
                               $nama = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$id'");
                               $listnama = mysqli_fetch_array($nama);
-                              echo "<td>".ucwords($listnama['nama_pasien'])."</td>";
+                              ?>
+                              <td><?php echo $listnama['kode_pasien']; ?></td>
+                              <?php
+                              echo "<td>" . ucwords($listnama['nama_pasien']) . "</td>";
                               ?>
                               <td><?php echo ucwords($row['penyakit']); ?></td>
                             </tr>

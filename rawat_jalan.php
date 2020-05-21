@@ -40,16 +40,16 @@
                       <div class="col-12 col-sm-12 col-md-4">
                         <ul class="nav nav-pills flex-column" id="myTab4" role="tablist">
                           <li class="nav-item">
-                            <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#home4" role="tab" aria-controls="home" aria-selected="true">Belum Memiliki Kartu Berobat</a>
+                            <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#daftar" role="tab" aria-controls="home" aria-selected="true">Belum Memiliki Kartu Berobat</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">Memiliki Kartu Berobat</a>
+                            <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#sudah_daftar" role="tab" aria-controls="profile" aria-selected="false">Memiliki Kartu Berobat</a>
                           </li>
                         </ul>
                       </div>
                       <div class="col-12 col-sm-12 col-md-8">
                         <div class="tab-content no-padding" id="myTab2Content">
-                          <div class="tab-pane fade show active" id="home4" role="tabpanel" aria-labelledby="home-tab4">
+                          <div class="tab-pane fade show active" id="daftar" role="tabpanel" aria-labelledby="home-tab4">
                             <div class="card-header">
                               <h4>Daftar Pasien Baru</h4>
                             </div>
@@ -83,7 +83,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4">
+                          <div class="tab-pane fade" id="sudah_daftar" role="tabpanel" aria-labelledby="profile-tab4">
                             <div class="card-header">
                               <h4>Pasien Yang Memiliki Kartu Berobat</h4>
                             </div>
@@ -92,11 +92,11 @@
                                 <label class="col-md-4 text-md-right text-left">Nama Lengkap / ID Pasien</label>
                                 <div class="col-lg-6 col-md-6">
                                   <select class="form-control select2" name="pasien" id="myselect">
-                                    <option value=""></option>
+                                    <option value="">Cari Nama/ID Pasien</option>
                                     <?php
                                     $pas = mysqli_query($conn, "SELECT * FROM pasien");
                                     while ($pasien = mysqli_fetch_array($pas)) {
-                                      echo "<option value='" . $pasien['id'] . "'>" . $pasien['kode_pasien'] . " - " . $pasien['nama_pasien'] . "</option>";
+                                      echo "<option value='" . $pasien['id'] . "'>" . ucwords($pasien['nama_pasien']) . " / " . $pasien['kode_pasien'] . "</option>";
                                     }
                                     ?>
                                   </select>

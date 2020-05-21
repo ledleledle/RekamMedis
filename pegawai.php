@@ -125,6 +125,7 @@
 														<th class="text-center">
 															#
 														</th>
+														<th>Foto</th>
 														<th>Nama Pegawai</th>
 														<th>Alamat</th>
 														<th>Pekerjaan</th>
@@ -137,18 +138,26 @@
 													$i = 0;
 													while ($row = mysqli_fetch_array($sql)) {
 														$i++;
+														if ($row['pekerjaan'] == '1') {
+															$jobname = 'Dokter';
+														} else {
+															$jobname = 'Apoteker';
+														}
 													?>
 														<tr>
 															<td><?php echo $i; ?></td>
 															<td>
-																<a href="#" class="font-weight-600"><img src="<?php echo $row['foto']; ?>" alt="avatar" width="30" class="rounded-circle mr-1"> <?php echo ucwords($row['nama_pegawai']); ?></a>
+																<div class="gallery">
+																	<div class="gallery-item rounded-circle mr-1" data-image="<?php echo $row['foto']; ?>" data-title="<?php echo $jobname. ". " .ucwords($row['nama_pegawai']); ?>"></div>
+																</div>
 															</td>
+															<th><?php echo ucwords($row['nama_pegawai']); ?></th>
 															<td><?php echo ucwords($row['alamat']); ?></td>
 															<td><?php
 																	if ($row['pekerjaan'] == '1') {
-																		echo '<div class="badge badge-pill badge-primary mb-1">Dokter';
+																		echo '<div class="badge badge-pill badge-primary mb-1">'.$jobname;
 																	} else {
-																		echo '<div class="badge badge-pill badge-success mb-1">Apoteker';
+																		echo '<div class="badge badge-pill badge-success mb-1">'.$jobname;
 																	} ?>
 										</div>
 										</td>
