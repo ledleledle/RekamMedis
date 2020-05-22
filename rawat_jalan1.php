@@ -45,8 +45,7 @@
       <?php include 'part/footer.php'; ?>
     </div>
   </div>
-  <?php include "part/all-js.php";
-  include "part/autocomplete.php"; ?>
+  <?php include "part/all-js.php"; ?>
 </body>
 
 </html>

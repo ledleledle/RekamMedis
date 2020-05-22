@@ -30,5 +30,5 @@ Rancangan Sistem
 ![rancangansistem](https://raw.githubusercontent.com/ledleledle/RekamMedis/master/blueprint/rancangan.png)
 
 For now its done :)
-## Update : Not Done yet, still doin a maintance. Backward till 70%
+## Update : Not Done yet, still doin a maintance. Backward till 80%
 ![awshit](https://raw.githubusercontent.com/ledleledle/RekamMedis/master/blueprint/fetchimage.webp)

@@ -148,16 +148,16 @@
 															<td><?php echo $i; ?></td>
 															<td>
 																<div class="gallery">
-																	<div class="gallery-item rounded-circle mr-1" data-image="<?php echo $row['foto']; ?>" data-title="<?php echo $jobname. ". " .ucwords($row['nama_pegawai']); ?>"></div>
+																	<div class="gallery-item rounded-circle mr-1" data-image="<?php echo $row['foto']; ?>" data-title="<?php echo $jobname . ". " . ucwords($row['nama_pegawai']); ?>"></div>
 																</div>
 															</td>
 															<th><?php echo ucwords($row['nama_pegawai']); ?></th>
 															<td><?php echo ucwords($row['alamat']); ?></td>
 															<td><?php
 																	if ($row['pekerjaan'] == '1') {
-																		echo '<div class="badge badge-pill badge-primary mb-1">'.$jobname;
+																		echo '<div class="badge badge-pill badge-primary mb-1">' . $jobname;
 																	} else {
-																		echo '<div class="badge badge-pill badge-success mb-1">'.$jobname;
+																		echo '<div class="badge badge-pill badge-success mb-1">' . $jobname;
 																	} ?>
 										</div>
 										</td>
