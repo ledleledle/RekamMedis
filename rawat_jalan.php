@@ -33,7 +33,7 @@
 
   if (isset($_POST['daftar1'])) {
     $id = $_POST['pasien'];
-    $no_urut = $antrian+1;
+    $no_urut = $antrian + 1;
     $insert = mysqli_query($conn, "INSERT INTO antrian (no_urut, id_pasien, status) VALUES ('$no_urut', '$id', '0')");
     echo '<script>
 				setTimeout(function() {
@@ -91,7 +91,7 @@
                               <h4>Daftar Pasien Baru</h4>
                             </div>
                             <div class="card-body">
-                              <form class="needs-validation" novalidate="" method="POST" autocomplete="off">
+                              <form class="needs-validation" novalidate="" method="POST" autocomplete="off" target="_blank" action="kartu.php">
                                 <div class="form-group row align-items-center">
                                   <label class="col-md-4 text-md-right text-left">Nama Lengkap</label>
                                   <div class="col-lg-6 col-md-6">
