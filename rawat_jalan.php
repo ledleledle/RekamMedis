@@ -16,10 +16,10 @@
 
   if (isset($_POST['daftar'])) {
     $nama = $_POST['nama'];
-    #$tgl = $_POST['tgl'];
-    #$alm = $_POST['alamat'];
+    $tgl = $_POST['tgl'];
+    $alm = $_POST['alamat'];
 
-    #$insert = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, alamat) VALUES ('$nama', '$tgl', '$alm')");
+    $insert = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, alamat) VALUES ('$nama', '$tgl', '$alm')");
     echo '<script>
 				setTimeout(function() {
 					swal({
