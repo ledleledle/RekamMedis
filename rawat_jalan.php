@@ -34,16 +34,30 @@
   if (isset($_POST['daftar1'])) {
     $id = $_POST['pasien'];
     $no_urut = $antrian + 1;
-    $insert = mysqli_query($conn, "INSERT INTO antrian (no_urut, id_pasien, status) VALUES ('$no_urut', '$id', '0')");
-    echo '<script>
+    $cek_keberadaan = mysqli_query($conn, "SELECT * FROM antrian WHERE id_pasien='$id'");
+    $ceque = mysqli_num_rows($cek_keberadaan);
+    if ($ceque == '0') {
+      $insert = mysqli_query($conn, "INSERT INTO antrian (no_urut, id_pasien, status) VALUES ('$no_urut', '$id', '0')");
+      echo '<script>
 				setTimeout(function() {
 					swal({
 						title: "Pasien didaftarkan dalam antrian!",
-						text: "Pasien diharapkan menunggu diruang tunggu.",
+						text: "Pasien diharapkan menunggu diruang tunggu sampai namanya dipanggil.",
 						icon: "success"
 						});
 					}, 500);
-			</script>';
+      </script>';
+    } else {
+      echo '<script>
+				setTimeout(function() {
+					swal({
+						title: "Pasien sudah terdaftar dalam antrian!",
+						text: "Pasien sudah didaftarkan dalam antrian, pasien diharapkan menunggu diruang tunggu sekarang juga.",
+						icon: "error"
+						});
+					}, 500);
+      </script>';
+    }
   }
   ?>
 </head>

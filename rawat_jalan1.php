@@ -8,6 +8,19 @@
   session_start();
   include 'auth/connect.php';
   include "part/head.php";
+
+  if(isset($_POST['reset_ant'])){
+    $del = mysqli_query($conn, "TRUNCATE TABLE antrian");
+    echo '<script>
+    setTimeout(function() {
+      swal({
+        title: "Antrian Berhasil Di Reset!",
+        text: "Antrian Pasien Berhasil Di Reset",
+        icon: "success"
+        });
+      }, 500);
+  </script>';
+  }
   ?>
 </head>
 
@@ -35,7 +48,7 @@
                   <div class="card-header">
                     <h4>Antrian <?php echo $page; ?></h4>
                     <div class="card-header-action">
-                      <a href="#reset" class="btn btn-danger">Reset Antrian</a>
+                      <a href="#" data-target="#reset_ant" data-toggle="modal" class="btn btn-danger">Reset Antrian</a>
                     </div>
                   </div>
                   <div class="card-body">
@@ -90,6 +103,28 @@
           </div>
       </div>
       </section>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="reset_ant">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Hapus Antrian Pasien</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="POST" class="needs-validation" novalidate="">
+              Apakah anda yakin ingin menghapus antrian pasien?
+          </div>
+          <div class="modal-footer bg-whitesmoke br">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger" name="reset_ant">Hapus</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="editPasien">
