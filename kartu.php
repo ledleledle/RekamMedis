@@ -3,7 +3,7 @@
 	@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 	body {
-		background: #e2e2e2;
+			background: #e2e2e2;
 		width: 98%;
 		height: 100vh;
 	}
@@ -129,15 +129,21 @@
 				<h3>LEON PRASETYA MULYA</h3>
 				<table>
 					<tr>
-						<td>Tgl. Lahir</td>
-						<td> : 04 Agustus 1998</td>
+						<td>Tempat/Tgl. Lahir</td>
+						<td> : </td>
+						<td>Depok/04 Agustus 1998</td>
 					</tr>
 					<tr>
-						<td>Alamat Pasien</td>
-						<td> : Jl. Dr. Wahidin Sudirohusodo No. 666 Trenggalek</td>
+						<td>Jenis Kelamin</td>
+						<td> : </td>
+						<td>Laki - Laki</td>
+					</tr>
+					<tr>
+						<td>Alamat</td>
+						<td> : </td>
+						<td>Jl. Dr. Wahidin Sudirohusodo No. 666 Trenggalek</td>
 					</tr>
 				</table>
-				<p><br /></p>
 			</div>
 		</div>
 	</div>

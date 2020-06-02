@@ -9,7 +9,7 @@
   include 'auth/connect.php';
   include "part/head.php";
 
-  if(isset($_POST['reset_ant'])){
+  if (isset($_POST['reset_ant'])) {
     $del = mysqli_query($conn, "TRUNCATE TABLE antrian");
     echo '<script>
     setTimeout(function() {
@@ -88,7 +88,7 @@
                     </div>
                     </td>
                     <td>
-                      <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-nama="<?php echo $row['nama_pasien']; ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">
+                      <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-whatever="<?php echo ucwords($pas['nama_pasien']); ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">
                         <a class="btn btn-primary btn-action mr-1" title="Edit Data Pasien" data-toggle="tooltip"><i class="fas fa-stethoscope"></i> Periksa Pasien</a>
                       </span>
                     </td>
@@ -139,19 +139,13 @@
           <div class="modal-body">
             <form action="" method="POST" class="needs-validation" novalidate="">
               <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Nama Pasien</label>
+                <label class="col-sm-3 col-form-label">Tekanan Darah</label>
                 <div class="col-sm-9">
                   <input type="hidden" class="form-control" name="id" required="" id="getId">
-                  <input type="text" class="form-control" name="nama" required="" id="getNama">
+                  <input type="text" class="form-control" name="tensi" required="">
                   <div class="invalid-feedback">
                     Mohon data diisi!
                   </div>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label class="col-sm-3 col-form-label">Tanggal lahir</label>
-                <div class="form-group col-sm-9">
-                  <input type="text" class="form-control datepicker" id="getTgl" name="tgl">
                 </div>
               </div>
               <div class="form-group row">
@@ -182,10 +176,19 @@
                   </div>
                 </div>
               </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Fonis Penyakit</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="tensi" required="">
+                  <div class="invalid-feedback">
+                    Mohon data diisi!
+                  </div>
+                </div>
+              </div>
           </div>
           <div class="modal-footer bg-whitesmoke br">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" name="submit">Edit</button>
+            <button type="submit" class="btn btn-primary" name="submit">Pemeriksaan Selesai</button>
             </form>
           </div>
         </div>
@@ -200,12 +203,14 @@
   <script>
     $('#editPasien').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget)
+      var recipient = button.data('whatever')
       var nama = button.data('nama')
       var id = button.data('id')
       var tgl = button.data('lahir')
       var berat = button.data('berat')
       var tinggi = button.data('tinggi')
       var modal = $(this)
+      modal.find('.modal-title').text('Pemeriksaan Pasien yang bernama ' + recipient)
       modal.find('#getId').val(id)
       modal.find('#getNama').val(nama)
       modal.find('#getTgl').val(tgl)

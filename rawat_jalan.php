@@ -18,8 +18,13 @@
     $nama = $_POST['nama'];
     $tgl = $_POST['tgl'];
     $alm = $_POST['alamat'];
+    $tmp = $_POST['tmp'];
+    $jk = $_POST['jk'];
+    $cek_pas2 = mysqli_num_rows($cek_pasien)+1;
+    $forcode = str_replace("-", "", $tgl);
+    $kode = $cek_pas2 . $forcode;
 
-    $insert = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, alamat) VALUES ('$nama', '$tgl', '$alm')");
+    $insert = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, alamat, kode_pasien, jk, tmp_lahir) VALUES ('$nama', '$tgl', '$alm', $kode, '$jk', '$tmp')");
     echo '<script>
 				setTimeout(function() {
 					swal({
@@ -105,7 +110,7 @@
                               <h4>Daftar Pasien Baru</h4>
                             </div>
                             <div class="card-body">
-                              <form class="needs-validation" novalidate="" method="POST" autocomplete="off" target="_blank" action="kartu.php">
+                              <form class="needs-validation" novalidate="" method="POST" autocomplete="off">
                                 <div class="form-group row align-items-center">
                                   <label class="col-md-4 text-md-right text-left">Nama Lengkap</label>
                                   <div class="col-lg-6 col-md-6">
@@ -116,9 +121,31 @@
                                   </div>
                                 </div>
                                 <div class="form-group row">
+                                  <label class="col-md-4 text-md-right text-left">Tempat lahir</label>
+                                  <div class="col-lg-6 col-md-6">
+                                    <input type="text" class="form-control" name="tmp" required="" placeholder="Tempat lahir pasien">
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
                                   <label class="col-md-4 text-md-right text-left">Tanggal lahir</label>
                                   <div class="col-lg-6 col-md-6">
                                     <input type="text" class="form-control datepicker" name="tgl" required="" value="<?php echo date('Y-m-d'); ?>">
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-4 text-md-right text-left">Jenis Kelamin</label>
+                                  <div class="col-lg-6 col-md-6">
+                                    <select class="form-control selectric" name="jk" required>
+                                      <option value="">Pilih Jenis Kelamin Pasien</option>
+                                      <option value="0">Laki - Laki</option>
+                                      <option value="1">Perempuan</option>
+                                    </select>
                                     <div class="invalid-feedback">
                                       Mohon data diisi!
                                     </div>

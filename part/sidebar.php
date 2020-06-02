@@ -22,7 +22,7 @@ $mbuh = "Rawat Jalan";
       <li class="menu-header">Menu</li>
 
       <li class="dropdown <?php echo ($page1 == "raw0" || $page1 == "raw1" || $page1 == "raw2" || $page1 == "raw3") ? "active" : ""; ?>">
-        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-stethoscope"></i> <span>Rawat Inap</span></a>
+        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-stethoscope"></i> <span>Rawat Jalan</span></a>
         <ul class="dropdown-menu">
           <li <?php echo (@$page1 == "raw0") ? "class=active" : ""; ?>><a class="nav-link" href="rawat_jalan.php"><span>Pendaftaran Pasien</span></a></li>
           <li <?php echo (@$page1 == "raw1") ? "class=active" : ""; ?>><a class="nav-link" href="rawat_jalan1.php"><span>Pemeriksaan Pasien</span></a></li>

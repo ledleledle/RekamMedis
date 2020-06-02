@@ -70,8 +70,16 @@
                               <td> : <?php echo ucwords($idnama); ?></td>
                             </tr>
                             <tr>
-                              <th scope="row">Tanggal Lahir</th>
-                              <td> : <?php echo tgl_indo($pasien['tgl_lahir']); ?></td>
+                              <th scope="row">Tempat / Tanggal Lahir</th>
+                              <td> : <?php echo ucwords($pasien['tmp_lahir'])." / ".tgl_indo($pasien['tgl_lahir']); ?></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Jenis Kelamin</th>
+                              <td> : <?php if($pasien['jk'] == "0"){
+                                echo "Laki - Laki";
+                              } else {
+                                echo "Perempuan";
+                              } ?></td>
                             </tr>
                             <tr>
                               <th scope="row">Tinggi Bandan</th>
@@ -83,7 +91,7 @@
                             </tr>
                             <tr>
                               <th scope="row">Alamat</th>
-                              <td> : <?php echo $pasien['alamat']; ?></td>
+                              <td> : <?php echo ucwords($pasien['alamat']); ?></td>
                             </tr>
                           </tbody>
                         </table>
