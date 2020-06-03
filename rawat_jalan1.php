@@ -21,6 +21,29 @@
       }, 500);
   </script>';
   }
+
+  if (isset($_POST['submit'])) {
+    $idpasien = $_POST['id'];
+    $penyakit = $_POST['penyakit'];
+    $diagnosa = $_POST['diagnosa'];
+    $biaya = $_POST['biaya'];
+    $tglnow = date('Y-m-d');
+    $berat = $_POST['berat'];
+    $tinggi = $_POST['tinggi'];
+    $tensi  = $_POST['tensi'];
+
+    $submit = mysqli_query($conn, "INSERT INTO riwayat_penyakit (id_pasien, penyakit, diagnosa, tgl, id_rawatinap, biaya_pengobatan, tinggi, berat, tensi) VALUES ('$idpasien', '$penyakit', '$diagnosa', '$tglnow', '0', '$biaya', '$tinggi', '$berat', '$tensi')");
+    $update_antrian = mysqli_query($conn, "UPDATE antrian SET status='1' WHERE id_pasien='$idpasien'");
+    echo '<script>
+    setTimeout(function() {
+      swal({
+        title: "Pasien Sudah Diperiksa!",
+        text: "Pasien diharapkan segera menuju ke ruang tindakan",
+        icon: "success"
+        });
+      }, 500);
+    </script>';
+  }
   ?>
 </head>
 
@@ -205,7 +228,7 @@
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Fonis Penyakit</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" name="tensi" required="" placeholder="Nama Penyakit yang menyerang Pasien">
+                  <input type="text" class="form-control" name="penyakit" required="" placeholder="Nama Penyakit yang menyerang Pasien">
                   <div class="invalid-feedback">
                     Mohon data diisi!
                   </div>

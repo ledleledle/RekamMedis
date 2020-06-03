@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Apr 2020 pada 18.17
+-- Waktu pembuatan: 03 Jun 2020 pada 08.20
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.4
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Database: `rekam_medis`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `antrian`
+--
+
+CREATE TABLE `antrian` (
+  `no_urut` int(11) NOT NULL,
+  `id_pasien` int(11) NOT NULL,
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -53,8 +65,9 @@ CREATE TABLE `obat` (
 --
 
 INSERT INTO `obat` (`id`, `nama_obat`, `stok`, `harga`) VALUES
-(1, 'parashitamol', 1000, 500),
-(2, 'antibilotil', 10, 5000);
+(1, 'parashitamol', 69, 500),
+(2, 'antibilotil', 20, 5000),
+(3, 'Susu', 100, 20000);
 
 -- --------------------------------------------------------
 
@@ -66,10 +79,18 @@ CREATE TABLE `pasien` (
   `id` int(11) NOT NULL,
   `nama_pasien` varchar(200) NOT NULL,
   `tgl_lahir` varchar(200) NOT NULL,
-  `tinggi_badan` int(11) NOT NULL,
-  `berat_badan` int(11) NOT NULL,
-  `alamat` text NOT NULL
+  `alamat` text NOT NULL,
+  `kode_pasien` varchar(50) NOT NULL,
+  `jk` int(11) NOT NULL,
+  `tmp_lahir` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `pasien`
+--
+
+INSERT INTO `pasien` (`id`, `nama_pasien`, `tgl_lahir`, `alamat`, `kode_pasien`, `jk`, `tmp_lahir`) VALUES
+(1, 'Leon Prasetya', '1980-06-03', 'Belum memiliki alamat tetap', '119800603', 1, 'Jakarta Utara');
 
 -- --------------------------------------------------------
 
@@ -83,15 +104,17 @@ CREATE TABLE `pegawai` (
   `password` varchar(100) NOT NULL,
   `nama_pegawai` varchar(200) NOT NULL,
   `alamat` varchar(360) NOT NULL,
-  `pekerjaan` int(11) NOT NULL
+  `pekerjaan` int(11) NOT NULL,
+  `foto` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `pegawai`
 --
 
-INSERT INTO `pegawai` (`id`, `username`, `password`, `nama_pegawai`, `alamat`, `pekerjaan`) VALUES
-(1, 'leon', 'admin', 'leon prasetya', 'tidak tau', 1);
+INSERT INTO `pegawai` (`id`, `username`, `password`, `nama_pegawai`, `alamat`, `pekerjaan`, `foto`) VALUES
+(1, 'leon', 'admin', 'leon prasetya', 'trenggalek, jawa timur', 1, 'assets/img/profile/leon.jpg'),
+(2, 'selly', 'jon cock', 'Selly Shelly', 'korea utara', 2, 'assets/img/profile/selly.jpg');
 
 -- --------------------------------------------------------
 
@@ -120,7 +143,10 @@ CREATE TABLE `riwayat_penyakit` (
   `diagnosa` text NOT NULL,
   `tgl` varchar(200) NOT NULL,
   `id_rawatinap` varchar(11) NOT NULL,
-  `biaya_pengobatan` int(11) NOT NULL
+  `biaya_pengobatan` int(11) NOT NULL,
+  `tinggi` int(11) NOT NULL,
+  `berat` int(11) NOT NULL,
+  `tensi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -148,7 +174,6 @@ CREATE TABLE `ruang_inap` (
   `nama_ruang` varchar(200) NOT NULL,
   `id_pasien` varchar(11) DEFAULT NULL,
   `tgl_masuk` varchar(200) DEFAULT NULL,
-  `jam_masuk` varchar(100) NOT NULL,
   `status` int(11) DEFAULT NULL,
   `biaya` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -157,15 +182,21 @@ CREATE TABLE `ruang_inap` (
 -- Dumping data untuk tabel `ruang_inap`
 --
 
-INSERT INTO `ruang_inap` (`id`, `nama_ruang`, `id_pasien`, `tgl_masuk`, `jam_masuk`, `status`, `biaya`) VALUES
-(1, 'Melati', NULL, NULL, '', 2, 900000),
-(2, 'Mawar', '', '', '', 0, 600000),
-(3, 'Coper', NULL, NULL, '', 2, 400000),
-(4, 'Copere', NULL, NULL, '', 0, 666);
+INSERT INTO `ruang_inap` (`id`, `nama_ruang`, `id_pasien`, `tgl_masuk`, `status`, `biaya`) VALUES
+(1, 'Melati', NULL, NULL, 0, 900000),
+(2, 'Mawar', NULL, NULL, 0, 600000),
+(3, 'Coper', NULL, NULL, 0, 400000),
+(4, 'Copere', NULL, NULL, 0, 666);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `antrian`
+--
+ALTER TABLE `antrian`
+  ADD PRIMARY KEY (`no_urut`);
 
 --
 -- Indeks untuk tabel `foto_rotgen`
@@ -232,19 +263,19 @@ ALTER TABLE `foto_rotgen`
 -- AUTO_INCREMENT untuk tabel `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `riwayat_obat`

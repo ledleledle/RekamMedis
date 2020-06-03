@@ -12,6 +12,8 @@
   $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$idnama'");
   $pasien = mysqli_fetch_array($cek);
   $idid = $pasien['id'];
+  $terakhir = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY id DESC LIMIT 1");
+  $riwayat_terakhir = mysqli_fetch_array($terakhir);
   ?>
 </head>
 
@@ -72,15 +74,15 @@
                             </tr>
                             <tr>
                               <th scope="row">Tinggi Bandan Terakhir</th>
-                              <td> : <?php echo $pasien['tinggi_badan'] . " cm"; ?></td>
+                              <td> : <?php echo (@$riwayat_terakhir['tinggi'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['tinggi'] . " cm"; ?></td>
                             </tr>
                             <tr>
                               <th scope="row">Berat Badan Terakhir</th>
-                              <td> : <?php echo $pasien['berat_badan'] . " kg"; ?></td>
+                              <td> : <?php echo (@$riwayat_terakhir['berat'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['berat'] . " kg"; ?></td>
                             </tr>
                             <tr>
                               <th scope="row">Tekanan Darah Terakhir</th>
-                              <td> : <?php echo $pasien['tensi'] . " mmHg"; ?></td>
+                              <td> : <?php echo (@$riwayat_terakhir['tensi'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['tensi'] . " mmHg"; ?></td>
                             </tr>
                             <tr>
                               <th scope="row">Alamat</th>
@@ -108,7 +110,7 @@
                               <th>Penyakit</th>
                               <th>Diagnosa</th>
                               <th>Obat</th>
-                              <th>Foto Rotgen</th>
+                              <th>Keterangan Lanjutan</th>
                               <th>Aksi</th>
                             </tr>
                           </thead>
@@ -122,23 +124,7 @@
                               <tr>
                                 <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
                                 <td><?php echo ucwords($row['penyakit']); ?></td>
-                                <td><?php
-                                    echo $row['diagnosa'] . " - ";
-                                    $status = substr($row['id_rawatinap'], 0, 3);
-                                    $idrawatinap = substr($row['id_rawatinap'], 3);
-                                    if ($row['id_rawatinap'] == '0') {
-                                      echo 'Pasien tidak membutuhkan Rawat Inap';
-                                    } else {
-                                      if ($status == "tmp") {
-                                        $ruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id='$idrawatinap'");
-                                        $showruang = mysqli_fetch_array($ruang);
-                                        echo "<a href='ruangan.php' title='Detail Ruang Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien masih dirawat di ruang " . $showruang['nama_ruang'] . " sejak tgl " . tgl_indo($showruang['tgl_masuk']) . "</a>";
-                                      } else {
-                                        $riw1 = mysqli_query($conn, "SELECT * FROM riwayat_rawatinap WHERE id='$idrawatinap'");
-                                        $riwayatinap = mysqli_fetch_array($riw1);
-                                        echo "<a href='riwayat_inap.php' title='Riwayat Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien pernah dirawat pada tgl " . tgl_indo($riwayatinap['2']) . ' - ' . tgl_indo($riwayatinap['3']) . "</a>";
-                                      }
-                                    } ?>
+                                <td><?php  echo $row['diagnosa']; ?>
                                 </td>
                                 <td>
                                   <?php
@@ -162,18 +148,40 @@
                                   }
                                   ?>
                                 </td>
-                                <td><?php
-                                    $rotgensql = mysqli_query($conn, "SELECT * FROM foto_rotgen WHERE id_pasien='$idid' AND id_penyakit='$idpenyakit'");
-                                    $jumrotgen = mysqli_num_rows($rotgensql);
-                                    if ($jumrotgen == 0) {
-                                      echo 'Tidak ada foto';
-                                    } else { ?>
+                                <td>
+                                  <?php
+                                  $rotgensql = mysqli_query($conn, "SELECT * FROM foto_rotgen WHERE id_pasien='$idid' AND id_penyakit='$idpenyakit'");
+                                  $jumrotgen = mysqli_num_rows($rotgensql);
+                                  if ($jumrotgen == 0) {
+                                    echo '- Tidak ada foto<br>';
+                                  } else { ?>
                                     <form action="detail_rotgen.php" method="POST">
                                       <input type="hidden" name="id" value="<?php echo $idnama; ?>">
                                       <input type="hidden" name="idriwayat" value="<?php echo $idpenyakit ?>">
                                       <button type="submit" title="Detail Foto Rotgen Pasien" data-toggle="tooltip" id="btn-link"><i class="fas fa-info-circle text-info"></i> <?php echo $jumrotgen; ?> Foto</button>
                                     </form>
-                                  <?php } ?>
+                                  <?php
+                                  }
+                                  echo "- Berat : " . $row['berat'] . " kg, ";
+                                  echo "Tinggi : " . $row['tinggi'] . " cm, ";
+                                  echo "Tekanan Darah : " . $row['tensi'] . " mmHg";
+                                  echo "<br>- ";
+                                  $status = substr($row['id_rawatinap'], 0, 3);
+                                    $idrawatinap = substr($row['id_rawatinap'], 3);
+                                    if ($row['id_rawatinap'] == '0') {
+                                      echo 'Pasien tidak membutuhkan Rawat Inap';
+                                    } else {
+                                      if ($status == "tmp") {
+                                        $ruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id='$idrawatinap'");
+                                        $showruang = mysqli_fetch_array($ruang);
+                                        echo "<a href='ruangan.php' title='Detail Ruang Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien masih dirawat di ruang " . $showruang['nama_ruang'] . " sejak tgl " . tgl_indo($showruang['tgl_masuk']) . "</a>";
+                                      } else {
+                                        $riw1 = mysqli_query($conn, "SELECT * FROM riwayat_rawatinap WHERE id='$idrawatinap'");
+                                        $riwayatinap = mysqli_fetch_array($riw1);
+                                        echo "<a href='riwayat_inap.php' title='Riwayat Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien pernah dirawat pada tgl " . tgl_indo($riwayatinap['2']) . ' s.d. ' . tgl_indo($riwayatinap['3']) . "</a>";
+                                      }
+                                    }
+                                  ?>
                                 </td>
                                 <td>
                                   <form method="POST" action="print.php" target="_blank">
