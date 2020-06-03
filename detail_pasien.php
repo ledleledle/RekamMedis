@@ -47,19 +47,6 @@
                   <div class="card">
                     <div class="card-header">
                       <h4>Info Pasien</h4>
-                      <div class="card-header-action">
-                        <form method="POST" action="print.php" target="_blank">
-                          <input type="hidden" name="id" value="<?php echo $idnama; ?>">
-                          <?php
-                          $cekrekam = mysqli_num_rows($rekam);
-                          if ($cekrekam == 0) {
-                            echo '';
-                          } else {
-                            echo '<button type="submit" class="btn btn-primary" name="printall">Print Semua</button> &emsp;';
-                          } ?>
-                          <a href="rawat_jalan.php" class="btn btn-primary">Rawat Jalan</a>
-                        </form>
-                      </div>
                     </div>
                     <div class="card-body">
                       <div class="gallery">
@@ -71,23 +58,29 @@
                             </tr>
                             <tr>
                               <th scope="row">Tempat / Tanggal Lahir</th>
-                              <td> : <?php echo ucwords($pasien['tmp_lahir'])." / ".tgl_indo($pasien['tgl_lahir']); ?></td>
+                              <td> : <?php echo ucwords($pasien['tmp_lahir']) . " / " . tgl_indo($pasien['tgl_lahir']); ?></td>
                             </tr>
                             <tr>
                               <th scope="row">Jenis Kelamin</th>
-                              <td> : <?php if($pasien['jk'] == "0"){
-                                echo "Laki - Laki";
-                              } else {
-                                echo "Perempuan";
-                              } ?></td>
+                              <td> :
+                                <?php if ($pasien['jk'] == "0") {
+                                  echo "Laki - Laki";
+                                } else {
+                                  echo "Perempuan";
+                                } ?>
+                              </td>
                             </tr>
                             <tr>
-                              <th scope="row">Tinggi Bandan</th>
+                              <th scope="row">Tinggi Bandan Terakhir</th>
                               <td> : <?php echo $pasien['tinggi_badan'] . " cm"; ?></td>
                             </tr>
                             <tr>
-                              <th scope="row">Berat Badan</th>
+                              <th scope="row">Berat Badan Terakhir</th>
                               <td> : <?php echo $pasien['berat_badan'] . " kg"; ?></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Tekanan Darah Terakhir</th>
+                              <td> : <?php echo $pasien['tensi'] . " mmHg"; ?></td>
                             </tr>
                             <tr>
                               <th scope="row">Alamat</th>
@@ -130,7 +123,7 @@
                                 <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
                                 <td><?php echo ucwords($row['penyakit']); ?></td>
                                 <td><?php
-                                    echo $row['diagnosa']." - ";
+                                    echo $row['diagnosa'] . " - ";
                                     $status = substr($row['id_rawatinap'], 0, 3);
                                     $idrawatinap = substr($row['id_rawatinap'], 3);
                                     if ($row['id_rawatinap'] == '0') {

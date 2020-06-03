@@ -3,25 +3,19 @@
 	@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 	body {
-			background: #e2e2e2;
-		width: 98%;
-		height: 100vh;
+		-webkit-print-color-adjust: exact;
 	}
 
 	body .card {
 		width: 800px;
 		height: 400px;
-		background: transparent;
+		background: #e2e2e2;
 		position: absolute;
 		left: 0;
 		right: 0;
 		margin: auto;
 		top: 0;
 		bottom: 0;
-		border-radius: 10px;
-		-webkit-border-radius: 10px;
-		-moz-border-radius: 10px;
-		box-shadow: 0px 20px 30px 3px rgba(0, 0, 0, 0.55);
 	}
 
 	body .card_left {
@@ -34,9 +28,6 @@
 	body .card_left img {
 		width: 100%;
 		height: auto;
-		border-radius: 10px 0 0 10px;
-		-webkit-border-radius: 10px 0 0 10px;
-		-moz-border-radius: 10px 0 0 10px;
 		position: relative;
 	}
 
@@ -45,9 +36,6 @@
 		float: left;
 		background: #000000;
 		height: 400px;
-		border-radius: 0 10px 10px 0;
-		-webkit-border-radius: 0 10px 10px 0;
-		-moz-border-radius: 0 10px 10px 0;
 	}
 
 	body .card_right h1 {

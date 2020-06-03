@@ -53,7 +53,7 @@
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-striped" id="table-1">
+                      <table class="table table-striped" id="antrian">
                         <thead>
                           <tr>
                             <th>No. Antrian</th>
@@ -88,9 +88,13 @@
                     </div>
                     </td>
                     <td>
-                      <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-whatever="<?php echo ucwords($pas['nama_pasien']); ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">
-                        <a class="btn btn-primary btn-action mr-1" title="Edit Data Pasien" data-toggle="tooltip"><i class="fas fa-stethoscope"></i> Periksa Pasien</a>
-                      </span>
+                      <?php if ($row['status'] == 0) { ?>
+                        <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-whatever="<?php echo ucwords($pas['nama_pasien']); ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">
+                          <a class="btn btn-primary btn-action mr-1" title="Periksa Pasien" data-toggle="tooltip"><i class="fas fa-stethoscope"></i> Periksa Pasien</a>
+                        </span>
+                      <?php } else { ?>
+                        <a class="btn btn-secondary btn-action mr-1" title="Pasien sudah diperiksa" data-toggle="tooltip"><i class="fas fa-stethoscope"></i> Pasien sudah diperiksa</a>
+                      <?php } ?>
                     </td>
                     </tr>
                   <?php } ?>
@@ -128,7 +132,7 @@
     </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" id="editPasien">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Edit Data</h5>
@@ -137,12 +141,25 @@
             </button>
           </div>
           <div class="modal-body">
+            <form action="detail_pasien.php" method="POST" novalidate="" target="_blank">
+              <div class="form-group row">
+                <div class="col-sm-9">
+                  <input type="hidden" name="id" required="" id="getNama">
+                  <button type="submit" class="btn btn-primary" name="submit">Periksa Rekam Medis Pasien</button>
+                </div>
+              </div>
+            </form>
             <form action="" method="POST" class="needs-validation" novalidate="">
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Tekanan Darah</label>
-                <div class="col-sm-9">
-                  <input type="hidden" class="form-control" name="id" required="" id="getId">
-                  <input type="text" class="form-control" name="tensi" required="">
+                <div class="input-group col-sm-9">
+                  <input type="hidden" name="id" required="" id="getId">
+                  <input type="number" class="form-control" name="tensi" required="" placeholder="Tekanan Darah Pasien">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      mmHg
+                    </div>
+                  </div>
                   <div class="invalid-feedback">
                     Mohon data diisi!
                   </div>
@@ -151,7 +168,7 @@
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Berat Badan</label>
                 <div class="input-group col-sm-9">
-                  <input type="number" class="form-control" name="berat" required="" id="getBerat">
+                  <input type="number" class="form-control" name="berat" required="" value="0" placeholder="Berat Badan Pasien">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
                       Kg
@@ -165,7 +182,7 @@
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Tinggi Badan</label>
                 <div class="col-sm-9 input-group">
-                  <input type="number" class="form-control" name="tinggi" required="" id="getTinggi">
+                  <input type="number" class="form-control" name="tinggi" required="" value="0" placeholder="Tinggi Badan Pasien">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
                       cm
@@ -177,9 +194,32 @@
                 </div>
               </div>
               <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Diagnosa Penyakit</label>
+                <div class="col-sm-9">
+                  <textarea placeholder="Wajib" class="summernote" name="diagnosa" required></textarea>
+                  <div class="invalid-feedback">
+                    Mohon data diisi!
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Fonis Penyakit</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" name="tensi" required="">
+                  <input type="text" class="form-control" name="tensi" required="" placeholder="Nama Penyakit yang menyerang Pasien">
+                  <div class="invalid-feedback">
+                    Mohon data diisi!
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Biaya Pemeriksaan</label>
+                <div class="input-group col-md-9">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      Rp
+                    </div>
+                  </div>
+                  <input type="number" class="form-control" name="biaya" required="" value="0">
                   <div class="invalid-feedback">
                     Mohon data diisi!
                   </div>
@@ -204,18 +244,11 @@
     $('#editPasien').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget)
       var recipient = button.data('whatever')
-      var nama = button.data('nama')
       var id = button.data('id')
-      var tgl = button.data('lahir')
-      var berat = button.data('berat')
-      var tinggi = button.data('tinggi')
       var modal = $(this)
       modal.find('.modal-title').text('Pemeriksaan Pasien yang bernama ' + recipient)
       modal.find('#getId').val(id)
-      modal.find('#getNama').val(nama)
-      modal.find('#getTgl').val(tgl)
-      modal.find('#getBerat').val(berat)
-      modal.find('#getTinggi').val(tinggi)
+      modal.find('#getNama').val(recipient)
     })
   </script>
 </body>

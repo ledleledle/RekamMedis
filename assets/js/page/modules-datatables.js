@@ -53,3 +53,6 @@ $("#table-2").dataTable({
     { "sortable": false, "targets": [2, 3] }
   ]
 });
+$("#antrian").dataTable({
+  "aaSorting": [[ 3, "asc" ]]
+});
