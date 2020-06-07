@@ -1,6 +1,5 @@
 <style>
 	@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
-	@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 	body {
 		-webkit-print-color-adjust: exact;
