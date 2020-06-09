@@ -60,8 +60,8 @@ $job = $output['pekerjaan'];
           }
           ?>
         </div>
-        <a href="profile.php" class="dropdown-item has-icon">
-          <i class="fas fa-user"></i> Profile
+        <a href="profil.php" class="dropdown-item has-icon">
+          <i class="fas fa-user"></i> Profil Pegawai
         </a>
         <div class="dropdown-divider"></div>
         <a href="#" data-target="#ModalLogout" data-toggle="modal" class="dropdown-item has-icon text-danger">
