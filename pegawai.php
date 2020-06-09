@@ -140,15 +140,21 @@
 														$i++;
 														if ($row['pekerjaan'] == '1') {
 															$jobname = 'Dokter';
-														} else {
+														} elseif ($row['pekerjaan'] == '2') {
 															$jobname = 'Apoteker';
+														} elseif ($row['pekerjaan'] == '3') {
+															$jobname = 'Administrator';
 														}
 													?>
 														<tr>
 															<td><?php echo $i; ?></td>
 															<td>
 																<div class="gallery">
-																	<div class="gallery-item rounded-circle mr-1" data-image="<?php echo $row['foto']; ?>" data-title="<?php echo $jobname . ". " . ucwords($row['nama_pegawai']); ?>"></div>
+																	<?php if ($row['foto'] == "") { ?>
+																		<div class="gallery-item rounded-circle mr-1" data-image="assets/img/profile/default.png" data-title="<?php echo $jobname . ". " . ucwords($row['nama_pegawai']); ?>"></div>
+																	<?php } else { ?>
+																		<div class="gallery-item rounded-circle mr-1" data-image="<?php echo $row['foto']; ?>" data-title="<?php echo $jobname . ". " . ucwords($row['nama_pegawai']); ?>"></div>
+																	<?php } ?>
 																</div>
 															</td>
 															<th><?php echo ucwords($row['nama_pegawai']); ?></th>
@@ -156,8 +162,10 @@
 															<td><?php
 																	if ($row['pekerjaan'] == '1') {
 																		echo '<div class="badge badge-pill badge-primary mb-1">' . $jobname;
-																	} else {
+																	} elseif ($row['pekerjaan'] == '2') {
 																		echo '<div class="badge badge-pill badge-success mb-1">' . $jobname;
+																	} elseif ($row['pekerjaan'] == '3') {
+																		echo '<div class="badge badge-pill badge-danger mb-1">' . $jobname;
 																	} ?>
 										</div>
 										</td>
@@ -218,6 +226,7 @@
 								<select class="form-control selectric" name="pekerjaan">
 									<option value="1">Dokter</option>
 									<option value="2">Apoteker</option>
+									<option value="3">Administrator</option>
 								</select>
 							</div>
 							<div class="form-group">

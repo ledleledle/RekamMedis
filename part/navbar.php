@@ -48,7 +48,7 @@ $job = $output['pekerjaan'];
     </li>
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
         <img alt="image" src="<?php echo $output['foto']; ?>" class="rounded-circle mr-1">
-        <div class="d-sm-none d-lg-inline-block">Hi, <?php echo ucwords($output['nama_pegawai']); ?></div>
+        <div class="d-sm-none d-lg-inline-block"><?php if($sessionid == '1'){ echo "Dokter ";} elseif($sessionid == '3'){ echo "Admin ";} echo "<b>".ucwords($output['nama_pegawai'])."</b>"; ?></div>
       </a>
       <div class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-title"><i class="fas fa-circle text-success"></i>

@@ -82,14 +82,14 @@
                           <tr>
                             <th>No. Antrian</th>
                             <th>ID Pasien</th>
-                            <th>Nama</th>
+                            <th>Nama Pasien</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
                           <?php
-                          $sql = mysqli_query($conn, "SELECT * FROM antrian");
+                          $sql = mysqli_query($conn, "SELECT * FROM antrian WHERE status='0'");
                           while ($row = mysqli_fetch_array($sql)) {
                             $idpasien = $row['id_pasien'];
                           ?>
@@ -101,16 +101,7 @@
                               ?>
                               <td><?php echo $pas['kode_pasien']; ?></td>
                               <td><?php echo ucwords($pas['nama_pasien']); ?></td>
-                              <td>
-                                <?php
-                                if ($row['status'] == 0) {
-                                  echo '<div class="badge badge-pill badge-primary mb-1">Belum Diperiksa';
-                                } else {
-                                  echo '<div class="badge badge-pill badge-danger mb-1">Sudah diperiksa';
-                                }
-                                echo "</div>";
-                                ?>
-                              </td>
+                              <td><div class="badge badge-pill badge-primary mb-1">Belum diperiksa</div></td>
                               <td>
                                 <?php if ($row['status'] == 0) { ?>
                                   <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-whatever="<?php echo ucwords($pas['nama_pasien']); ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">

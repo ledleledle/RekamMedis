@@ -42,7 +42,7 @@
                           <tr>
                             <th>No. Antrian</th>
                             <th>ID Pasien</th>
-                            <th>Nama</th>
+                            <th>Nama Pasien</th>
                             <th>Status</th>
                             <th>Action</th>
                           </tr>
