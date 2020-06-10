@@ -3,16 +3,20 @@
 
 <head>
   <?php
-  $page1 = "raw1";
+  $page1 = $_POST['page'];
   if ($page1 == "raw1") {
     $page = "Pemeriksaan Pasien";
   } elseif ($page1 == "raw2") {
     $page = "Tindakan untuk Pasien";
+  } else {
+    header("location:index.php");
   }
+  $idnama = $_POST['id'];
 
   session_start();
   include 'auth/connect.php';
   include "part/head.php";
+  include "part_func/tgl_ind.php";
   ?>
 </head>
 
@@ -31,6 +35,10 @@
         <section class="section">
           <div class="section-header">
             <h1><?php echo $mbuh; ?></h1>
+            <div class="section-header-breadcrumb">
+              <div class="breadcrumb-item active"><?php echo $page; ?></div>
+              <div class="breadcrumb-item">Nama Pasien : <?php echo ucwords($idnama); ?></div>
+            </div>
           </div>
 
           <div class="section-body">
@@ -54,26 +62,258 @@
                         <div class="col-8">
                           <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="list-diagnosa" role="tabpanel" aria-labelledby="list-diagnosa-list">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non.
+                              <form action="" method="POST" class="needs-validation" novalidate="">
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label">Tekanan Darah</label>
+                                  <div class="input-group col-sm-9">
+                                    <input type="hidden" name="id" required="" id="getId">
+                                    <input type="number" class="form-control" name="tensi" required="" placeholder="Tekanan Darah Pasien">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">
+                                        mmHg
+                                      </div>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label">Berat Badan</label>
+                                  <div class="input-group col-sm-9">
+                                    <input type="number" class="form-control" name="berat" required="" value="0" placeholder="Berat Badan Pasien">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">
+                                        Kg
+                                      </div>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label">Tinggi Badan</label>
+                                  <div class="col-sm-9 input-group">
+                                    <input type="number" class="form-control" name="tinggi" required="" value="0" placeholder="Tinggi Badan Pasien">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">
+                                        cm
+                                      </div>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label">Diagnosa Penyakit</label>
+                                  <div class="col-sm-9">
+                                    <textarea placeholder="Wajib" class="summernote-simple" name="diagnosa" required></textarea>
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label">Fonis Penyakit</label>
+                                  <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="penyakit" required="" placeholder="Nama Penyakit yang menyerang Pasien">
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label">Butuh tidakan lebih lanjut?</label>
+                                  <div class="col-sm-9">
+                                    <select class="form-control selectric" name="status" required>
+                                      <option value="1">Tidak</option>
+                                      <option value="2">Ya</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label class="col-sm-3 col-form-label">Biaya Pemeriksaan</label>
+                                  <div class="input-group col-md-9">
+                                    <div class="input-group-prepend">
+                                      <div class="input-group-text">
+                                        Rp
+                                      </div>
+                                    </div>
+                                    <input type="number" class="form-control" name="biaya" required="" value="0">
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" name="submit">Pemeriksaan Selesai</button>
+                              </form>
                             </div>
                             <div class="tab-pane fade" id="list-info" role="tabpanel" aria-labelledby="list-info-list">
-                              info
+                              <?php
+                              $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$idnama'");
+                              $pasien = mysqli_fetch_array($cek);
+                              $idid = $pasien['id'];
+                              $terakhir = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY id DESC LIMIT 1");
+                              $riwayat_terakhir = mysqli_fetch_array($terakhir);
+                              ?>
+                              <table class="table table-striped table-sm">
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">Nama Lengkap</th>
+                                    <td> : <?php echo ucwords($idnama); ?></td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Tempat / Tanggal Lahir</th>
+                                    <td> : <?php echo ucwords($pasien['tmp_lahir']) . " / " . tgl_indo($pasien['tgl_lahir']); ?></td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Jenis Kelamin</th>
+                                    <td> :
+                                      <?php if ($pasien['jk'] == "0") {
+                                        echo "Laki - Laki";
+                                      } else {
+                                        echo "Perempuan";
+                                      } ?>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Tinggi Bandan Terakhir</th>
+                                    <td> : <?php echo (@$riwayat_terakhir['tinggi'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['tinggi'] . " cm"; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Berat Badan Terakhir</th>
+                                    <td> : <?php echo (@$riwayat_terakhir['berat'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['berat'] . " kg"; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Tekanan Darah Terakhir</th>
+                                    <td> : <?php echo (@$riwayat_terakhir['tensi'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['tensi'] . " mmHg"; ?></td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">Alamat</th>
+                                    <td> : <?php echo ucwords($pasien['alamat']); ?></td>
+                                  </tr>
+                                </tbody>
+                              </table>
                             </div>
                             <div class="tab-pane fade" id="list-rekam" role="tabpanel" aria-labelledby="list-rekam-list">
-                              Deserunt cupidatat anim ullamco ut dolor anim sint nulla amet incididunt tempor ad ut pariatur officia culpa laboris occaecat. Dolor in nisi aliquip in non magna amet nisi sed commodo proident anim deserunt nulla veniam occaecat reprehenderit esse ut eu culpa fugiat nostrud pariatur adipisicing incididunt consequat nisi non amet.
+                              <table class="table table-striped table-bordered" id="table-1">
+                                <thead>
+                                  <tr>
+                                    <th>Tanggal Berobat</th>
+                                    <th>Penyakit</th>
+                                    <th>Diagnosa</th>
+                                    <th>Obat</th>
+                                    <th>Keterangan Lanjutan</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <?php
+                                  $sql = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid'");
+                                  $i = 0;
+                                  while ($row = mysqli_fetch_array($sql)) {
+                                    $idpenyakit = $row['id'];
+                                  ?>
+                                    <tr>
+                                      <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
+                                      <td><?php echo ucwords($row['penyakit']); ?></td>
+                                      <td><?php echo $row['diagnosa']; ?>
+                                      </td>
+                                      <td>
+                                        <?php
+                                        $obat2an = mysqli_query($conn, "SELECT * FROM riwayat_obat WHERE id_penyakit='$idpenyakit' AND id_pasien='$idid'");
+                                        $jumobat = mysqli_num_rows($obat2an);
+                                        if ($jumobat == 0) {
+                                          echo "Tidak ada obat yang diberikan";
+                                        } else {
+                                          $count = 0;
+                                          while ($showobat = mysqli_fetch_array($obat2an)) {
+                                            $idobat = $showobat['id_obat'];
+                                            $obatlagi = mysqli_query($conn, "SELECT * FROM obat WHERE id='$idobat'");
+                                            $namaobat = mysqli_fetch_array($obatlagi);
+                                            echo $str = ucwords($namaobat['nama_obat']);
+                                            $count = $count + 1;
+
+                                            if ($count < $jumobat) {
+                                              echo ", ";
+                                            }
+                                          }
+                                        }
+                                        ?>
+                                      </td>
+                                      <td>
+                                        <?php
+                                        $rotgensql = mysqli_query($conn, "SELECT * FROM foto_rotgen WHERE id_pasien='$idid' AND id_penyakit='$idpenyakit'");
+                                        $jumrotgen = mysqli_num_rows($rotgensql);
+                                        if ($jumrotgen == 0) {
+                                          echo '- Tidak ada foto rotgen<br>';
+                                        } else { ?>
+                                          <form action="detail_rotgen.php" method="POST">
+                                            <input type="hidden" name="id" value="<?php echo $idnama; ?>">
+                                            <input type="hidden" name="idriwayat" value="<?php echo $idpenyakit ?>">
+                                            <button type="submit" title="Detail Foto Rotgen Pasien" data-toggle="tooltip" id="btn-link"><i class="fas fa-info-circle text-info"></i> <?php echo $jumrotgen; ?> Foto</button>
+                                          </form>
+                                        <?php
+                                        }
+                                        echo "- Berat : " . $row['berat'] . " kg, ";
+                                        echo "Tinggi : " . $row['tinggi'] . " cm, ";
+                                        echo "Tekanan Darah : " . $row['tensi'] . " mmHg";
+                                        echo "<br>- ";
+                                        $status = substr($row['id_rawatinap'], 0, 3);
+                                        $idrawatinap = substr($row['id_rawatinap'], 3);
+                                        if ($row['id_rawatinap'] == '0') {
+                                          echo 'Pasien tidak membutuhkan Rawat Inap';
+                                        } else {
+                                          if ($status == "tmp") {
+                                            $ruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id='$idrawatinap'");
+                                            $showruang = mysqli_fetch_array($ruang);
+                                            echo "<a href='ruangan.php' title='Detail Ruang Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien masih dirawat di ruang " . $showruang['nama_ruang'] . " sejak tgl " . tgl_indo($showruang['tgl_masuk']) . "</a>";
+                                          } else {
+                                            $riw1 = mysqli_query($conn, "SELECT * FROM riwayat_rawatinap WHERE id='$idrawatinap'");
+                                            $riwayatinap = mysqli_fetch_array($riw1);
+                                            echo "<a href='riwayat_inap.php' title='Riwayat Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien pernah dirawat pada tgl " . tgl_indo($riwayatinap['2']) . ' s.d. ' . tgl_indo($riwayatinap['3']) . "</a>";
+                                          }
+                                        }
+                                        ?>
+                                      </td>
+                                    </tr>
+                                  <?php } ?>
+                                </tbody>
+                              </table>
                             </div>
                             <div class="tab-pane fade" id="list-obat" role="tabpanel" aria-labelledby="list-obat-list">
-                              In quis non esse eiusmod sunt fugiat magna pariatur officia anim ex officia nostrud amet nisi pariatur eu est id ut exercitation ex ad reprehenderit dolore nostrud sit ut culpa consequat magna ad labore proident ad qui et tempor exercitation in aute veniam et velit dolore irure qui ex magna ex culpa enim anim ea mollit consequat ullamco exercitation in.
+                              <table class="table table-striped table-bordered" id="table-1">
+                                <thead>
+                                  <tr>
+                                    <th>Nama</th>
+                                    <th>Stok</th>
+                                    <th>Harga per unit</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <?php
+                                  $sql = mysqli_query($conn, "SELECT * FROM obat");
+                                  while ($row = mysqli_fetch_array($sql)) {
+                                  ?>
+                                    <tr>
+                                      <td><?php echo ucwords($row['nama_obat']) ?></td>
+                                      <td><?php echo $row['stok'] . " Unit"; ?></td>
+                                      <td>Rp. <?php echo number_format($row['harga'], 0, ".", "."); ?></td>
+                                    </tr>
+                                  <?php } ?>
+                                </tbody>
+                              </table>
                             </div>
                           </div>
                         </div>
                       </div>
                     <?php } elseif ($page1 == "raw2") { ?>
-                      awaw
+                      <?php echo $idnama; ?>
                     <?php } ?>
                   </div>
                 </div>

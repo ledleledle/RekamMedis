@@ -153,7 +153,7 @@
                                   $rotgensql = mysqli_query($conn, "SELECT * FROM foto_rotgen WHERE id_pasien='$idid' AND id_penyakit='$idpenyakit'");
                                   $jumrotgen = mysqli_num_rows($rotgensql);
                                   if ($jumrotgen == 0) {
-                                    echo '- Tidak ada foto<br>';
+                                    echo '- Tidak ada foto rotgen<br>';
                                   } else { ?>
                                     <form action="detail_rotgen.php" method="POST">
                                       <input type="hidden" name="id" value="<?php echo $idnama; ?>">

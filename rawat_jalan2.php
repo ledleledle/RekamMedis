@@ -65,13 +65,11 @@
                                 <div class="badge badge-pill badge-primary mb-1">Butuh Tindakan Lebih Lanjut</div>
                               </td>
                               <td>
-                                <?php if ($row['status'] == 2) { ?>
-                                  <span data-target="#editPasien" data-toggle="modal" data-id="<?php echo $idpasien; ?>" data-whatever="<?php echo ucwords($pas['nama_pasien']); ?>" data-lahir="<?php echo $row['tgl_lahir']; ?>" data-tinggi="<?php echo $row['tinggi_badan']; ?>" data-berat="<?php echo $row['berat_badan']; ?>">
-                                    <a class="btn btn-primary btn-action mr-1" title="Beri tindakan pada pasien" data-toggle="tooltip"><i class="fas fa-bed"></i> Beri tindakan pada pasien</a>
-                                  </span>
-                                <?php } else { ?>
-                                  <a class="btn btn-secondary btn-action mr-1" title="Pasien sudah diperiksa" data-toggle="tooltip"><i class="fas fa-stethoscope"></i> Pasien sudah diperiksa</a>
-                                <?php } ?>
+                                <form action="aksi.php" method="POST">
+                                  <input type="hidden" name="page" value="raw2" readonly>
+                                  <input type="hidden" name="id" value="<?php echo $pas['nama_pasien']; ?>" readonly>
+                                  <button class="btn btn-primary btn-action mr-1" name="raw2" title="Beri tindakan pada pasien" data-toggle="tooltip"><i class="fas fa-bed"></i> Beri tindakan pada pasien</button>
+                                </form>
                               </td>
                             </tr>
                           <?php } ?>
