@@ -287,7 +287,7 @@
                               </table>
                             </div>
                             <div class="tab-pane fade" id="list-obat" role="tabpanel" aria-labelledby="list-obat-list">
-                              <table class="table table-striped table-bordered" id="table-1">
+                              <table class="table table-striped table-bordered" id="table-211">
                                 <thead>
                                   <tr>
                                     <th>Nama</th>
