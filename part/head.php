@@ -1,6 +1,6 @@
    <meta charset="UTF-8">
    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-   <title>Rekam Medis - <?php echo $page; ?></title>
+   <title>Rekam Medis : <?php echo $page; ?></title>
    <link rel="shortcut icon" type="image/x-icon" href="assets/img/stisla.svg" />
 
    <!-- General CSS Files -->
@@ -18,6 +18,7 @@
    <link rel="stylesheet" href="assets/modules/jquery-selectric/selectric.css">
    <link rel="stylesheet" href="assets/modules/chocolat/dist/css/chocolat.css">
    <link rel="stylesheet" href="assets/modules/select2/dist/css/select2.min.css">
+   <link rel="stylesheet" href="assets/modules/croppie/croppie.css">
 
    <link rel="stylesheet" href="assets/modules/datatables/datatables.min.css">
    <link rel="stylesheet" href="assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">

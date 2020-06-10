@@ -3,15 +3,17 @@
 
 <head>
   <?php
+  $idnama = $_POST['id'];
   $page1 = $_POST['page'];
   if ($page1 == "raw1") {
     $page = "Pemeriksaan Pasien";
+    $bread = "<a href='rawat_jalan1.php'>";
   } elseif ($page1 == "raw2") {
     $page = "Tindakan untuk Pasien";
+    $bread = "<a href='rawat_jalan2.php'>";
   } else {
     header("location:index.php");
   }
-  $idnama = $_POST['id'];
 
   session_start();
   include 'auth/connect.php';
@@ -36,7 +38,7 @@
           <div class="section-header">
             <h1><?php echo $mbuh; ?></h1>
             <div class="section-header-breadcrumb">
-              <div class="breadcrumb-item active"><?php echo $page; ?></div>
+              <div class="breadcrumb-item active"><?php echo $bread . " " . $page; ?></a></div>
               <div class="breadcrumb-item">Nama Pasien : <?php echo ucwords($idnama); ?></div>
             </div>
           </div>

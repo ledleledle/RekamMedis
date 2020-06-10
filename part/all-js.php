@@ -12,6 +12,7 @@
 <script src="assets/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
 <script src="assets/modules/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="assets/modules/select2/dist/js/select2.full.min.js"></script>
+<script src="assets/modules/croppie/croppie.min.js"></script>
 
 <!-- DataTable -->
 <script src="assets/modules/datatables/datatables.min.js"></script>
