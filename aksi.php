@@ -49,6 +49,7 @@
                     <h4><?php echo $page; ?></h4>
                   </div>
                   <div class="card-body">
+                    <!-- RAWAT JALAN : Menu Pemeriksaan Pasien -->
                     <?php if ($page1 == "raw1") { ?>
                       <div class="row">
                         <div class="col-4">
@@ -62,7 +63,37 @@
                         <div class="col-8">
                           <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="list-diagnosa" role="tabpanel" aria-labelledby="list-diagnosa-list">
-                              <form action="" method="POST" class="needs-validation" novalidate="">
+                              <form action="rawat_jalan_print.php" method="POST" class="needs-validation" novalidate="">
+                                <div class="row">
+                                  <div class="form-group col-md-6 col-12">
+                                    <label>Berat Badan</label>
+                                    <div class="input-group">
+                                      <input type="number" class="form-control" value="0" required="" min="0" name="berat" placeholder="Berat Badan Pasien">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                          kg
+                                        </div>
+                                      </div>
+                                      <div class="invalid-feedback">
+                                        Mohon data diisi!
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group col-md-6 col-12">
+                                    <label>Tinggi Badan</label>
+                                    <div class="input-group">
+                                      <input type="number" class="form-control" value="0" required="" min="0" name="tinggi" placeholder="Tinggi Badan Pasien">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                          cm
+                                        </div>
+                                      </div>
+                                      <div class="invalid-feedback">
+                                        Mohon data diisi!
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                                 <div class="form-group row">
                                   <label class="col-sm-3 col-form-label">Tekanan Darah</label>
                                   <div class="input-group col-sm-9">
@@ -71,34 +102,6 @@
                                     <div class="input-group-prepend">
                                       <div class="input-group-text">
                                         mmHg
-                                      </div>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                      Mohon data diisi!
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-3 col-form-label">Berat Badan</label>
-                                  <div class="input-group col-sm-9">
-                                    <input type="number" class="form-control" name="berat" required="" value="0" placeholder="Berat Badan Pasien">
-                                    <div class="input-group-prepend">
-                                      <div class="input-group-text">
-                                        Kg
-                                      </div>
-                                    </div>
-                                    <div class="invalid-feedback">
-                                      Mohon data diisi!
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-3 col-form-label">Tinggi Badan</label>
-                                  <div class="col-sm-9 input-group">
-                                    <input type="number" class="form-control" name="tinggi" required="" value="0" placeholder="Tinggi Badan Pasien">
-                                    <div class="input-group-prepend">
-                                      <div class="input-group-text">
-                                        cm
                                       </div>
                                     </div>
                                     <div class="invalid-feedback">
@@ -312,8 +315,30 @@
                           </div>
                         </div>
                       </div>
+                      <!-- RAWAT JALAN : Menu Tindakan Pasien -->
                     <?php } elseif ($page1 == "raw2") { ?>
-                      <?php echo $idnama; ?>
+                      <div class="row">
+                        <div class="col-4">
+                          <div class="list-group" id="list-tab" role="tablist">
+                            <a class="list-group-item list-group-item-action active" id="list-inap-list" data-toggle="list" href="#list-inap" role="tab">Rawat Inap</a>
+                            <a class="list-group-item list-group-item-action" id="list-foto-list" data-toggle="list" href="#list-foto" role="tab">Foto Rotgen</a>
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="list-inap" role="tabpanel" aria-labelledby="list-inap-list">
+                              Deserunt cupidatat anim ullamco ut dolor anim sint nulla amet incididunt tempor ad ut pariatur officia culpa laboris occaecat. Dolor in nisi aliquip in non magna amet nisi sed commodo proident anim deserunt nulla veniam occaecat reprehenderit esse ut eu culpa fugiat nostrud pariatur adipisicing incididunt consequat nisi non amet.
+                            </div>
+                            <div class="tab-pane fade" id="list-foto" role="tabpanel" aria-labelledby="list-foto-list">
+                              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     <?php } ?>
                   </div>
                 </div>
