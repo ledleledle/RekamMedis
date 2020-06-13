@@ -21,30 +21,6 @@
       }, 500);
   </script>';
   }
-
-  if (isset($_POST['submit'])) {
-    $idpasien = $_POST['id'];
-    $penyakit = $_POST['penyakit'];
-    $diagnosa = $_POST['diagnosa'];
-    $biaya = $_POST['biaya'];
-    $tglnow = date('Y-m-d');
-    $berat = $_POST['berat'];
-    $tinggi = $_POST['tinggi'];
-    $tensi  = $_POST['tensi'];
-    $statusnya = $_POST['status'];
-
-    $submit = mysqli_query($conn, "INSERT INTO riwayat_penyakit (id_pasien, penyakit, diagnosa, tgl, id_rawatinap, biaya_pengobatan, tinggi, berat, tensi) VALUES ('$idpasien', '$penyakit', '$diagnosa', '$tglnow', '0', '$biaya', '$tinggi', '$berat', '$tensi')");
-    $update_antrian = mysqli_query($conn, "UPDATE antrian SET status='$statusnya' WHERE id_pasien='$idpasien'");
-    echo '<script>
-    setTimeout(function() {
-      swal({
-        title: "Pasien Sudah Diperiksa!",
-        text: "Pasien diharapkan segera menuju ke ruang tindakan",
-        icon: "success"
-        });
-      }, 500);
-    </script>';
-  }
   ?>
 </head>
 

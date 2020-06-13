@@ -45,6 +45,7 @@
                             <th>ID Pasien</th>
                             <th>Nama Pasien</th>
                             <th>Penyakit</th>
+                            <th>Dokter</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -52,6 +53,7 @@
                           $rekam = mysqli_query($conn, "SELECT * FROM riwayat_penyakit");
                           while ($row = mysqli_fetch_array($rekam)) {
                             $id = $row['id_pasien'];
+                            $id_doc = $row['id_dokter'];
                           ?>
                             <tr>
                               <th><?php echo tgl_indo($row['tgl']); ?></th>
@@ -64,6 +66,11 @@
                               echo "<td>" . ucwords($listnama['nama_pasien']) . "</td>";
                               ?>
                               <td><?php echo ucwords($row['penyakit']); ?></td>
+                              <td><?php
+                              $dokter = mysqli_query($conn, "SELECT * FROM pegawai WHERE id='$id_doc'");
+                              $doc = mysqli_fetch_array($dokter);
+                              echo ucwords($doc['nama_pegawai']);
+                              ?></td>
                             </tr>
                           <?php } ?>
                         </tbody>

@@ -120,6 +120,7 @@
                             $i = 0;
                             while ($row = mysqli_fetch_array($sql)) {
                               $idpenyakit = $row['id'];
+                              $id_dokter = $row['id_dokter'];
                             ?>
                               <tr>
                                 <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
@@ -181,6 +182,9 @@
                                         echo "<a href='riwayat_inap.php' title='Riwayat Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien pernah dirawat pada tgl " . tgl_indo($riwayatinap['2']) . ' s.d. ' . tgl_indo($riwayatinap['3']) . "</a>";
                                       }
                                     }
+                                    $dokter = mysqli_query($conn, "SELECT * FROM pegawai WHERE id='$id_dokter'");
+                                    $doc = mysqli_fetch_array($dokter);
+                                    echo "<br>- Diperiksa oleh Dr. ". ucwords($doc['nama_pegawai']);
                                   ?>
                                 </td>
                                 <td>

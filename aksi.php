@@ -3,7 +3,11 @@
 
 <head>
   <?php
+  include 'auth/connect.php';
   $idnama = $_POST['id'];
+  $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$idnama'");
+  $ceque = mysqli_fetch_array($cek);
+  $realid = $ceque['id'];
   $page1 = $_POST['page'];
   if ($page1 == "raw1") {
     $page = "Pemeriksaan Pasien";
@@ -16,7 +20,6 @@
   }
 
   session_start();
-  include 'auth/connect.php';
   include "part/head.php";
   include "part_func/tgl_ind.php";
   ?>
@@ -70,6 +73,8 @@
                                   <div class="form-group col-md-6 col-12">
                                     <label>Berat Badan</label>
                                     <div class="input-group">
+                                      <input type="hidden" name="page" value="raw1" readonly required>
+                                      <input type="text" name="idlae" value="<?php echo $realid; ?>" readonly required>
                                       <input type="number" class="form-control" value="0" required="" min="0" name="berat" placeholder="Berat Badan Pasien">
                                       <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -99,7 +104,7 @@
                                 <div class="form-group row">
                                   <label class="col-sm-3 col-form-label">Tekanan Darah</label>
                                   <div class="input-group col-sm-9">
-                                    <input type="hidden" name="id" required="" id="getId">
+                                    <input type="hidden" name="id" required="">
                                     <input type="number" class="form-control" name="tensi" required="" placeholder="Tekanan Darah Pasien">
                                     <div class="input-group-prepend">
                                       <div class="input-group-text">
@@ -141,7 +146,6 @@
                                     </div>
                                   </div>
                                 </div>
-
                                 <div class="form-group row">
                                   <label class="col-sm-3 col-form-label">Biaya Pemeriksaan</label>
                                   <div class="input-group col-md-9">

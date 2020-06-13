@@ -13,11 +13,11 @@ $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$idnama'");
 $pasien = mysqli_fetch_array($cek);
 $idid = $pasien['id'];
 
-if (isset($_POST['printall'])) {
-  $riwayatpenyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY tgl ASC");
-} elseif (isset($_POST['printone']) || isset($_POST['detail'])) {
+if (isset($_POST['printone']) || isset($_POST['detail'])) {
   $idriwayat = $_POST['idriwayat'];
   $riwayatpenyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' AND id='$idriwayat'");
+  $terakhir = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY id DESC LIMIT 1");
+  $riwayat_terakhir = mysqli_fetch_array($terakhir);
 } elseif (isset($_POST['print_foto'])) {
   $idfoto = $_POST['idfoto'];
   $sqlimg = mysqli_query($conn, "SELECT * FROM foto_rotgen WHERE id_pasien='$idid' AND id_penyakit='$idfoto'");
@@ -66,20 +66,34 @@ if (isset($_POST['printall'])) {
                     <td> : <?php echo ucwords($idnama); ?></td>
                   </tr>
                   <tr>
-                    <th scope="row">Tanggal Lahir</th>
-                    <td> : <?php echo tgl_indo($pasien['tgl_lahir']); ?></td>
+                    <th scope="row">Tempat / Tanggal Lahir</th>
+                    <td> : <?php echo ucwords($pasien['tmp_lahir']) . " / " . tgl_indo($pasien['tgl_lahir']); ?></td>
                   </tr>
                   <tr>
-                    <th scope="row">Tinggi Bandan</th>
-                    <td> : <?php echo $pasien['tinggi_badan'] . " cm"; ?></td>
+                    <th scope="row">Jenis Kelamin</th>
+                    <td> :
+                      <?php if ($pasien['jk'] == "0") {
+                        echo "Laki - Laki";
+                      } else {
+                        echo "Perempuan";
+                      } ?>
+                    </td>
                   </tr>
                   <tr>
-                    <th scope="row">Berat Badan</th>
-                    <td> : <?php echo $pasien['berat_badan'] . " kg"; ?></td>
+                    <th scope="row">Tinggi Bandan Terakhir</th>
+                    <td> : <?php echo (@$riwayat_terakhir['tinggi'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['tinggi'] . " cm"; ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Berat Badan Terakhir</th>
+                    <td> : <?php echo (@$riwayat_terakhir['berat'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['berat'] . " kg"; ?></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Tekanan Darah Terakhir</th>
+                    <td> : <?php echo (@$riwayat_terakhir['tensi'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['tensi'] . " mmHg"; ?></td>
                   </tr>
                   <tr>
                     <th scope="row">Alamat</th>
-                    <td> : <?php echo $pasien['alamat']; ?></td>
+                    <td> : <?php echo ucwords($pasien['alamat']); ?></td>
                   </tr>
                 </tbody>
               </table>
@@ -102,89 +116,109 @@ if (isset($_POST['printall'])) {
                     <th>Tanggal Berobat</th>
                     <th>Penyakit</th>
                     <th>Diagnosa</th>
+                    <th>Keterangan</th>
                     <th>Obat</th>
                     <th>Total Biaya</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <?php
-                  while ($row = mysqli_fetch_array($riwayatpenyakit)) {
-                    $idpenyakit = $row['id'];
-                    $biayaperiksa = $row['biaya_pengobatan'];
-                  ?>
-                    <tr>
-                      <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
-                      <td><?php echo ucwords($row['penyakit']); ?></td>
-                      <td><?php
-                          echo $row['diagnosa']. " - ";
-                          $status = substr($row['id_rawatinap'], 0, 3);
-                          $idrawatinap = substr($row['id_rawatinap'], 3);
-                          if ($row['id_rawatinap'] == '0') {
-                            echo 'Pasien tidak membutuhkan Rawat Inap';
-                          } else {
-                            if ($status == "tmp") {
-                              $ruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id='$idrawatinap'");
-                              $showruang = mysqli_fetch_array($ruang);
-                              echo "Pasien masih dirawat di ruang " . $showruang['nama_ruang'] . " sejak tgl " . tgl_indo($showruang['tgl_masuk']);
-                              $biayapenginapan = $showruang['biaya'];
-                            }
-                            if ($status == "yes") {
-                              $riw1 = mysqli_query($conn, "SELECT * FROM riwayat_rawatinap WHERE id='$idrawatinap'");
-                              $riwayatinap = mysqli_fetch_array($riw1);
-                              echo 'Pasien pernah dirawat pada tgl ' . tgl_indo($riwayatinap['2']) . ' - ' . tgl_indo($riwayatinap['3']);
-
-                              $biayarawatinap = $riwayatinap['biaya'];
-                            }
-                          }
-                          ?>
-                      </td>
-                      <td>
-                        <?php
-                        $obat2an = mysqli_query($conn, "SELECT * FROM riwayat_obat WHERE id_penyakit='$idpenyakit' AND id_pasien='$idid'");
-                        $jumobat = mysqli_num_rows($obat2an);
-                        if ($jumobat == 0) {
-                          echo "Tidak ada obat yang diberikan";
-                          @$hargaobat = 0;
-                        } else {
-                          $count = 0;
-                          while ($showobat = mysqli_fetch_array($obat2an)) {
-                            $jumjumjum = $showobat['jumlah'];
-                            $idobat = $showobat['id_obat'];
-                            $obatlagi = mysqli_query($conn, "SELECT * FROM obat WHERE id='$idobat'");
-                            $namaobat = mysqli_fetch_array($obatlagi);
-                            echo $str = ucwords($namaobat['nama_obat']);
-                            $count = $count + 1;
-
-                            if ($count < $jumobat) {
-                              echo ", ";
-                            }
-
-                            @$hargaobat += $namaobat['harga'] * $jumjumjum;
-                          }
-                        }
-                        ?>
-                      </td>
-                      <td>
-                        <?php if ($status == "tmp") {
-                          $toti = "Biaya sementara : ";
-                          $tot = $biayapenginapan;
-                        }
-                        if ($status == "yes") {
-                          $tot = $biayarawatinap;
-                        }
-                        echo @$toti . " Rp. ";
-                        @$sum += @$tot + $biayaperiksa + @$hargaobat;
-                        echo number_format(@$tot + $biayaperiksa + @$hargaobat, 0, ".", ".");
-                        ?>
-                      </td>
-                    </tr>
-                  <?php } ?>
+                <?php
+                $sql = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid'");
+                $i = 0;
+                while ($row = mysqli_fetch_array($sql)) {
+                  $idpenyakit = $row['id'];
+                  $id_dokter = $row['id_dokter'];
+                  $biayaperiksa = $row['biaya_pengobatan'];
+                ?>
                   <tr>
-                    <th colspan="4">
-                      Total yang harus dibayar :
-                    </th>
-                    <th><?php echo "Rp. " . number_format($sum, 0, ".", "."); ?></th>
+                    <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
+                    <td><?php echo ucwords($row['penyakit']); ?></td>
+                    <td><?php echo $row['diagnosa']; ?>
+                    </td>
+                    <td>
+                      <?php
+                      $rotgensql = mysqli_query($conn, "SELECT * FROM foto_rotgen WHERE id_pasien='$idid' AND id_penyakit='$idpenyakit'");
+                      $jumrotgen = mysqli_num_rows($rotgensql);
+                      if ($jumrotgen == 0) {
+                        echo '- Tidak ada foto rotgen<br>';
+                      } else { ?>
+                        <form action="detail_rotgen.php" method="POST">
+                          <input type="hidden" name="id" value="<?php echo $idnama; ?>">
+                          <input type="hidden" name="idriwayat" value="<?php echo $idpenyakit ?>">
+                          <button type="submit" title="Detail Foto Rotgen Pasien" data-toggle="tooltip" id="btn-link"><i class="fas fa-info-circle text-info"></i> <?php echo $jumrotgen; ?> Foto</button>
+                        </form>
+                      <?php
+                      }
+                      echo "- Berat : " . $row['berat'] . " kg, ";
+                      echo "Tinggi : " . $row['tinggi'] . " cm, ";
+                      echo "Tekanan Darah : " . $row['tensi'] . " mmHg";
+                      echo "<br>- ";
+                      $status = substr($row['id_rawatinap'], 0, 3);
+                      $idrawatinap = substr($row['id_rawatinap'], 3);
+                      if ($row['id_rawatinap'] == '0') {
+                        echo 'Pasien tidak membutuhkan Rawat Inap';
+                      } else {
+                        if ($status == "tmp") {
+                          $ruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id='$idrawatinap'");
+                          $showruang = mysqli_fetch_array($ruang);
+                          echo "<a href='ruangan.php' title='Detail Ruang Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien masih dirawat di ruang " . $showruang['nama_ruang'] . " sejak tgl " . tgl_indo($showruang['tgl_masuk']) . "</a>";
+                        } else {
+                          $riw1 = mysqli_query($conn, "SELECT * FROM riwayat_rawatinap WHERE id='$idrawatinap'");
+                          $riwayatinap = mysqli_fetch_array($riw1);
+                          echo "<a href='riwayat_inap.php' title='Riwayat Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien pernah dirawat pada tgl " . tgl_indo($riwayatinap['2']) . ' s.d. ' . tgl_indo($riwayatinap['3']) . "</a>";
+                        }
+                      }
+                      $dokter = mysqli_query($conn, "SELECT * FROM pegawai WHERE id='$id_dokter'");
+                      $doc = mysqli_fetch_array($dokter);
+                      echo "<br>- Diperiksa oleh Dr. " . ucwords($doc['nama_pegawai']);
+                      ?>
+                    </td>
+                    <td>
+                      <?php
+                      $obat2an = mysqli_query($conn, "SELECT * FROM riwayat_obat WHERE id_penyakit='$idpenyakit' AND id_pasien='$idid'");
+                      $jumobat = mysqli_num_rows($obat2an);
+                      if ($jumobat == 0) {
+                        echo "Tidak ada obat yang diberikan";
+                        @$hargaobat = 0;
+                      } else {
+                        $count = 0;
+                        while ($showobat = mysqli_fetch_array($obat2an)) {
+                          $jumjumjum = $showobat['jumlah'];
+                          $idobat = $showobat['id_obat'];
+                          $obatlagi = mysqli_query($conn, "SELECT * FROM obat WHERE id='$idobat'");
+                          $namaobat = mysqli_fetch_array($obatlagi);
+                          echo $str = ucwords($namaobat['nama_obat']);
+                          $count = $count + 1;
+
+                          if ($count < $jumobat) {
+                            echo ", ";
+                          }
+
+                          @$hargaobat += $namaobat['harga'] * $jumjumjum;
+                        }
+                      }
+                      ?>
+                    </td>
+                    <td>
+                      <?php if ($status == "tmp") {
+                        $toti = "Biaya sementara : ";
+                        $tot = $biayapenginapan;
+                      }
+                      if ($status == "yes") {
+                        $tot = $biayarawatinap;
+                      }
+                      echo @$toti . " Rp. ";
+                      @$sum += @$tot + $biayaperiksa + @$hargaobat;
+                      echo number_format(@$tot + $biayaperiksa + @$hargaobat, 0, ".", ".");
+                      ?>
+                    </td>
                   </tr>
+                <?php } ?>
+                <tr>
+                  <th colspan="5">
+                    Total yang harus dibayar :
+                  </th>
+                  <th><?php echo "Rp. " . number_format($sum, 0, ".", "."); ?></th>
+                </tr>
                 </tbody>
               </table>
             </div>
