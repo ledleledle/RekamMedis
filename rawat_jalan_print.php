@@ -88,9 +88,9 @@
   } elseif ($page1 == "raw3") {
     $page = "Pemberian Obat untuk Pasien";
     $bread = "rawat_jalan3.php";
-  } /*else {
+  } else {
     header("location: index.php");
-  }*/
+  }
 
   include "part/head.php";
   ?>

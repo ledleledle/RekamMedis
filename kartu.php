@@ -11,9 +11,9 @@ if ($page1 == "raw00") {
 	$no = $_POST['no_urut'];
 	$pas = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$id'");
 	$pasien = mysqli_fetch_array($pas); ?>
-	<div class='card-antri'>
+	<div class='card-antri text-dark'>
 		<h3>NOMOR ANTRIAN PASIEN R.S. EMPPS AHH</h3>
-		<table class="table table-striped">
+		<table class="table table-striped text-dark">
 			<tr>
 				<th><?php echo ucwords($pasien['nama_pasien']) . " / " . $pasien['kode_pasien']; ?></th>
 			</tr>

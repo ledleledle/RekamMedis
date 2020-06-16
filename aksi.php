@@ -74,7 +74,8 @@
                                     <label>Berat Badan</label>
                                     <div class="input-group">
                                       <input type="hidden" name="page" value="raw1" readonly required>
-                                      <input type="text" name="idlae" value="<?php echo $realid; ?>" readonly required>
+                                      <input type="hidden" name="idlae" value="<?php echo $realid; ?>" readonly required>
+                                      <input type="hidden" name="dokter" value="<?php echo $sessionid; ?>" readonly required>
                                       <input type="number" class="form-control" value="0" required="" min="0" name="berat" placeholder="Berat Badan Pasien">
                                       <div class="input-group-prepend">
                                         <div class="input-group-text">
