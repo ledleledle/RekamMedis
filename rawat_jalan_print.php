@@ -23,6 +23,7 @@
       $info = "0";
       $insert = mysqli_query($conn, "INSERT INTO antrian (no_urut, id_pasien, status) VALUES ('$no_urut', '$id', '0')");
     } else {
+      $no_urut = $no_urut-1;
       $info = "1";
       echo '<script>
 				setTimeout(function() {
@@ -135,7 +136,7 @@
                     ?>
                       <table class="table table-striped">
                         <tr>
-                          <th><?php echo $pasien['nama_pasien'] . " / " . $pasien['kode_pasien']; ?></th>
+                          <th><?php echo ucwords($pasien['nama_pasien']) . " / " . $pasien['kode_pasien']; ?></th>
                         </tr>
                         <tr>
                           <th>No. Antrian</th>
@@ -146,9 +147,10 @@
                           </th>
                         </tr>
                       </table>
-                      <form action="kartu.php" method="POST">
+                      <form action="kartu.php" method="POST" target="_blank">
                         <input type="hidden" name="page" value="raw00">
                         <input type="hidden" name="id" value="<?php echo $id; ?>">
+                        <input type="hidden" name="no_urut" value="<?php echo $no_urut; ?>">
                       <?php
                     } elseif ($page1 == "raw01") { ?>
                         <table class="table table-striped">
@@ -181,6 +183,14 @@
                             <td><?php echo ucwords($alm); ?></td>
                           </tr>
                         </table>
+                        <form action="kartu.php" method="POST" target="_blank">
+                        <input type="hidden" name="page" value="raw01">
+                        <input type="hidden" name="nama" value="<?php echo $nama; ?>">
+                        <input type="hidden" name="tgl" value="<?php echo $tgl; ?>">
+                        <input type="hidden" name="alamat" value="<?php echo $alm; ?>">
+                        <input type="hidden" name="tmp" value="<?php echo $tmp; ?>">
+                        <input type="hidden" name="jk" value="<?php echo $jk; ?>">
+                        <input type="hidden" name="kode" value="<?php echo $kode; ?>">
                       <?php
                     } elseif ($page1 == "raw1") {
                       echo "1";

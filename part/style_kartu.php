@@ -16,6 +16,22 @@
 		top: 0;
 		bottom: 0;
 	}
+	body .card-antri {
+		width: 450px;
+		height: 300px;
+		background: #e2e2e2;
+		position: absolute;
+		left: 0;
+		right: 0;
+		margin: auto;
+		top: 0;
+		bottom: 0;
+	}
+	body .card-antri h3 {
+		padding: 15px;
+		font-family: 'Montserrat', sans-serif;
+		font-weight: 800;
+	}
 
 	body .card_left {
 		width: 40%;
