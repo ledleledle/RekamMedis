@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Jun 2020 pada 08.20
+-- Waktu pembuatan: 16 Jun 2020 pada 04.13
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.4
 
@@ -72,6 +72,19 @@ INSERT INTO `obat` (`id`, `nama_obat`, `stok`, `harga`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `obat2`
+--
+
+CREATE TABLE `obat2` (
+  `kode` int(11) NOT NULL,
+  `id_penyakit` int(11) NOT NULL,
+  `id_obat` int(11) NOT NULL,
+  `jum_obat` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `pasien`
 --
 
@@ -84,13 +97,6 @@ CREATE TABLE `pasien` (
   `jk` int(11) NOT NULL,
   `tmp_lahir` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `pasien`
---
-
-INSERT INTO `pasien` (`id`, `nama_pasien`, `tgl_lahir`, `alamat`, `kode_pasien`, `jk`, `tmp_lahir`) VALUES
-(1, 'Leon Prasetya', '1980-06-03', 'Belum memiliki alamat tetap', '119800603', 1, 'Jakarta Utara');
 
 -- --------------------------------------------------------
 
@@ -105,16 +111,18 @@ CREATE TABLE `pegawai` (
   `nama_pegawai` varchar(200) NOT NULL,
   `alamat` varchar(360) NOT NULL,
   `pekerjaan` int(11) NOT NULL,
-  `foto` varchar(200) NOT NULL
+  `foto` varchar(200) NOT NULL,
+  `spesialis` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `pegawai`
 --
 
-INSERT INTO `pegawai` (`id`, `username`, `password`, `nama_pegawai`, `alamat`, `pekerjaan`, `foto`) VALUES
-(1, 'leon', 'admin', 'leon prasetya', 'trenggalek, jawa timur', 1, 'assets/img/profile/leon.jpg'),
-(2, 'selly', 'jon cock', 'Selly Shelly', 'korea utara', 2, 'assets/img/profile/selly.jpg');
+INSERT INTO `pegawai` (`id`, `username`, `password`, `nama_pegawai`, `alamat`, `pekerjaan`, `foto`, `spesialis`) VALUES
+(1, 'leon', 'admin', 'leon prasetya', 'trenggalek, jawa timur', 1, 'assets/img/profile/leon.jpg', ''),
+(2, 'selly', 'jon cock', 'Selly Shelly', 'korea utara', 2, 'assets/img/profile/selly.jpg', ''),
+(3, 'admin', 'dogo', 'Ini admin', 'komputer', 3, '', '');
 
 -- --------------------------------------------------------
 
@@ -146,7 +154,8 @@ CREATE TABLE `riwayat_penyakit` (
   `biaya_pengobatan` int(11) NOT NULL,
   `tinggi` int(11) NOT NULL,
   `berat` int(11) NOT NULL,
-  `tensi` int(11) NOT NULL
+  `tensi` int(11) NOT NULL,
+  `id_dokter` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -269,13 +278,13 @@ ALTER TABLE `obat`
 -- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `riwayat_obat`

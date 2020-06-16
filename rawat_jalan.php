@@ -8,62 +8,6 @@
   session_start();
   include 'auth/connect.php';
   include "part/head.php";
-
-  $cek_pasien = mysqli_query($conn, "SELECT * FROM pasien");
-  $cek_pas = mysqli_num_rows($cek_pasien);
-  $cek_antrian = mysqli_query($conn, "SELECT * FROM antrian");
-  $antrian = mysqli_num_rows($cek_antrian);
-
-  if (isset($_POST['daftar'])) {
-    $nama = $_POST['nama'];
-    $tgl = $_POST['tgl'];
-    $alm = $_POST['alamat'];
-    $tmp = $_POST['tmp'];
-    $jk = $_POST['jk'];
-    $cek_pas2 = mysqli_num_rows($cek_pasien)+1;
-    $forcode = str_replace("-", "", $tgl);
-    $kode = $cek_pas2 . $forcode;
-
-    $insert = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, alamat, kode_pasien, jk, tmp_lahir) VALUES ('$nama', '$tgl', '$alm', $kode, '$jk', '$tmp')");
-    echo '<script>
-				setTimeout(function() {
-					swal({
-						title: "Pasien Telah Terdaftar!",
-						text: "Pasien yang bernama ' . ucwords($nama) . ' sudah terdaftar. Pasien sudah bisa mendaftarkan dirinya ke untuk pemeriksaan kesehatan. Jangan lupa print kartu pasien",
-						icon: "success"
-						});
-					}, 500);
-			</script>';
-  }
-
-  if (isset($_POST['daftar1'])) {
-    $id = $_POST['pasien'];
-    $no_urut = $antrian + 1;
-    $cek_keberadaan = mysqli_query($conn, "SELECT * FROM antrian WHERE id_pasien='$id'");
-    $ceque = mysqli_num_rows($cek_keberadaan);
-    if ($ceque == '0') {
-      $insert = mysqli_query($conn, "INSERT INTO antrian (no_urut, id_pasien, status) VALUES ('$no_urut', '$id', '0')");
-      echo '<script>
-				setTimeout(function() {
-					swal({
-						title: "Pasien didaftarkan dalam antrian!",
-						text: "Pasien diharapkan menunggu diruang tunggu sampai namanya dipanggil.",
-						icon: "success"
-						});
-					}, 500);
-      </script>';
-    } else {
-      echo '<script>
-				setTimeout(function() {
-					swal({
-						title: "Pasien sudah terdaftar dalam antrian!",
-						text: "Pasien sudah didaftarkan dalam antrian, pasien diharapkan menunggu diruang tunggu sekarang juga.",
-						icon: "error"
-						});
-					}, 500);
-      </script>';
-    }
-  }
   ?>
 </head>
 
@@ -110,10 +54,11 @@
                               <h4>Daftar Pasien Baru</h4>
                             </div>
                             <div class="card-body">
-                              <form class="needs-validation" novalidate="" method="POST" autocomplete="off">
+                              <form class="needs-validation" novalidate="" method="POST" autocomplete="off" action="rawat_jalan_print.php">
                                 <div class="form-group row align-items-center">
                                   <label class="col-md-4 text-md-right text-left">Nama Lengkap</label>
                                   <div class="col-lg-6 col-md-6">
+                                    <input type="hidden" name="page" value="raw01" readonly>
                                     <input type="text" class="form-control" required="" name="nama" placeholder="Nama Lengkap Pasien">
                                     <div class="invalid-feedback">
                                       Mohon data diisi!
@@ -174,16 +119,17 @@
                               <h4>Pasien Yang Memiliki Kartu Berobat</h4>
                             </div>
                             <div class="card-body">
-                              <form class="needs-validation" novalidate="" method="POST" autocomplete="off">
+                              <form class="needs-validation" novalidate="" method="POST" autocomplete="off" action="rawat_jalan_print.php">
                                 <div class="form-group row align-items-center">
-                                  <label class="col-md-4 text-md-right text-left">Nama Lengkap / ID Pasien</label>
+                                  <label class="col-md-4 text-md-right text-left">Nama Lengkap / ID Pasien / Alamat</label>
                                   <div class="col-lg-6 col-md-6">
+                                    <input type="hidden" name="page" value="raw00" readonly>
                                     <select class="form-control select2" name="pasien" id="myselect" required="">
-                                      <option value="">Cari Nama / ID Pasien</option>
+                                      <option value="">Cari Nama / ID Pasien / Alamat</option>
                                       <?php
                                       $pas = mysqli_query($conn, "SELECT * FROM pasien");
                                       while ($pasien = mysqli_fetch_array($pas)) {
-                                        echo "<option value='" . $pasien['id'] . "'>" . ucwords($pasien['nama_pasien']) . " / " . $pasien['kode_pasien'] . "</option>";
+                                        echo "<option value='" . $pasien['id'] . "'>" . ucwords($pasien['nama_pasien']) . " / " . $pasien['kode_pasien'] . " / " . $pasien['alamat'] . "</option>";
                                       }
                                       ?>
                                     </select>
