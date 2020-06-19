@@ -76,5 +76,8 @@ if ($page1 == "raw00") {
 				</div>
 			</div>
 
-		<?php } ?>
+		<?php
+	} else {
+		header("location:index.php");
+	} ?>
 		</div>

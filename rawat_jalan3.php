@@ -3,7 +3,7 @@
 
 <head>
   <?php
-  $page = "Pemberian Obat untuk Pasien";
+  $page = "Pengambilan Obat oleh Pasien";
   $page1 = "raw3";
   session_start();
   include 'auth/connect.php';
@@ -35,7 +35,9 @@
                   <div class="card-header">
                     <h4><?php echo $page; ?></h4>
                   </div>
-                  
+                  <div class="card-body">
+                    
+                  </div>
                 </div>
               </div>
             </div>

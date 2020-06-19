@@ -27,7 +27,7 @@ $mbuh = "Rawat Jalan";
           <li <?php echo (@$page1 == "raw00" || @$page1 == "raw01" || @$page1 == "raw0") ? "class=active" : ""; ?>><a class="nav-link" href="rawat_jalan.php"><span>Pendaftaran Pasien</span></a></li>
           <li <?php echo (@$page1 == "raw1") ? "class=active" : ""; ?>><a class="nav-link" href="rawat_jalan1.php"><span>Pemeriksaan Pasien</span></a></li>
           <li <?php echo (@$page1 == "raw2") ? "class=active" : ""; ?>><a class="nav-link" href="rawat_jalan2.php"><span>Tindakan untuk Pasien</span></a></li>
-          <li <?php echo (@$page1 == "raw3") ? "class=active" : ""; ?>><a class="nav-link" href="rawat_jalan3.php"><span>Pemberian Obat Pasien</span></a></li>
+          <li <?php echo (@$page1 == "raw3") ? "class=active" : ""; ?>><a class="nav-link" href="rawat_jalan3.php"><span>Pengambilan Obat Pasien</span></a></li>
         </ul>
       </li>
       <li class="dropdown <?php echo ($page1 == "det" || $page1 == "det1" || $page1 == "det2") ? "active" : ""; ?>">

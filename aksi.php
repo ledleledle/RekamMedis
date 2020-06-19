@@ -62,18 +62,16 @@
                             <a class="list-group-item list-group-item-action active" id="list-diagnosa-list" data-toggle="list" href="#list-diagnosa" role="tab">Diagnosa</a>
                             <a class="list-group-item list-group-item-action" id="list-info-list" data-toggle="list" href="#list-info" role="tab">Info Pasien</a>
                             <a class="list-group-item list-group-item-action" id="list-rekam-list" data-toggle="list" href="#list-rekam" role="tab">Rekam Medis Pasien</a>
-                            <a class="list-group-item list-group-item-action" id="list-obat-list" data-toggle="list" href="#list-obat" role="tab">Obat yang diberikan</a>
                           </div>
                         </div>
                         <div class="col-8">
                           <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="list-diagnosa" role="tabpanel" aria-labelledby="list-diagnosa-list">
-                              <form action="rawat_jalan_print.php" method="POST" class="needs-validation" novalidate="">
+                              <form action="rawat_jalan_obat.php" method="POST" class="needs-validation" novalidate="">
                                 <div class="row">
                                   <div class="form-group col-md-6 col-12">
                                     <label>Berat Badan</label>
                                     <div class="input-group">
-                                      <input type="hidden" name="page" value="raw1" readonly required>
                                       <input type="hidden" name="idlae" value="<?php echo $realid; ?>" readonly required>
                                       <input type="hidden" name="dokter" value="<?php echo $sessionid; ?>" readonly required>
                                       <input type="number" class="form-control" value="0" required="" min="0" name="berat" placeholder="Berat Badan Pasien">
@@ -224,7 +222,7 @@
                                 </thead>
                                 <tbody>
                                   <?php
-                                  $sql = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid'");
+                                  $sql = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$realid'");
                                   $i = 0;
                                   while ($row = mysqli_fetch_array($sql)) {
                                     $idpenyakit = $row['id'];
@@ -291,29 +289,6 @@
                                         }
                                         ?>
                                       </td>
-                                    </tr>
-                                  <?php } ?>
-                                </tbody>
-                              </table>
-                            </div>
-                            <div class="tab-pane fade" id="list-obat" role="tabpanel" aria-labelledby="list-obat-list">
-                              <table class="table table-striped table-bordered" id="table-211">
-                                <thead>
-                                  <tr>
-                                    <th>Nama</th>
-                                    <th>Stok</th>
-                                    <th>Harga per unit</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <?php
-                                  $sql = mysqli_query($conn, "SELECT * FROM obat");
-                                  while ($row = mysqli_fetch_array($sql)) {
-                                  ?>
-                                    <tr>
-                                      <td><?php echo ucwords($row['nama_obat']) ?></td>
-                                      <td><?php echo $row['stok'] . " Unit"; ?></td>
-                                      <td>Rp. <?php echo number_format($row['harga'], 0, ".", "."); ?></td>
                                     </tr>
                                   <?php } ?>
                                 </tbody>
