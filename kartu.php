@@ -34,6 +34,7 @@ if ($page1 == "raw00") {
 	$tmp = $_POST['tmp'];
 	$jk = $_POST['jk'];
 	$kode = $_POST['kode'];
+	$job = $_POST['job'];
 	?>
 		<div class='card'>
 			<div class='card_left'>
@@ -67,9 +68,14 @@ if ($page1 == "raw00") {
 								</td>
 							</tr>
 							<tr>
+								<td>Pekerjaan</td>
+								<td> : </td>
+								<td><?php echo ucwords($job); ?></td>
+							</tr>
+							<tr>
 								<td>Alamat</td>
 								<td> : </td>
-								<td><?php echo $alm; ?></td>
+								<td><?php echo ucwords($alm); ?></td>
 							</tr>
 						</table>
 					</div>
@@ -77,6 +83,8 @@ if ($page1 == "raw00") {
 			</div>
 
 		<?php
+	} elseif ($page1 == "raw1") {
+
 	} else {
 		header("location:index.php");
 	} ?>

@@ -21,9 +21,6 @@
   $doc = $_POST['dokter'];
   $kodeobat = str_replace("-", "", $id . $tglnow . $doc);
 
-  //$submit = mysqli_query($conn, "INSERT INTO riwayat_penyakit (id_pasien, penyakit, diagnosa, tgl, id_rawatinap, biaya_pengobatan, tinggi, berat, tensi, id_dokter) VALUES ('$id', '$penyakit', '$diagnosa', '$tglnow', '0', '$biaya', '$tinggi', '$berat', '$tensi', '$doc')");
-  //$update_antrian = mysqli_query($conn, "UPDATE antrian SET status='$statusnya' WHERE id_pasien='$id'");
-
   if (isset($_POST['submite'])) {
     $id = $_POST['idlae'];
     $penyakit = $_POST['penyakit'];
@@ -112,6 +109,22 @@
               <div class="card">
                 <div class="card-header">
                   <h4>Info Pasien</h4>
+                  <div class="card-header-action">
+                    <form action="rawat_jalan_print.php" method="POST">
+                    <input type="hidden" class="form-control" name="page" value="raw1" required="">
+                      <input type="hidden" class="form-control" name="idlae" value="<?php echo $id; ?>" required="">
+                      <input type="hidden" class="form-control" name="penyakit" value="<?php echo $penyakit; ?>" required="">
+                      <input type="hidden" class="form-control" name="diagnosa" value="<?php echo $diagnosa; ?>" required="">
+                      <input type="hidden" class="form-control" name="biaya" value="<?php echo $biaya; ?>" required="">
+                      <input type="hidden" class="form-control" name="berat" value="<?php echo $berat; ?>" required="">
+                      <input type="hidden" class="form-control" name="tinggi" value="<?php echo $tinggi; ?>" required="">
+                      <input type="hidden" class="form-control" name="tensi" value="<?php echo $tensi; ?>" required="">
+                      <input type="hidden" class="form-control" name="status" value="<?php echo $statusnya; ?>" required="">
+                      <input type="hidden" class="form-control" name="dokter" value="<?php echo $doc; ?>" required="">
+                      <input type="hidden" class="form-control" name="kode" value="<?php echo $kodeobat; ?>" required="">
+                      <button class="btn btn-primary">Selesai</button>
+                    </form>
+                  </div>
                 </div>
                 <div class="card-body">
                   <table class="table table-striped">

@@ -97,6 +97,37 @@
                                   </div>
                                 </div>
                                 <div class="form-group row">
+                                  <label class="col-md-4 text-md-right text-left">Pekerjaan</label>
+                                  <div class="col-lg-6 col-md-6">
+                                    <input type="text" class="form-control" name="job" required="" placeholder="Pekerjaan pasien">
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-4 text-md-right text-left">Nama Ibu</label>
+                                  <div class="col-lg-6 col-md-6">
+                                    <input type="text" class="form-control" name="ibu" required="" placeholder="Nama Ibu">
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
+                                  <label class="col-md-4 text-md-right text-left">Status Pernikahan</label>
+                                  <div class="col-lg-6 col-md-6">
+                                    <select class="form-control selectric" name="nikah" required>
+                                      <option value="">Pilih Status Pernikahan</option>
+                                      <option value="0">Menikah</option>
+                                      <option value="1">Belum Menikah</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                      Mohon data diisi!
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group row">
                                   <label class="col-md-4 text-md-right text-left">Alamat</label>
                                   <div class="col-lg-6 col-md-6">
                                     <textarea type="number" class="form-control" name="alamat" required="" placeholder="Alamat Pasien"></textarea>

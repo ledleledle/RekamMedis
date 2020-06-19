@@ -43,11 +43,14 @@
     $alm = $_POST['alamat'];
     $tmp = $_POST['tmp'];
     $jk = $_POST['jk'];
+    $ibu = $_POST['ibu'];
+    $job = $_POST['job'];
+    $nikah = $_POST['nikah'];
     $cek_pas2 = mysqli_num_rows($cek_pasien) + 1;
     $forcode = str_replace("-", "", $tgl);
     $kode = $cek_pas2 . $forcode;
 
-    $insert = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, alamat, kode_pasien, jk, tmp_lahir) VALUES ('$nama', '$tgl', '$alm', $kode, '$jk', '$tmp')");
+    $insert = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, alamat, kode_pasien, jk, tmp_lahir, ibu, pekerjaan, pernikahan) VALUES ('$nama', '$tgl', '$alm', $kode, '$jk', '$tmp', '$ibu', '$job', '$nikah')");
     echo '<script>
 				setTimeout(function() {
 					swal({
@@ -58,9 +61,8 @@
 					}, 500);
 			</script>';
   } elseif ($page1 == "raw1") {
-    /*$page = "Pemeriksaan Pasien";
+    $page = "Pemeriksaan Pasien";
     $bread = "rawat_jalan1.php";
-
     $id = $_POST['idlae'];
     $penyakit = $_POST['penyakit'];
     $diagnosa = $_POST['diagnosa'];
@@ -71,18 +73,10 @@
     $tensi  = $_POST['tensi'];
     $statusnya = $_POST['status'];
     $doc = $_POST['dokter'];
+    $kodeobat = $_POST['kode'];
 
     $submit = mysqli_query($conn, "INSERT INTO riwayat_penyakit (id_pasien, penyakit, diagnosa, tgl, id_rawatinap, biaya_pengobatan, tinggi, berat, tensi, id_dokter) VALUES ('$id', '$penyakit', '$diagnosa', '$tglnow', '0', '$biaya', '$tinggi', '$berat', '$tensi', '$doc')");
     $update_antrian = mysqli_query($conn, "UPDATE antrian SET status='$statusnya' WHERE id_pasien='$id'");
-    echo '<script>
-      setTimeout(function() {
-        swal({
-          title: "Pasien Sudah Diperiksa!",
-          text: "Pasien diharapkan segera menuju ke ruang tindakan",
-          icon: "success"
-          });
-        }, 500);
-      </script>';*/
   } elseif ($page1 == "raw2") {
     $page = "Tindakan untuk Pasien";
     $bread = "rawat_jalan2.php";
@@ -179,6 +173,29 @@
                                 ?></td>
                           </tr>
                           <tr>
+                            <th>Status Pernikahan</th>
+                            <td> : </td>
+                            <td><?php
+                                if ($jk == 0) {
+                                  echo "Menikah";
+                                } elseif ($jk == 1) {
+                                  echo "Belum Menikah";
+                                } else {
+                                  echo "Tidak terdeteksi";
+                                }
+                                ?></td>
+                          </tr>
+                          <tr>
+                            <th>Pekerjaan</th>
+                            <td> : </td>
+                            <td><?php echo ucwords($job); ?></td>
+                          </tr>
+                          <tr>
+                            <th>Nama Ibu</th>
+                            <td> : </td>
+                            <td><?php echo ucwords($ibu); ?></td>
+                          </tr>
+                          <tr>
                             <th>Alamat</th>
                             <td> : </td>
                             <td><?php echo ucwords($alm); ?></td>
@@ -192,25 +209,40 @@
                           <input type="hidden" name="tmp" value="<?php echo $tmp; ?>">
                           <input type="hidden" name="jk" value="<?php echo $jk; ?>">
                           <input type="hidden" name="kode" value="<?php echo $kode; ?>">
+                          <input type="hidden" name="job" value="<?php echo $job; ?>">
                         <?php
                       } elseif ($page1 == "raw1") {
-                        ?>
-                          <form action="kartu.php" method="POST" target="_blank">
-                            <input type="hidden" name="page" value="raw1">
-                            <input type="hidden" name="id" value="<?php echo $id; ?>">
-                          <?php
-                        } elseif ($page1 == "raw2") {
-                          echo "2";
-                        } elseif ($page1 == "raw3") {
-                          echo "3";
-                        }
-                          ?>
-                          <div class="row justify-content-center">
-                            <div class="btn-group">
-                              <button class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
-                              <a href="<?php echo $bread; ?>" class="btn btn-danger">Kembali ke menu sebelumnya</a>
-                            </div>
-                          </form>
+                        $name = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$id'");
+                        $name2 = mysqli_fetch_array($name); ?>
+                          <table class="table table-striped">
+                            <tr>
+                              <th>Nama / Kode Pasien</th>
+                              <td> : </td>
+                              <th><?php echo ucwords($name2['nama_pasien']) . " / " . $kodeobat; ?></th>
+                            </tr>
+                            <tr>
+                              <th>Penyakit</th>
+                              <td> : </td>
+                              <th><?php echo ucwords($penyakit); ?></th>
+                            </tr>
+                          </table>
+                            <form action="kartu.php" method="POST" target="_blank">
+                              <input type="hidden" name="page" value="raw1">
+                              <input type="hidden" name="kode" value="<?php echo $kodeobat; ?>">
+                              <input type="hidden" name="nama" value="<?php echo $name2['nama_pasien']; ?>">
+                            <?php
+                          } elseif ($page1 == "raw2") {
+                            echo "2";
+                          } elseif ($page1 == "raw3") {
+                            echo "3";
+                          }
+                            ?>
+                            <div class="row justify-content-center">
+                              <div class="btn-group">
+                                <button class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
+                                <a href="<?php echo $bread; ?>" class="btn btn-danger">Kembali ke menu sebelumnya</a>
+                              </div>
+                            </form>
                   </div>
                 </div>
               </div>
