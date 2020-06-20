@@ -145,20 +145,7 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div class="form-group row">
-                                  <label class="col-sm-3 col-form-label">Biaya Pemeriksaan</label>
-                                  <div class="input-group col-md-9">
-                                    <div class="input-group-prepend">
-                                      <div class="input-group-text">
-                                        Rp
-                                      </div>
-                                    </div>
-                                    <input type="number" class="form-control" name="biaya" required="" value="0">
-                                    <div class="invalid-feedback">
-                                      Mohon data diisi!
-                                    </div>
-                                  </div>
-                                </div>
+                                <input type="hidden" class="form-control" name="biaya" required="" value="50000">
                                 <button type="submit" class="btn btn-primary" name="submit">Pemeriksaan Selesai</button>
                               </form>
                             </div>

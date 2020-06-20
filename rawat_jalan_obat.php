@@ -31,7 +31,6 @@
     $tensi  = $_POST['tensi'];
     $statusnya = $_POST['status'];
     $doc = $_POST['dokter'];
-
     $id2 = $_POST['id'];
     $jum = $_POST['jumlah'];
     $cekcek = mysqli_query($conn, "SELECT * FROM riwayat_penyakit");
@@ -50,9 +49,9 @@
 					}, 500);
 			</script>';
     } else {
-      $cekobattmp = mysqli_query($conn, "SELECT * FROM obat2 WHERE kode='$kodeobat' AND id_obat='$id2'");
-      $cekobattmp2 = mysqli_num_rows($cekobattmp);
       $obatasli = mysqli_query($conn, "UPDATE obat SET stok=stok-$jum WHERE id='$id2'");
+      $cekobattmp = mysqli_query($conn, "SELECT * FROM obat2 WHERE id_penyakit='$id_penya' AND id_obat='$id2'");
+      $cekobattmp2 = mysqli_num_rows($cekobattmp);
       if ($cekobattmp2 == 0) {
         $obat_tmp = mysqli_query($conn, "INSERT INTO obat2 (kode, id_penyakit, id_obat, jum_obat) VALUES ('$kodeobat', '$id_penya', '$id2', '$jum')");
         echo '<script>
@@ -183,7 +182,7 @@
                             <td><a href="" class="btn btn-primary" data-target="#obat" data-toggle="modal" data-id="<?php echo $idobat; ?>" data-pasien="<?php echo $id; ?>">Pilih Obat</a></td>
                             <th>
                               <?php
-                              $sto = mysqli_query($conn, "SELECT * FROM obat2 WHERE kode='$kodeobat' AND id_obat='$idobat'");
+                              @$sto = mysqli_query($conn, "SELECT * FROM obat2 WHERE id_penyakit='$id_penya' AND id_obat='$idobat'");
                               $stok = mysqli_fetch_array($sto);
                               if (!isset($stok['jum_obat'])) {
                                 echo "Tidak dipilih";
@@ -228,7 +227,7 @@
                     <input type="hidden" class="form-control" name="dokter" value="<?php echo $doc; ?>" required="">
                     <input type="hidden" class="form-control" name="id" required="" id="getId">
                     <input type="hidden" class="form-control" name="idpasien" required="" id="getPas">
-                    <input type="number" class="form-control" name="jumlah" required="" min="1">
+                    <input type="number" class="form-control" name="jumlah" required="" min="1" value="1">
                     <div class="invalid-feedback">
                       Mohon data diisi!
                     </div>

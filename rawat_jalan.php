@@ -160,7 +160,7 @@
                                       <?php
                                       $pas = mysqli_query($conn, "SELECT * FROM pasien");
                                       while ($pasien = mysqli_fetch_array($pas)) {
-                                        echo "<option value='" . $pasien['id'] . "'>" . ucwords($pasien['nama_pasien']) . " / " . $pasien['kode_pasien'] . " / " . $pasien['alamat'] . "</option>";
+                                        echo "<option value='" . $pasien['id'] . "'>" . ucwords($pasien['nama_pasien']) . " / " . $pasien['kode_pasien'] . " / " . ucwords($pasien['alamat']) . "</option>";
                                       }
                                       ?>
                                     </select>

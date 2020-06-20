@@ -75,7 +75,7 @@
     $doc = $_POST['dokter'];
     $kodeobat = $_POST['kode'];
 
-    $submit = mysqli_query($conn, "INSERT INTO riwayat_penyakit (id_pasien, penyakit, diagnosa, tgl, id_rawatinap, biaya_pengobatan, tinggi, berat, tensi, id_dokter) VALUES ('$id', '$penyakit', '$diagnosa', '$tglnow', '0', '$biaya', '$tinggi', '$berat', '$tensi', '$doc')");
+    $submit = mysqli_query($conn, "INSERT INTO riwayat_penyakit (id_pasien, penyakit, diagnosa, tgl, biaya_pengobatan, tinggi, berat, tensi, id_dokter) VALUES ('$id', '$penyakit', '$diagnosa', '$tglnow', '$biaya', '$tinggi', '$berat', '$tensi', '$doc')");
     $update_antrian = mysqli_query($conn, "UPDATE antrian SET status='$statusnya' WHERE id_pasien='$id'");
   } elseif ($page1 == "raw2") {
     $page = "Tindakan untuk Pasien";
@@ -83,6 +83,34 @@
   } elseif ($page1 == "raw3") {
     $page = "Pemberian Obat untuk Pasien";
     $bread = "rawat_jalan3.php";
+    $kode = $_POST['kode'];
+    $cek = mysqli_query($conn, "SELECT * FROM obat2 WHERE kode='$kode' GROUP BY kode");
+    $cek2 = mysqli_num_rows($cek);
+    if ($cek2 == 0) {
+      echo '<script>
+				setTimeout(function() {
+					swal({
+						title: "Gagal!",
+						text: "Kode salah, cek kembali kode anda!",
+						icon: "error"
+						});
+					}, 500);
+			</script>';
+    } else {
+      $cekcek = mysqli_query($conn, "SELECT * FROM obat2 WHERE kode='$kode'");
+      while ($row = mysqli_fetch_array($cekcek)) {
+        $penyakit = $row['id_penyakit'];
+        $obat = $row['id_obat'];
+        $jum = $row['jum_obat'];
+        $pasien = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id='$penyakit'");
+        $cekpasien = mysqli_fetch_array($pasien);
+        $pasien1 = $cekpasien['id_pasien'];
+        $penyakit2 = $cekpasien['penyakit'];
+        $input = mysqli_query($conn, "INSERT INTO riwayat_obat (id_penyakit, id_pasien, id_obat, jumlah) VALUES ('$penyakit', '$pasien1', '$obat', '$jum')");
+        $delete = mysqli_query($conn, "DELETE * FROM obat2 WHERE kode='$kode'");
+        $deleteantrian = mysqli_query($conn, "DELETE * FROM antrian WHERE id_pasien='$pasien1'");
+      }
+    }
   } else {
     header("location: index.php");
   }
@@ -216,27 +244,53 @@
                         $name2 = mysqli_fetch_array($name); ?>
                           <table class="table table-striped">
                             <tr>
-                              <th>Nama / Kode Pasien</th>
+                              <th>Nama</th>
                               <td> : </td>
-                              <th><?php echo ucwords($name2['nama_pasien']) . " / " . $kodeobat; ?></th>
+                              <th><?php echo ucwords($name2['nama_pasien']); ?></th>
                             </tr>
                             <tr>
                               <th>Penyakit</th>
                               <td> : </td>
                               <th><?php echo ucwords($penyakit); ?></th>
                             </tr>
+                            <tr>
+                              <th>Kode Pengambilan Obat</th>
+                              <td> : </td>
+                              <th><?php echo $kodeobat; ?></th>
+                            </tr>
                           </table>
-                            <form action="kartu.php" method="POST" target="_blank">
-                              <input type="hidden" name="page" value="raw1">
-                              <input type="hidden" name="kode" value="<?php echo $kodeobat; ?>">
-                              <input type="hidden" name="nama" value="<?php echo $name2['nama_pasien']; ?>">
-                            <?php
-                          } elseif ($page1 == "raw2") {
-                            echo "2";
-                          } elseif ($page1 == "raw3") {
-                            echo "3";
-                          }
-                            ?>
+                          <form action="kartu.php" method="POST" target="_blank">
+                            <input type="hidden" name="page" value="raw1">
+                            <input type="hidden" name="kode" value="<?php echo $kodeobat; ?>">
+                            <input type="hidden" name="nama" value="<?php echo $name2['nama_pasien']; ?>">
+                          <?php
+                        } elseif ($page1 == "raw2") {
+                          echo "2";
+                        } elseif ($page1 == "raw3") {
+                          $nama = mysqli_query($conn, "SELECT * FROM pasien WHERE id='$pasien1'");
+                          $nama2 = mysqli_fetch_array($nama);
+                          ?>
+                            <table class="table table-striped">
+                              <tr>
+                                <th>Nama</th>
+                                <td> : </td>
+                                <th><?php echo ucwords($nama2['nama_pasien']); ?></th>
+                              </tr>
+                              <tr>
+                                <th>Penyakit</th>
+                                <td> : </td>
+                                <th><?php echo ucwords($penyakit); ?></th>
+                              </tr>
+                              <tr>
+                                <th>Kode Pengambilan Obat</th>
+                                <td> : </td>
+                                <th><?php echo $kode; ?></th>
+                              </tr>
+                            </table>
+                            <form action="print.php" method="POST" target="_blank">
+                              <input type="hidden" name="id" value="<?php echo $nama2['nama_pasien']; ?>">
+                              <input type="hidden" name="idriwayat" value="<?php echo $penyakit ?>">
+                            <?php } ?>
                             <div class="row justify-content-center">
                               <div class="btn-group">
                                 <button class="btn btn-primary"><i class="fas fa-print"></i> Print</button>

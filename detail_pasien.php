@@ -125,7 +125,7 @@
                               <tr>
                                 <td><?php echo ucwords(tgl_indo($row['tgl'])); ?></td>
                                 <td><?php echo ucwords($row['penyakit']); ?></td>
-                                <td><?php  echo $row['diagnosa']; ?>
+                                <td><?php echo $row['diagnosa']; ?>
                                 </td>
                                 <td>
                                   <?php
@@ -166,25 +166,9 @@
                                   echo "- Berat : " . $row['berat'] . " kg, ";
                                   echo "Tinggi : " . $row['tinggi'] . " cm, ";
                                   echo "Tekanan Darah : " . $row['tensi'] . " mmHg";
-                                  echo "<br>- ";
-                                  $status = substr($row['id_rawatinap'], 0, 3);
-                                    $idrawatinap = substr($row['id_rawatinap'], 3);
-                                    if ($row['id_rawatinap'] == '0') {
-                                      echo 'Pasien tidak membutuhkan Rawat Inap';
-                                    } else {
-                                      if ($status == "tmp") {
-                                        $ruang = mysqli_query($conn, "SELECT * FROM ruang_inap WHERE id='$idrawatinap'");
-                                        $showruang = mysqli_fetch_array($ruang);
-                                        echo "<a href='ruangan.php' title='Detail Ruang Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien masih dirawat di ruang " . $showruang['nama_ruang'] . " sejak tgl " . tgl_indo($showruang['tgl_masuk']) . "</a>";
-                                      } else {
-                                        $riw1 = mysqli_query($conn, "SELECT * FROM riwayat_rawatinap WHERE id='$idrawatinap'");
-                                        $riwayatinap = mysqli_fetch_array($riw1);
-                                        echo "<a href='riwayat_inap.php' title='Riwayat Rawat Inap Pasien' data-toggle='tooltip'><i class='fas fa-info-circle text-info'></i> Pasien pernah dirawat pada tgl " . tgl_indo($riwayatinap['2']) . ' s.d. ' . tgl_indo($riwayatinap['3']) . "</a>";
-                                      }
-                                    }
-                                    $dokter = mysqli_query($conn, "SELECT * FROM pegawai WHERE id='$id_dokter'");
-                                    $doc = mysqli_fetch_array($dokter);
-                                    echo "<br>- Diperiksa oleh Dr. ". ucwords($doc['nama_pegawai']);
+                                  $dokter = mysqli_query($conn, "SELECT * FROM pegawai WHERE id='$id_dokter'");
+                                  $doc = mysqli_fetch_array($dokter);
+                                  echo "<br>- Diperiksa oleh Dr. " . ucwords($doc['nama_pegawai']);
                                   ?>
                                 </td>
                                 <td>
