@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Jun 2020 pada 04.13
+-- Waktu pembuatan: 21 Jun 2020 pada 13.25
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.4
 
@@ -65,9 +65,9 @@ CREATE TABLE `obat` (
 --
 
 INSERT INTO `obat` (`id`, `nama_obat`, `stok`, `harga`) VALUES
-(1, 'parashitamol', 69, 500),
-(2, 'antibilotil', 20, 5000),
-(3, 'Susu', 100, 20000);
+(1, 'parashitamol', 70, 500),
+(2, 'antibilotil', 6, 5000),
+(3, 'Susu', 90, 20000);
 
 -- --------------------------------------------------------
 
@@ -95,7 +95,10 @@ CREATE TABLE `pasien` (
   `alamat` text NOT NULL,
   `kode_pasien` varchar(50) NOT NULL,
   `jk` int(11) NOT NULL,
-  `tmp_lahir` varchar(100) NOT NULL
+  `tmp_lahir` varchar(100) NOT NULL,
+  `ibu` varchar(100) NOT NULL,
+  `pekerjaan` varchar(100) NOT NULL,
+  `pernikahan` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -150,52 +153,12 @@ CREATE TABLE `riwayat_penyakit` (
   `penyakit` varchar(300) NOT NULL,
   `diagnosa` text NOT NULL,
   `tgl` varchar(200) NOT NULL,
-  `id_rawatinap` varchar(11) NOT NULL,
   `biaya_pengobatan` int(11) NOT NULL,
   `tinggi` int(11) NOT NULL,
   `berat` int(11) NOT NULL,
   `tensi` int(11) NOT NULL,
   `id_dokter` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `riwayat_rawatinap`
---
-
-CREATE TABLE `riwayat_rawatinap` (
-  `id` int(11) NOT NULL,
-  `id_pasien` int(11) NOT NULL,
-  `tgl_masuk` varchar(200) NOT NULL,
-  `tgl_keluar` varchar(200) NOT NULL,
-  `biaya` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `ruang_inap`
---
-
-CREATE TABLE `ruang_inap` (
-  `id` int(11) NOT NULL,
-  `nama_ruang` varchar(200) NOT NULL,
-  `id_pasien` varchar(11) DEFAULT NULL,
-  `tgl_masuk` varchar(200) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `biaya` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `ruang_inap`
---
-
-INSERT INTO `ruang_inap` (`id`, `nama_ruang`, `id_pasien`, `tgl_masuk`, `status`, `biaya`) VALUES
-(1, 'Melati', NULL, NULL, 0, 900000),
-(2, 'Mawar', NULL, NULL, 0, 600000),
-(3, 'Coper', NULL, NULL, 0, 400000),
-(4, 'Copere', NULL, NULL, 0, 666);
 
 --
 -- Indexes for dumped tables
@@ -246,19 +209,6 @@ ALTER TABLE `riwayat_penyakit`
   ADD KEY `id_pasien_2` (`id_pasien`);
 
 --
--- Indeks untuk tabel `riwayat_rawatinap`
---
-ALTER TABLE `riwayat_rawatinap`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `ruang_inap`
---
-ALTER TABLE `ruang_inap`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id_pasien` (`id_pasien`);
-
---
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -297,18 +247,6 @@ ALTER TABLE `riwayat_obat`
 --
 ALTER TABLE `riwayat_penyakit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `riwayat_rawatinap`
---
-ALTER TABLE `riwayat_rawatinap`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `ruang_inap`
---
-ALTER TABLE `ruang_inap`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
