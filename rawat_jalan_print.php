@@ -310,5 +310,4 @@
   </div>
   <?php include "part/all-js.php"; ?>
 </body>
-
 </html>

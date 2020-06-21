@@ -88,20 +88,23 @@ if ($page1 == "raw00") {
 		$kode = $_POST['kode'];
 		$nama = $_POST['nama'];
 		?>
-		<div class='card-antri text-dark'>
-		<h3>NOMOR ANTRIAN PASIEN R.S. EMPPS AHH</h3>
-		<table class="table table-striped text-dark">
-			<tr>
-				<th><?php echo ucwords($nama); ?></th>
-			</tr>
-			<tr>
-				<th>
-					<h1><?php echo $kode; ?></h1>
-				</th>
-			</tr>
-		</table>
-	<?php
-	} else {
-		header("location:index.php");
-	} ?>
-		</div>
+			<div class='card-antri text-dark'>
+				<h3>NOMOR ANTRIAN PASIEN R.S. EMPPS AHH</h3>
+				<table class="table table-striped text-dark">
+					<tr>
+						<th><?php echo ucwords($nama); ?></th>
+					</tr>
+					<tr>
+						<th>
+							<h1><?php echo $kode; ?></h1>
+						</th>
+					</tr>
+				</table>
+			<?php
+		} else {
+			header("location:index.php");
+		} ?>
+			</div>
+			<script>
+				window.print();
+			</script>
