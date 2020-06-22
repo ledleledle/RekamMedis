@@ -85,6 +85,20 @@
                               <td> : <?php echo (@$riwayat_terakhir['tensi'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['tensi'] . " mmHg"; ?></td>
                             </tr>
                             <tr>
+                              <th scope="row">Pekerjaan</th>
+                              <td> : <?php echo ucwords($pasien['pekerjaan']); ?></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Status Pernikahan</th>
+                              <td> : <?php
+                              if($pasien['pernikahan'] == 0){
+                                echo "Menikah";
+                              } elseif($pasien['pernikahan'] == 1){
+                                echo "Belum Menikah";
+                              }
+                              ?></td>
+                            </tr>
+                            <tr>
                               <th scope="row">Alamat</th>
                               <td> : <?php echo ucwords($pasien['alamat']); ?></td>
                             </tr>
@@ -190,10 +204,8 @@
                   </div>
                 </div>
               </div>
-
         </section>
       </div>
-
       <?php include 'part/footer.php'; ?>
     </div>
   </div>
