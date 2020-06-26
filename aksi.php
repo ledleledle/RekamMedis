@@ -9,12 +9,13 @@
   $ceque = mysqli_fetch_array($cek);
   $realid = $ceque['id'];
   $page1 = $_POST['page'];
+  
+  $cekriwayat = mysqli_query($conn, "SELECT * FROM `riwayat_penyakit` ORDER BY id DESC LIMIT 1");
+  $datapasien = mysqli_fetch_array($cekriwayat);
+
   if ($page1 == "raw1") {
     $page = "Pemeriksaan Pasien";
     $bread = "<a href='rawat_jalan1.php'>";
-  } elseif ($page1 == "raw2") {
-    $page = "Tindakan untuk Pasien";
-    $bread = "<a href='rawat_jalan2.php'>";
   } else {
     header("location:index.php");
   }
@@ -24,13 +25,10 @@
   include "part_func/tgl_ind.php";
 
   if (isset($_POST['submitfoto'])) {
-    $idpasien = $_POST['id'];
-    $penyakit = $_POST['penyakit'];
-    $biaya = $_POST['biaya'];
-    $cekriwayat = mysqli_query($conn, "SELECT * FROM `riwayat_penyakit` WHERE penyakit='$penyakit' AND id_pasien='$idpasien' ORDER BY id DESC LIMIT 1");
-    $datapasien = mysqli_fetch_array($cekriwayat);
-    $idpas = $datapasien['id_pasien'];
-    $idpeny = $datapasien['id'];
+    @$idpeny = $datapasien['id']+1;
+    $idnama = $_POST['id'];
+    $page1 = $_POST['page'];
+    $biaya = "10000";
 
     if (count($_FILES['upload']['name']) > 0) {
       for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
@@ -39,7 +37,7 @@
           $filePath = "assets/img/uploads/" . date('d-m-Y-H-i-s') . '-' . $_FILES['upload']['name'][$i];
           if (move_uploaded_file($tmpFilePath, $filePath)) {
             $split = count($_FILES['upload']['tmp_name']);
-            $sql = mysqli_query($conn, "INSERT INTO foto_rotgen (id_pasien, id_penyakit, biaya, directory) VALUES ('$idpas', '$idpeny','$biaya', '$filePath')");
+            $sql = mysqli_query($conn, "INSERT INTO foto_rotgen (id_pasien, id_penyakit, biaya, directory) VALUES ('$realid', '$idpeny','$biaya', '$filePath')");
           }
         }
       }
@@ -305,8 +303,9 @@
                             <div class="form-group row mb-4">
                               <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Pilih Foto</label>
                               <div class="col-sm-12 col-md-7">
-                                <input type="hidden" class="form-control" name="id" required="" value="<?php echo $idpasien; ?>">
-                                <input type="hidden" class="form-control" name="penyakit" required="" value="<?php echo $penyakit; ?>">
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="page" value="<?php echo $page1; ?>">
+                                <input type="hidden" name="id" value="<?php echo $idnama; ?>">
                                 <input id='upload' class="form-control" name="upload[]" type="file" multiple="multiple" />
                                 <div class="invalid-feedback">
                                   Mohon data diisi!
@@ -317,6 +316,7 @@
                               <div class="col-md-6"></div>
                               <div class="col-lg-4 col-md-6 text-right">
                                 <input type="submit" class="btn btn-icon icon-right btn-primary" name="submitfoto" value="Upload Foto">
+                                    </form>
                               </div>
                             </div>
                           </div>

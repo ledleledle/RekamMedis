@@ -29,8 +29,3 @@ Rancangan Sistem
 Rancangan Sistem will be changed
 
 ![rancangansistem](https://raw.githubusercontent.com/ledleledle/RekamMedis/master/blueprint/rancangan.png)
-
-For now its done :)
-## <s>Update : Not Done yet, still doin a maintance. Backward till 100% yeay</s>
-### Still had bugs to fix
-![awshit](https://raw.githubusercontent.com/ledleledle/RekamMedis/master/blueprint/fetchimage.webp)
