@@ -140,11 +140,18 @@ if (isset($_POST['printone']) || isset($_POST['detail'])) {
                       $jumrotgen = mysqli_num_rows($rotgensql);
                       if ($jumrotgen == 0) {
                         echo '- Tidak ada foto rotgen<br>';
-                      } else { ?>
+                      } else {
+                        $count = 0;
+                        while ($showobat = mysqli_fetch_array($rotgensql)) {
+                          $foto = mysqli_query($conn, "SELECT * FROM foto_rotgen WHERE id_pasien='$idid' AND id_penyakit='$idpenyakit'");
+                          $fotorot = mysqli_fetch_array($foto);
+                          @$hargafoto += $fotorot['biaya'];
+                        }
+                      ?>
                         <form action="detail_rotgen.php" method="POST">
                           <input type="hidden" name="id" value="<?php echo $idnama; ?>">
                           <input type="hidden" name="idriwayat" value="<?php echo $idpenyakit ?>">
-                          <button type="submit" title="Detail Foto Rotgen Pasien" data-toggle="tooltip" id="btn-link"><i class="fas fa-info-circle text-info"></i> <?php echo $jumrotgen; ?> Foto</button>
+                          <button type="submit" title="Detail Foto Rotgen Pasien" data-toggle="tooltip" id="btn-link"><i class="fas fa-info-circle text-info"></i> <?php echo $jumrotgen; ?> Foto Rotgen</button>
                         </form>
                       <?php
                       }
@@ -184,8 +191,8 @@ if (isset($_POST['printone']) || isset($_POST['detail'])) {
                     <td>
                       <?php
                       echo " Rp. ";
-                      @$sum += $biayaperiksa + @$hargaobat;
-                      echo number_format($biayaperiksa + @$hargaobat, 0, ".", ".");
+                      @$sum += $biayaperiksa + @$hargaobat + @$hargafoto;
+                      echo number_format($biayaperiksa + @$hargaobat + @$hargafoto, 0, ".", ".");
                       ?>
                     </td>
                   </tr>

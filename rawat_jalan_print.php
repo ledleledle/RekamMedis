@@ -107,9 +107,9 @@
         $pasien1 = $cekpasien['id_pasien'];
         $penyakit2 = $cekpasien['penyakit'];
         $input = mysqli_query($conn, "INSERT INTO riwayat_obat (id_penyakit, id_pasien, id_obat, jumlah) VALUES ('$penyakit', '$pasien1', '$obat', '$jum')");
-        $delete = mysqli_query($conn, "DELETE * FROM obat2 WHERE id_pasien='$pasien1'");
+        $deleteantrian = mysqli_query($conn, "DELETE FROM antrian WHERE id_pasien='$pasien1'");
+        $delete = mysqli_query($conn, "DELETE FROM obat2 WHERE kode='$kode'");
       }
-      $deleteantrian = mysqli_query($conn, "DELETE * FROM antrian WHERE id_pasien='$pasien1'");
     }
   } else {
     header("location: index.php");

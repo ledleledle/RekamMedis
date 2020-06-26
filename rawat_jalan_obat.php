@@ -20,6 +20,7 @@
   $statusnya = $_POST['status'];
   $doc = $_POST['dokter'];
   $kodeobat = str_replace("-", "", $id . $tglnow . $doc);
+  $id_penya = $_POST['idpeny'];
 
   if (isset($_POST['submite'])) {
     $id = $_POST['idlae'];
@@ -33,8 +34,7 @@
     $doc = $_POST['dokter'];
     $id2 = $_POST['id'];
     $jum = $_POST['jumlah'];
-    $cekcek = mysqli_query($conn, "SELECT * FROM riwayat_penyakit");
-    $id_penya = mysqli_num_rows($cekcek) + 1;
+    $id_penya = $_POST['idpeny'];
     $owbat = mysqli_query($conn, "SELECT * FROM obat WHERE id='$id2'");
     $stokobat = mysqli_fetch_array($owbat);
     $stoknya = $stokobat['stok'];
@@ -110,7 +110,7 @@
                   <h4>Info Pasien</h4>
                   <div class="card-header-action">
                     <form action="rawat_jalan_print.php" method="POST">
-                    <input type="hidden" class="form-control" name="page" value="raw1" required="">
+                      <input type="hidden" class="form-control" name="page" value="raw1" required="">
                       <input type="hidden" class="form-control" name="idlae" value="<?php echo $id; ?>" required="">
                       <input type="hidden" class="form-control" name="penyakit" value="<?php echo $penyakit; ?>" required="">
                       <input type="hidden" class="form-control" name="diagnosa" value="<?php echo $diagnosa; ?>" required="">
@@ -121,6 +121,7 @@
                       <input type="hidden" class="form-control" name="status" value="<?php echo $statusnya; ?>" required="">
                       <input type="hidden" class="form-control" name="dokter" value="<?php echo $doc; ?>" required="">
                       <input type="hidden" class="form-control" name="kode" value="<?php echo $kodeobat; ?>" required="">
+                      <input type="hidden" name="idpeny" value="<?php echo $id_penya; ?>" readonly required>
                       <button class="btn btn-primary">Selesai</button>
                     </form>
                   </div>
@@ -225,6 +226,7 @@
                     <input type="hidden" class="form-control" name="tensi" value="<?php echo $tensi; ?>" required="">
                     <input type="hidden" class="form-control" name="status" value="<?php echo $statusnya; ?>" required="">
                     <input type="hidden" class="form-control" name="dokter" value="<?php echo $doc; ?>" required="">
+                    <input type="hidden" name="idpeny" value="<?php echo $id_penya; ?>" readonly required>
                     <input type="hidden" class="form-control" name="id" required="" id="getId">
                     <input type="hidden" class="form-control" name="idpasien" required="" id="getPas">
                     <input type="number" class="form-control" name="jumlah" required="" min="1" value="1">

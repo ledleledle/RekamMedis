@@ -9,9 +9,10 @@
   $ceque = mysqli_fetch_array($cek);
   $realid = $ceque['id'];
   $page1 = $_POST['page'];
-  
+
   $cekriwayat = mysqli_query($conn, "SELECT * FROM `riwayat_penyakit` ORDER BY id DESC LIMIT 1");
   $datapasien = mysqli_fetch_array($cekriwayat);
+  @$idpeny = $datapasien['id']+1;
 
   if ($page1 == "raw1") {
     $page = "Pemeriksaan Pasien";
@@ -25,7 +26,7 @@
   include "part_func/tgl_ind.php";
 
   if (isset($_POST['submitfoto'])) {
-    @$idpeny = $datapasien['id']+1;
+    @$idpeny = $_POST['idpeny'];
     $idnama = $_POST['id'];
     $page1 = $_POST['page'];
     $biaya = "10000";
@@ -103,6 +104,7 @@
                                   <div class="input-group">
                                     <input type="hidden" name="idlae" value="<?php echo $realid; ?>" readonly required>
                                     <input type="hidden" name="dokter" value="<?php echo $sessionid; ?>" readonly required>
+                                    <input type="text" name="idpeny" value="<?php echo $idpeny; ?>" readonly required>
                                     <input type="number" class="form-control" value="0" required="" min="0" name="berat" placeholder="Berat Badan Pasien">
                                     <div class="input-group-prepend">
                                       <div class="input-group-text">
@@ -301,22 +303,23 @@
                           </div>
                           <div class="tab-pane fade" id="list-rotgen" role="tabpanel" aria-labelledby="list-rotgen-list">
                             <div class="form-group row mb-4">
-                              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Pilih Foto</label>
+                              <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Upload Foto Rotgen (1x Foto = Rp.10.000)</label>
                               <div class="col-sm-12 col-md-7">
                                 <form action="" method="POST" enctype="multipart/form-data">
-                                <input type="hidden" name="page" value="<?php echo $page1; ?>">
-                                <input type="hidden" name="id" value="<?php echo $idnama; ?>">
-                                <input id='upload' class="form-control" name="upload[]" type="file" multiple="multiple" />
-                                <div class="invalid-feedback">
-                                  Mohon data diisi!
-                                </div>
+                                  <input type="hidden" name="page" value="<?php echo $page1; ?>">
+                                  <input type="hidden" name="id" value="<?php echo $idnama; ?>">
+                                  <input type="text" name="idpeny" value="<?php echo $idpeny; ?>">
+                                  <input id='upload' class="form-control" name="upload[]" type="file" multiple="multiple" />
+                                  <div class="invalid-feedback">
+                                    Mohon data diisi!
+                                  </div>
                               </div>
                             </div>
                             <div class="form-group row">
                               <div class="col-md-6"></div>
                               <div class="col-lg-4 col-md-6 text-right">
                                 <input type="submit" class="btn btn-icon icon-right btn-primary" name="submitfoto" value="Upload Foto">
-                                    </form>
+                                </form>
                               </div>
                             </div>
                           </div>
