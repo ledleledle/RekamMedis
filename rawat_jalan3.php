@@ -38,14 +38,14 @@
                   <div class="card-body">
                     <form class="needs-validation" novalidate="" method="POST" autocomplete="off" action="rawat_jalan_print.php">
                       <div class="form-group row">
-                        <label class="col-md-3">Kode Pengambilan Obat</label>
+                        <label class="col-md-3">Kode Pengambilan Obat & Pembayaran</label>
                         <div class="col-lg-6 col-md-6">
                           <input type="hidden" required="" name="page" value="raw3">
                           <input type="text" class="form-control" required="" name="kode" placeholder="Masukkan Kode Obat">
                           <div class="invalid-feedback">
                             Mohon data diisi!
                           </div><br>
-                        <button class="btn btn-primary" name="submit">Ambil Obat</button>
+                        <button class="btn btn-primary" name="submit">Selesai</button>
                     </form>
                   </div>
                 </div>
