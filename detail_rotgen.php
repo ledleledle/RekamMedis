@@ -17,6 +17,8 @@
   $sqlimg = mysqli_query($conn, "SELECT * FROM foto_rotgen WHERE id_pasien='$idid' AND id_penyakit='$idpenyakit'");
   $penyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' AND id='$idpenyakit'");
   $echopen = mysqli_fetch_array($penyakit);
+  $terakhir = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY id DESC LIMIT 1");
+  $riwayat_terakhir = mysqli_fetch_array($terakhir);
   ?>
 </head>
 
@@ -81,11 +83,25 @@
                             </tr>
                             <tr>
                               <th scope="row">Tinggi Bandan</th>
-                              <td> : <?php echo $pasien['tinggi_badan'] . " cm"; ?></td>
+                              <td> : <?php echo (@$riwayat_terakhir['tinggi'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['tinggi'] . " cm"; ?></td>
                             </tr>
                             <tr>
                               <th scope="row">Berat Badan</th>
-                              <td> : <?php echo $pasien['berat_badan'] . " kg"; ?></td>
+                              <td> : <?php echo (@$riwayat_terakhir['berat'] == "") ? "Pasien Belum Pernah Diperiksa" : $riwayat_terakhir['berat'] . " kg"; ?></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Pekerjaan</th>
+                              <td> : <?php echo ucwords($pasien['pekerjaan']); ?></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Status Pernikahan</th>
+                              <td> : <?php
+                                      if ($pasien['pernikahan'] == 0) {
+                                        echo "Menikah";
+                                      } elseif ($pasien['pernikahan'] == 1) {
+                                        echo "Belum Menikah";
+                                      }
+                                      ?></td>
                             </tr>
                             <tr>
                               <th scope="row">Alamat</th>
