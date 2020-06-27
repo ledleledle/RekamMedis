@@ -10,7 +10,8 @@
   include "part/head.php";
 
   if (isset($_POST['reset_ant'])) {
-    $del = mysqli_query($conn, "DELETE FROM antrian WHERE status='1' OR status='0'");
+    #$del = mysqli_query($conn, "DELETE FROM antrian WHERE status='1' OR status='0'");
+    $del = mysqli_query($conn, "TRUNCATE TABLE antrian");
     echo '<script>
     setTimeout(function() {
       swal({
