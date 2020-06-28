@@ -12,9 +12,9 @@ include 'part_func/tgl_ind.php';
 $cek = mysqli_query($conn, "SELECT * FROM pasien WHERE nama_pasien='$idnama'");
 $pasien = mysqli_fetch_array($cek);
 $idid = $pasien['id'];
+@$idriwayat = $_POST['idriwayat'];
 
 if (isset($_POST['printone']) || isset($_POST['detail'])) {
-  $idriwayat = $_POST['idriwayat'];
   $riwayatpenyakit = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' AND id='$idriwayat'");
   $terakhir = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' ORDER BY id DESC LIMIT 1");
   $riwayat_terakhir = mysqli_fetch_array($terakhir);
@@ -122,7 +122,7 @@ if (isset($_POST['printone']) || isset($_POST['detail'])) {
                   </tr>
                 </thead>
                 <?php
-                $sql = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid'");
+                $sql = mysqli_query($conn, "SELECT * FROM riwayat_penyakit WHERE id_pasien='$idid' AND id='$idriwayat'");
                 $i = 0;
                 while ($row = mysqli_fetch_array($sql)) {
                   $idpenyakit = $row['id'];
