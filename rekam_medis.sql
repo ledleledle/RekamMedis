@@ -66,7 +66,7 @@ CREATE TABLE `obat` (
 
 INSERT INTO `obat` (`id`, `nama_obat`, `stok`, `harga`) VALUES
 (1, 'parashitamol', 70, 500),
-(2, 'antibilotil', 6, 5000),
+(2, 'antibilotil', 100, 5000),
 (3, 'Susu', 90, 20000);
 
 -- --------------------------------------------------------

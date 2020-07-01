@@ -97,7 +97,7 @@
                       <div class="col-8">
                         <div class="tab-content" id="nav-tabContent">
                           <div class="tab-pane fade show active" id="list-diagnosa" role="tabpanel" aria-labelledby="list-diagnosa-list">
-                            <form action="rawat_jalan_obat.php" method="POST" class="needs-validation" novalidate="">
+                            <form action="rawat_jalan_obat.php" method="POST" class="needs-validation" novalidate="" autocomplete="off">
                               <div class="row">
                                 <div class="form-group col-md-6 col-12">
                                   <label>Berat Badan</label>
@@ -305,7 +305,7 @@
                             <div class="form-group row mb-4">
                               <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Upload Foto Rotgen (1x Foto = Rp.10.000)</label>
                               <div class="col-sm-12 col-md-7">
-                                <form action="" method="POST" enctype="multipart/form-data">
+                                <form action="" method="POST" enctype="multipart/form-data" autocomplete="off">
                                   <input type="hidden" name="page" value="<?php echo $page1; ?>">
                                   <input type="hidden" name="id" value="<?php echo $idnama; ?>">
                                   <input type="hidden" name="idpeny" value="<?php echo $idpeny; ?>">

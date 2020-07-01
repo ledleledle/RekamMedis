@@ -48,7 +48,7 @@
     $nikah = $_POST['nikah'];
     $cek_pas2 = mysqli_num_rows($cek_pasien) + 1;
     $forcode = str_replace("-", "", $tgl);
-    $kode = $cek_pas2 . $forcode;
+    $kode = $forcode . $cek_pas2;
 
     $insert = mysqli_query($conn, "INSERT INTO pasien (nama_pasien, tgl_lahir, alamat, kode_pasien, jk, tmp_lahir, ibu, pekerjaan, pernikahan) VALUES ('$nama', '$tgl', '$alm', $kode, '$jk', '$tmp', '$ibu', '$job', '$nikah')");
     echo '<script>
@@ -77,9 +77,6 @@
 
     $submit = mysqli_query($conn, "INSERT INTO riwayat_penyakit (id_pasien, penyakit, diagnosa, tgl, biaya_pengobatan, tinggi, berat, tensi, id_dokter) VALUES ('$id', '$penyakit', '$diagnosa', '$tglnow', '$biaya', '$tinggi', '$berat', '$tensi', '$doc')");
     $update_antrian = mysqli_query($conn, "UPDATE antrian SET status='$statusnya' WHERE id_pasien='$id'");
-  } elseif ($page1 == "raw2") {
-    $page = "Tindakan untuk Pasien";
-    $bread = "rawat_jalan2.php";
   } elseif ($page1 == "raw3") {
     $page = "Pemberian Obat untuk Pasien";
     $bread = "rawat_jalan3.php";
